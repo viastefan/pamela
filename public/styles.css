@@ -755,11 +755,11 @@ html:not(.js) .cw, .top[data-open] ~ .cw, .top[data-open] ~ .notice { display: n
 .steps p { margin-top: 10px; max-width: 22em; font-size: var(--fs-card); line-height: 1.55; }
 
 /* Fuß */
-.foot { position: relative; overflow: hidden; margin: 0 6px 6px; border-radius: 28px; background: var(--wine-950); color: var(--deep-ink-2); padding: 96px 0 40px; }
+.foot { --deep-ink-1: var(--ink-1); --deep-ink-2: var(--ink-2); --deep-line: var(--line-2); position: relative; overflow: hidden; margin: 0 6px 6px; border-radius: 28px; background: var(--sunken); color: var(--ink-2); padding: 96px 0 108px; }
 .foot .wrap { position: relative; }
 .foot-mark { position: absolute; right: -90px; top: -70px; width: 460px; height: auto; opacity: .1; pointer-events: none; animation: mark-drift 16s ease-in-out infinite alternate; }
-.foot .brand { color: var(--deep-ink-1); margin: 0; }
-.foot .brand img { width: 44px; height: 44px; } .foot .brand b { font-size: 26px; } .foot .brand small { color: var(--deep-ink-2); }
+.foot .brand { margin: 0; }
+.foot .brand img { width: 44px; height: 44px; } .foot .brand b { font-size: 26px; }
 .foot-lead { margin: 28px 0 28px; max-width: 30em; font-size: 19px; line-height: 1.6; color: var(--deep-ink-2); }
 .foot .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; padding: 64px 0 56px; }
 .foot h3 { margin-bottom: 14px; font-size: 15.5px; font-weight: var(--wt-strong); color: var(--deep-ink-1); }
@@ -773,7 +773,7 @@ html:not(.js) .cw, .top[data-open] ~ .cw, .top[data-open] ~ .notice { display: n
 .foot-end p a, .foot-end p button { margin-left: 18px; border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
 .theme { display: inline-flex; gap: 2px; padding: 4px; border-radius: 999px; border: 1px solid var(--deep-line); }
 .theme button { width: 38px; height: 38px; display: grid; place-items: center; border: 0; border-radius: 50%; background: none; color: var(--deep-ink-2); cursor: pointer; transition: background-color .3s ease, color .3s ease; }
-.theme button[aria-pressed="true"] { background: var(--deep-ink-1); color: var(--wine-950); }
+.theme button[aria-pressed="true"] { background: var(--deep-ink-1); color: var(--canvas); }
 .theme svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.500; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Dunkle Darstellung */
