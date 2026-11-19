@@ -26,27 +26,37 @@ const mail = ({ title, intro, rows, foot }) => `<!doctype html><html lang="de"><
 <p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#74686B">${foot}</p>
 </td></tr></table></body></html>`
 
+// Höchstens acht Sekunden warten; bei einem Fehler nur den Status festhalten, keine Angaben der Person.
 const send = (key, body) => fetch('https://api.resend.com/emails', {
   method: 'POST', headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body),
-}).then(r => r.ok, () => false)
+  signal: AbortSignal.timeout(8000),
+}).then(r => { if (!r.ok) console.error('resend', r.status); return r.ok }, e => { console.error('resend', e && e.name); return false })
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ error: 'method' }) }
+
+  res.setHeader('Cache-Control', 'no-store')
+  // Nur Anfragen von der eigenen Seite und in vernünftiger Größe
+  const origin = req.headers.origin
+  if (origin) { let host = ''; try { host = new URL(origin).host } catch {} if (host !== req.headers.host) return res.status(403).json({ error: 'origin' }) }
+  if (Number(req.headers['content-length'] || 0) > 20000) return res.status(413).json({ error: 'too_large' })
 
   let b = req.body
   if (typeof b === 'string') { try { b = JSON.parse(b) } catch { b = Object.fromEntries(new URLSearchParams(b)) } }
   b = b && typeof b === 'object' ? b : {}
   const wantsPage = !String(req.headers['content-type'] || '').includes('json')
-  const done = (status, body) => wantsPage && status === 200 ? res.redirect(303, '/termin/?gesendet=1') : res.status(status).json(body)
+  const kontakt = b.art === 'kontakt' // kurze Nachricht von der Kontaktseite statt der geführten Terminanfrage
+  const done = (status, body) => wantsPage && status === 200 ? res.redirect(303, kontakt ? '/kontakt/?gesendet=1#schreiben' : '/termin/?gesendet=1') : res.status(status).json(body)
 
   if (line(b.website, 10)) return done(200, { ok: true }) // Feld, das nur Bots ausfüllen
 
   const name = line(b.name, 120), email = line(b.email, 160), telefon = line(b.telefon, 40), nachricht = text(b.nachricht, 1500)
-  const zeit = [].concat(b.zeit || []).map(z => ZEIT[z]).filter(Boolean)
+  const zeit = [...new Set([].concat(b.zeit || []).flatMap(z => String(z).split(',')).map(z => ZEIT[z.trim()]).filter(Boolean))]
   const thema = THEMA[b.thema], ort = ORT[b.ort]
-  if (!thema || !ort || !zeit.length || name.length < 2 || !b.einwilligung) return done(400, { error: 'incomplete' })
+  if (name.length < 2 || !b.einwilligung || b.einwilligung === 'false') return done(400, { error: 'incomplete' })
+  if (kontakt ? nachricht.length < 5 : (!thema || !ort || !zeit.length)) return done(400, { error: 'incomplete' })
   if (!email && !telefon) return done(400, { error: 'contact' })
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return done(400, { error: 'email' })
+  if (email && !/^[^\s@<>,;"]+@[^\s@<>,;"]+\.[^\s@<>,;"]{2,}$/.test(email)) return done(400, { error: 'email' })
 
   const { RESEND_API_KEY: key, ANFRAGE_TO: to } = process.env
   const from = process.env.ANFRAGE_FROM || DEFAULT_FROM, reply = process.env.ANFRAGE_REPLY || PRAXIS.mail
@@ -55,6 +65,22 @@ module.exports = async (req, res) => {
   const wish = [['Anliegen', thema], ['Form', ort], ['Wunschzeit', zeit.join(', ')]]
   const contact = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
   const plain = rows => rows.map(([k, v]) => `${k}: ${v}`).join('\n')
+
+  if (kontakt) {
+    const rows = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
+    const sent = await send(key, {
+      from, to: [to], subject: `Neue Nachricht über die Website (${name})`, ...(email ? { reply_to: email } : {}),
+      text: `Neue Nachricht über die Website\n\n${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}`,
+      html: mail({ title: 'Neue Nachricht', intro: `${esc(name)} hat über das Kontaktformular geschrieben.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt.' }),
+    })
+    if (!sent) return done(502, { error: 'send_failed' })
+    if (email) await send(key, {
+      from, to: [email], reply_to: reply, subject: 'Ihre Nachricht ist angekommen',
+      text: `Guten Tag ${name},\n\nvielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.\n\n${PRAXIS.name}\n${PRAXIS.phone}\n${PRAXIS.mail}`,
+      html: mail({ title: 'Ihre Nachricht ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: [['Ihre Nachricht', nachricht]], foot: `${PRAXIS.name}, ${PRAXIS.phone}, ${PRAXIS.mail}<br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.` }),
+    })
+    return done(200, { ok: true })
+  }
 
   // 1. An die Praxis. Ohne diese Mail gilt die Anfrage als nicht zugestellt.
   const lead = await send(key, {

@@ -5,24 +5,12 @@
 
   // Kopf: Linie erst beim Scrollen, Menü am Handy
   var top = doc.querySelector('.top'), btn = doc.querySelector('.menu-btn')
-  var loc = doc.querySelector('[data-loc]')
+  var dock = doc.querySelector('[data-dock]')
   var onScroll = function () {
     top.classList.toggle('scrolled', scrollY > 8)
-    if (loc) loc.classList.toggle('show', scrollY > innerHeight * .6)
+    if (dock) dock.classList.toggle('show', scrollY > innerHeight * .6)
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll()
-  // Standort: Taste öffnet die Karte, die Google-Karte lädt erst auf Klick
-  if (loc) {
-    var locPill = loc.querySelector('[data-loc-open]'), locCard = loc.querySelector('.loc-card'), locLoad = loc.querySelector('[data-loc-load]')
-    var setLoc = function (open) { loc.classList.toggle('open', open); locCard.hidden = !open; locPill.setAttribute('aria-expanded', String(open)) }
-    locPill.addEventListener('click', function () { setLoc(true); loc.querySelector('[data-loc-close]').focus() })
-    loc.querySelector('[data-loc-close]').addEventListener('click', function () { setLoc(false); locPill.focus() })
-    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && loc.classList.contains('open')) { setLoc(false); locPill.focus() } })
-    locLoad.addEventListener('click', function () {
-      var f = doc.createElement('iframe'); f.src = locLoad.dataset.src; f.title = 'Karte: Standort der Praxis'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'
-      locLoad.replaceWith(f)
-    })
-  }
   if (btn) {
     var setMenu = function (open) {
       top.toggleAttribute('data-open', open)
@@ -46,6 +34,32 @@
     }
     requestAnimationFrame(tick)
   }
+  // Lange Seiten: jeder Abschnitt klappt auf, damit zuerst nur die Überschriften zu sehen sind
+  doc.querySelectorAll('.prose[data-fold]').forEach(function (prose) {
+    var heads = [].filter.call(prose.children, function (c) { return c.tagName === 'H2' })
+    if (heads.length < 2) return
+    heads.forEach(function (h, i) {
+      var d = doc.createElement('details'), sum = doc.createElement('summary'), body = doc.createElement('div'), n
+      d.className = 'fold'; body.className = 'fold-body'
+      h.classList.remove('rv'); h.removeAttribute('style')
+      prose.insertBefore(d, h); sum.appendChild(h); d.appendChild(sum); d.appendChild(body)
+      while ((n = d.nextSibling) && n.tagName !== 'H2') body.appendChild(n)
+      if (i === 0) d.open = true
+    })
+    var openFor = function () {
+      var t = location.hash && doc.getElementById(decodeURIComponent(location.hash.slice(1)))
+      var d = t && t.closest && t.closest('details.fold'); if (d && !d.open) d.open = true
+    }
+    addEventListener('hashchange', openFor); openFor()
+    doc.querySelectorAll('.toc a[href^="#"]').forEach(function (a) { a.addEventListener('click', function () { setTimeout(openFor, 0) }) })
+  })
+
+  // Lange Inhalte bauen sich Zeile für Zeile auf
+  if (!calm) doc.querySelectorAll('.prose > *, .rows > .row, .fees > *, .faq > *, .glance > *').forEach(function (el) {
+    if (el.classList.contains('rv') || el.closest('.rv')) return
+    var i = [].indexOf.call(el.parentNode.children, el)
+    el.classList.add('rv'); el.style.setProperty('--d', (i % 5) * 60 + 'ms')
+  })
   var items = doc.querySelectorAll('.rv')
   if (!('IntersectionObserver' in window)) items.forEach(function (el) { el.classList.add('in') })
   else {
@@ -58,6 +72,13 @@
     }, { rootMargin: '0px 0px -8% 0px' })
     items.forEach(function (el) { io.observe(el) })
   }
+  // Zeichnungen laufen nur, solange sie zu sehen sind
+  if ('IntersectionObserver' in window) {
+    var artIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('off', !e.isIntersecting) })
+    })
+    doc.querySelectorAll('.art').forEach(function (el) { artIo.observe(el) })
+  }
 
   // Darstellung: hell, wie das Gerät oder dunkel
   var themeBtns = doc.querySelectorAll('[data-theme-set]')
@@ -66,7 +87,10 @@
     root.dataset.themeChoice = t
     root.dataset.theme = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
     themeBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)) })
+    var meta = doc.querySelector('meta[name=theme-color]'); if (meta) meta.content = root.dataset.theme === 'dark' ? '#150B0E' : '#F8F4EF'
   }
+  doc.querySelectorAll('[data-theme-toggle]').forEach(function (b) { b.addEventListener('click', function () { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark') }) })
+  if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { if (root.dataset.themeChoice === 'system') setTheme('system') })
   themeBtns.forEach(function (b) {
     b.setAttribute('aria-pressed', String(b.dataset.themeSet === (root.dataset.themeChoice || 'light')))
     b.addEventListener('click', function () { setTheme(b.dataset.themeSet) })
@@ -108,15 +132,30 @@
 
   // Termin anfragen: erst die Wahl (ausfüllen, anrufen, schreiben)
   var sheet = doc.getElementById('kontakt-wahl')
+  // Nur am großen Bildschirm als Popup; am Handy öffnet sich direkt die eigene Seite.
+  var wide = matchMedia('(min-width: 961px) and (hover: hover)')
   if (sheet && sheet.showModal) {
     doc.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[href^="/termin/"]')
-      if (!a || a.closest('.sheet') || e.metaKey || e.ctrlKey || e.shiftKey) return
+      if (!a || a.closest('.sheet') || e.metaKey || e.ctrlKey || e.shiftKey || !wide.matches) return
       e.preventDefault()
       sheet.querySelector('[data-sheet-form]').href = a.getAttribute('href')
       sheet.showModal()
     })
     sheet.addEventListener('click', function (e) { if (e.target === sheet || e.target.closest('[data-sheet-close]')) sheet.close() })
+    // Am Handy lässt sich das Blatt am Griff nach unten wegziehen
+    var sGrip = sheet.querySelector('.sheet-grip'), sDrag = null
+    if (sGrip) {
+      sGrip.addEventListener('pointerdown', function (e) { sDrag = { y: e.clientY, t: Date.now(), dy: 0 }; sheet.classList.add('is-drag'); try { sGrip.setPointerCapture(e.pointerId) } catch (err) {} })
+      sGrip.addEventListener('pointermove', function (e) { if (!sDrag) return; sDrag.dy = Math.max(0, e.clientY - sDrag.y); sheet.style.transform = 'translateY(' + sDrag.dy + 'px)' })
+      var sEnd = function () {
+        if (!sDrag) return
+        var go = sDrag.dy > 12 && (sDrag.dy / Math.max(1, Date.now() - sDrag.t) > .6 || sDrag.dy > sheet.offsetHeight * .28)
+        sheet.classList.remove('is-drag'); sheet.style.transform = ''; sDrag = null
+        if (go) sheet.close()
+      }
+      sGrip.addEventListener('pointerup', sEnd); sGrip.addEventListener('pointercancel', sEnd)
+    }
   }
 
   // Chat: geführte Antworten aus den Inhalten der Seite, Aufbau wie bei Primava
@@ -182,6 +221,30 @@
       if (on && matchMedia('(pointer: fine)').matches) setTimeout(function () { composer.q.focus({ preventScroll: true }) }, 280)
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
+    // Am Handy lässt sich das Fenster am Griff nach unten wegziehen
+    var grip = cw.querySelector('.cw-grip'), head = cw.querySelector('.cw-head'), drag = null
+    var dragStart = function (e) {
+      if (innerWidth > 640 || !cw.classList.contains('is-open') || (e.target.closest && e.target.closest('button, a'))) return
+      drag = { y: e.clientY, t: Date.now(), dy: 0 }; panel.classList.add('is-drag')
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (err) {}
+    }
+    var dragMove = function (e) {
+      if (!drag) return
+      drag.dy = Math.max(0, e.clientY - drag.y)
+      panel.style.transform = 'translateY(' + drag.dy + 'px)'
+    }
+    var dragEnd = function () {
+      if (!drag) return
+      var fast = drag.dy / Math.max(1, Date.now() - drag.t) > .6, far = drag.dy > panel.offsetHeight * .28
+      panel.classList.remove('is-drag'); panel.style.transform = ''
+      if (drag.dy > 12 && (fast || far)) setChat(false)
+      drag = null
+    }
+    ;[grip, head].forEach(function (h) {
+      if (!h) return
+      h.addEventListener('pointerdown', dragStart); h.addEventListener('pointermove', dragMove)
+      h.addEventListener('pointerup', dragEnd); h.addEventListener('pointercancel', dragEnd)
+    })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })
@@ -189,6 +252,37 @@
       e.preventDefault()
       var q = composer.q.value.trim(); if (!q) return
       composer.q.value = ''; user(q); bot(match(q))
+    })
+  }
+
+  // Kontaktformular: prüfen, senden, Dank an Ort und Stelle; ohne Server geht die Nachricht ins Mailprogramm
+  var cform = doc.getElementById('kontakt-form')
+  if (cform) {
+    var cErr = cform.querySelector('[data-cform-error]'), cDone = cform.querySelector('[data-cform-done]'), cBtn = cform.querySelector('button[type="submit"]')
+    var thanks = function () { cform.classList.add('is-done'); cDone.hidden = false; cDone.focus({ preventScroll: true }) }
+    if (/[?&]gesendet=1/.test(location.search)) thanks()
+    var fail = function (msg) { cErr.textContent = msg; cErr.hidden = false }
+    cform.addEventListener('input', function (e) { var f = e.target.closest('.cfield, .ccheck'); if (f) f.classList.remove('is-bad') })
+    cform.addEventListener('submit', function (e) {
+      e.preventDefault(); cErr.hidden = true
+      var bad = null
+      ;[].forEach.call(cform.querySelectorAll('input[required], textarea[required]'), function (i) {
+        var ok = i.type === 'checkbox' ? i.checked : i.checkValidity() && i.value.trim().length >= (i.minLength > 0 ? i.minLength : 1)
+        i.closest('.cfield, .ccheck').classList.toggle('is-bad', !ok); if (!ok && !bad) bad = i
+      })
+      if (bad) { fail(bad.type === 'checkbox' ? 'Bitte stimmen Sie der Verwendung Ihrer Angaben zu.' : bad.type === 'email' ? 'Bitte geben Sie eine gültige E-Mail-Adresse an.' : 'Bitte füllen Sie die markierten Felder aus.'); bad.focus(); return }
+      var data = {}; [].forEach.call(cform.elements, function (i) { if (i.name) data[i.name] = i.type === 'checkbox' ? i.checked : i.value })
+      cBtn.disabled = true; cBtn.textContent = 'Wird gesendet …'
+      var reset = function () { cBtn.disabled = false; cBtn.textContent = 'Nachricht senden' }
+      fetch(cform.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.ok ? thanks() : Promise.reject(r.status) })
+        .catch(function (status) {
+          reset()
+          if (status === 400) return fail('Bitte prüfen Sie Ihre Angaben.')
+          var body = ['Guten Tag Frau Zurbuchen,', '', data.nachricht, '', 'Name: ' + data.name, data.telefon ? 'Telefon: ' + data.telefon : ''].join('\n').trim()
+          fail('Der Versand hat gerade nicht geklappt. Ihre Nachricht öffnet sich in Ihrem Mailprogramm.')
+          location.href = 'mailto:' + cform.dataset.mail + '?subject=' + encodeURIComponent('Nachricht über die Website') + '&body=' + encodeURIComponent(body)
+        })
     })
   }
 
@@ -207,7 +301,9 @@
     s.classList.toggle('back', !!back); s.classList.add('on')
     bar.style.width = (at / last) * 100 + '%'
     prev.disabled = at === 0 || at === last
-    fwd.disabled = at >= last - 1
+    fwd.textContent = at === last - 1 ? 'Anfrage senden' : 'Weiter'
+    fwd.classList.toggle('send', at === last - 1)
+    doc.querySelector('[data-count-label]').textContent = at < last ? (at + 1) + ' von ' + last : ''
     doc.querySelector('.flow-nav').hidden = at === last
     var f = s.querySelector('input:checked') || s.querySelector('input:not([tabindex="-1"]), textarea')
     if (f && at !== last) setTimeout(function () { f.focus({ preventScroll: true }) }, calm ? 0 : 260)
@@ -275,7 +371,7 @@
   })
   form.addEventListener('click', function (e) { if (e.target.closest('[data-next]')) go() })
   prev.addEventListener('click', function () { show(at - 1, true) })
-  fwd.addEventListener('click', go)
+  fwd.addEventListener('click', function () { if (at === last - 1) form.requestSubmit(); else go() })
   doc.addEventListener('keydown', function (e) {
     if (at === last || e.metaKey || e.altKey) return
     var s = steps[at], tag = e.target.tagName
@@ -301,18 +397,3 @@
   })
   show(start)
 })()
-
-/* Szenen nur im Sichtfeld animieren; kleines Geheimnis */
-;(() => {
-  const ways = document.querySelectorAll('.way');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('pz', !e.isIntersecting)), { rootMargin: '80px' });
-    ways.forEach((w) => { w.classList.add('pz'); io.observe(w); });
-  }
-  const out = document.querySelectorAll('[data-secret] span');
-  const words = ['Alles', 'hat einen', 'Sinn.'];
-  document.querySelectorAll('.hs').forEach((b) => b.addEventListener('click', () => {
-    const i = +b.dataset.i; b.classList.add('found');
-    if (out[i]) { out[i].textContent = words[i]; requestAnimationFrame(() => out[i].classList.add('on')); }
-  }));
-})();

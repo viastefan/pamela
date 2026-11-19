@@ -21,12 +21,8 @@ const P = {
   areas: ['Landsberg am Lech', 'Kaufering', 'Buchloe', 'Dießen am Ammersee', 'Weilheim', 'Bad Wörishofen', 'Türkheim', 'Mindelheim'],
 }
 const ADDRESS = `${P.practice}, ${P.street}, ${P.zip} ${P.city}`
-// Standort: Google Maps. Die Karte selbst lädt erst nach einem Klick, vorher geht keine Anfrage an Google.
-const MAPS_Q = encodeURIComponent(`${P.practice} ${P.name}, ${P.street}, ${P.zip} ${P.city}`)
-const MAPS = 'https://www.google.com/maps/search/?api=1&query=' + MAPS_Q
-const MAPS_ROUTE = 'https://www.google.com/maps/dir/?api=1&destination=' + MAPS_Q
-const MAPS_EMBED = 'https://www.google.com/maps?q=' + MAPS_Q + '&hl=de&z=16&output=embed'
-const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.500s7-6 7-11.500a7 7 0 0 0-14 0c0 5.500 7 11.500 7 11.500z"/><circle cx="12" cy="10" r="2.600"/></svg>'
+const GMAPS = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${P.practice}, ${P.street}, ${P.zip} ${P.city}`)
+const MAPS = 'https://www.openstreetmap.org/search?query=' + encodeURIComponent(`${P.street}, ${P.zip} ${P.city}`)
 const NAV = [['/angebot/', 'Angebot'], ['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt']]
 
 
@@ -66,12 +62,13 @@ const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script
 const picture = (name, [big, small], alt, w, h, attrs = 'loading="lazy" decoding="async"') =>
   `<picture><source type="image/webp" srcset="/img/${name}-${small}.webp ${small}w, /img/${name}-${big}.webp ${big}w" sizes="(max-width: 960px) 74vw, 440px"><img src="/img/${name}-${big}.jpg" srcset="/img/${name}-${small}.jpg ${small}w, /img/${name}-${big}.jpg ${big}w" sizes="(max-width: 960px) 74vw, 440px" width="${w}" height="${h}" alt="${esc(alt)}" ${attrs}></picture>`
 const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
-const mark = `<img class="mark" src="/img/logo-512.webp" width="512" height="512" alt="" loading="lazy" decoding="async">`
+const mark = `<img class="mark" src="/img/logo-512.webp?v=3" width="512" height="512" alt="" loading="lazy" decoding="async">`
 const nameOf = d => d.name.replace('Kommunikationstraining', 'Kommunikations&shy;training').replace('Erziehungsberatung', 'Erziehungs&shy;beratung')
 const card = (d, i = 0, goWord = 'Mehr erfahren') => `<a class="card rv" style="--d:${i * 60}ms" href="${d.path}"><h3>${nameOf(d)}</h3><p>${inline(d.card || d.teaser)}</p><span class="go">${goWord}</span></a>`
 const book = (thema, cls = 'primary', label = 'Termin anfragen') => `<a class="btn ${cls}" href="/termin/${thema ? '?thema=' + thema : ''}">${label}</a>`
 
 const PRICES = [['Erstgespräch', 'kostenfrei', 'ca. 30 Minuten, zum gegenseitigen Kennenlernen'], ['Einzelsitzung', '100 €', '60 Minuten'], ['Paargespräch', '180 €', '90 Minuten'], ['Jugendcoaching', '100 €', '60 Minuten'], ['Erziehungsberatung', '100 €', '60 Minuten'], ['Onlineberatung', '100 €', '60 Minuten']]
+const place = `<a class="place" href="${GMAPS}" target="_blank" rel="noopener"><span class="place-pin" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 17.500s5.500-4.700 5.500-9.200a5.500 5.500 0 0 0-11 0c0 4.500 5.500 9.200 5.500 9.200z"/><circle cx="10" cy="8.300" r="2"/></svg></span><span class="place-text"><b>${P.practice}</b><span>${P.street}, ${P.zip} ${P.city}</span></span><span class="place-go">In Google Maps öffnen</span></a>`
 const prices = (n = PRICES.length) => `<div class="fees rv">${PRICES.slice(0, n).map(([t, p, s]) => `<div class="fee"><span class="fee-name">${t}</span><span class="fee-note">${s}</span><b class="fee-price">${p}</b></div>`).join('')}</div>`
 
 const cta = (du, title, text, thema) => `
@@ -90,13 +87,36 @@ const steps = du => `<div class="steps-wrap rv" data-steps><span class="steps-li
 
 const G = '<svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.500c3.540 0 6.710 1.220 9.210 3.600l6.850-6.850C35.900 2.380 30.470 0 24 0 14.620 0 6.510 5.380 2.560 13.220l7.980 6.190C12.430 13.720 17.740 9.500 24 9.500z"/><path fill="#4285F4" d="M46.980 24.550c0-1.570-.15-3.090-.38-4.550H24v9.020h12.940c-.58 2.960-2.260 5.480-4.780 7.180l7.730 6c4.510-4.180 7.090-10.360 7.090-17.650z"/><path fill="#FBBC05" d="M10.530 28.590c-.48-1.450-.76-2.990-.76-4.590s.27-3.140.76-4.590l-7.980-6.190C.92 16.460 0 20.120 0 24c0 3.880.92 7.540 2.560 10.780l7.970-6.190z"/><path fill="#34A853" d="M24 48c6.480 0 11.930-2.130 15.890-5.810l-7.730-6c-2.150 1.450-4.920 2.300-8.160 2.300-6.260 0-11.570-4.220-13.470-9.910l-7.980 6.190C6.510 42.620 14.620 48 24 48z"/></svg>'
 const STARS = '<span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg></span>'
-const RATE = `${G}<b>5,0</b>${STARS}<i class="gb-sep" aria-hidden="true"></i><small>2 <span class="gb-x">Google-</span>Rezensionen</small>`
 // Drei kleine Zeichnungen, die sich bewegen: Raum, Gehen, Bildschirm
-const ART = {
-  praxis: `<svg class="art" viewBox="0 0 240 150" aria-hidden="true"><path class="beam" d="M58 14h36l-26 114H22z"/><path class="ground" d="M16 128h208"/><g class="lamp"><path d="M176 128V52"/><path d="M160 52h32l-7-22h-18z"/><circle class="glow" cx="176" cy="62" r="26"/></g><path d="M40 128V92c0-8 6-14 14-14h26c8 0 14 6 14 14v36M34 104h66M40 128v8M94 128v8"/><path d="M118 128v-30c0-7 5-12 12-12h22c7 0 12 5 12 12v30M112 108h58"/><g class="cup"><path d="M139 86v-7h12v7"/><path class="steam s1" d="M143 74c-3-4 3-6 0-11"/><path class="steam s2" d="M148 74c-3-4 3-6 0-11"/></g><path class="leaf" d="M206 128v-24c0-10 6-16 14-18-2 10-6 16-14 18M206 112c-8-2-12-8-13-16 8 1 12 6 13 16"/></svg>`,
-  walk: `<svg class="art" viewBox="0 0 240 150" aria-hidden="true"><path class="hill" d="M0 112c40-34 76-34 116-8s84 20 124-10"/><circle class="sun" cx="196" cy="38" r="12"/><g class="cloud"><path d="M20 30h30M28 24h16"/></g><g class="tree"><path d="M40 131v-34"/><path class="crown" d="M40 97c-12 0-18-9-18-19s8-20 18-20 18 10 18 20-6 19-18 19z"/></g><path class="ground run" d="M-40 132h320"/><g transform="translate(104 1)"><g class="walker"><path class="arm a" d="M0 73l-3 12 2 10"/><g class="leg a"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><g class="leg b"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><path class="coat" d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><circle class="head" cx="0" cy="56" r="8"/><path class="arm b" d="M0 73l-3 12 2 10"/></g></g><g class="w2" transform="translate(140 14) scale(.9)"><g class="walker"><path class="arm a" d="M0 73l-3 12 2 10"/><g class="leg a"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><g class="leg b"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><path class="coat" d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><circle class="head" cx="0" cy="56" r="8"/><path class="arm b" d="M0 73l-3 12 2 10"/></g></g></svg>`,
-  online: `<svg class="art" viewBox="0 0 240 150" aria-hidden="true"><rect x="52" y="30" width="136" height="86" rx="8"/><path d="M36 128h168M104 116l-4 12M136 116l4 12"/><circle cx="120" cy="64" r="11"/><path d="M98 100c2-12 10-18 22-18s20 6 22 18"/><g class="bubble b1"><rect x="150" y="14" width="46" height="26" rx="10"/><path d="M162 27h22"/></g><g class="bubble b2"><rect x="44" y="52" width="40" height="24" rx="10"/><path d="M54 64h20"/></g><circle class="live" cx="178" cy="44" r="3"/><path class="wave w1" d="M204 70c6 6 6 16 0 22"/><path class="wave w2" d="M212 62c10 10 10 28 0 38"/></svg>`,
+// Zeichnungen: Linien mit Klasse d zeichnen sich beim Erscheinen selbst, f blendet ein, der Rest läuft als ruhige Schleife
+const ART_RAW = {
+  praxis: `<svg class="art art-praxis" viewBox="0 0 240 150" aria-hidden="true"><defs><clipPath id="zw-win"><rect x="88" y="18" width="38" height="36" rx="3"/></clipPath></defs>
+<g class="soft"><rect class="d" style="--i:4" x="86" y="16" width="42" height="40" rx="4"/><path class="d" style="--i:5" d="M107 16v40M86 36h42"/><g clip-path="url(#zw-win)"><g class="cloud cw"><path d="M2 10h24a5 5 0 0 0 0-10 8 8 0 0 0-15-2 5.500 5.500 0 0 0-9 4.500A4 4 0 0 0 2 10z" transform="translate(0 22) scale(.7)"/></g></g></g>
+<path class="ground d" style="--i:0" d="M16 128h208"/>
+<g class="lampon"><path class="cone" d="M163 52h26l24 76h-74z"/></g>
+<path class="d" style="--i:3" d="M176 128V52"/><path class="shade d" style="--i:4" d="M160 52h32l-7-22h-18z"/>
+<path class="d" style="--i:1" d="M30 128V92c0-8 6-14 14-14h26c8 0 14 6 14 14v36M24 104h66M30 128v8M84 128v8"/>
+<path class="d" style="--i:2" d="M118 128v-30c0-7 5-12 12-12h22c7 0 12 5 12 12v30M112 108h58"/>
+<g class="thin"><path class="d" style="--i:6" d="M94 114h14M101 114v14"/><path class="d" style="--i:7" d="M97 114v-6.500h8v6.500M105 109.500h2.500v3H105"/><path class="steam" d="M99 104c-2.500-3 2.500-5 0-8.500"/><path class="steam s2" d="M103.500 104c-2.500-3 2.500-5 0-8.500"/></g>
+<g class="leaf"><path class="d" style="--i:6" d="M206 128v-24c0-10 6-16 14-18-2 10-6 16-14 18"/></g><g class="leaf l2"><path class="d" style="--i:7" d="M206 112c-8-2-12-8-13-16 8 1 12 6 13 16"/></g></svg>`,
+  walk: `<svg class="art art-walk" viewBox="0 0 240 150" aria-hidden="true">
+<g class="f" style="--i:2"><g class="sunwrap"><circle class="halo" cx="196" cy="38" r="19"/><circle class="sun" cx="196" cy="38" r="11"/></g></g>
+<g class="f soft" style="--i:4"><g class="cloud c1"><path d="M2 10h24a5 5 0 0 0 0-10 8 8 0 0 0-15-2 5.500 5.500 0 0 0-9 4.500A4 4 0 0 0 2 10z" transform="translate(0 12)"/></g></g>
+<g class="hills"><path class="hill d" style="--i:0" d="M-240 106c40-22 80-22 120 0s80 22 120 0 80-22 120 0 80 22 120 0 80-22 120 0 80 22 120 0"/></g>
+<g class="f" style="--i:3"><g class="pass"><g class="tree"><path d="M40 131v-34"/><path class="crown" d="M40 97c-12 0-18-9-18-19s8-20 18-20 18 10 18 20-6 19-18 19z"/></g></g></g>
+<g class="f" style="--i:1"><path class="ground run" d="M-40 132h320"/></g>
+<g class="enter"><g transform="translate(104 1)"><g class="walker"><path class="arm a" d="M0 73l-3 12 2 10"/><g class="leg a"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><g class="leg b"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><path class="coat" d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><circle class="head" cx="0" cy="56" r="8"/><path class="arm b" d="M0 73l-3 12 2 10"/></g></g><g class="w2" transform="translate(140 14) scale(.9)"><g class="walker"><path class="arm a" d="M0 73l-3 12 2 10"/><g class="leg a"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><g class="leg b"><path d="M0 100v15"/><g class="shin"><path d="M0 115v15h5"/></g></g><path class="coat" d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><circle class="head" cx="0" cy="56" r="8"/><path class="arm b" d="M0 73l-3 12 2 10"/></g></g>
+<g class="thin"><g class="say"><rect x="78" y="24" width="26" height="15" rx="7.500"/><path d="M96 39l2.500 4"/><circle class="dot" cx="85.500" cy="31.500" r="1.200"/><circle class="dot d2" cx="91" cy="31.500" r="1.200"/><circle class="dot d3" cx="96.500" cy="31.500" r="1.200"/></g><g class="say y2"><rect x="146" y="36" width="24" height="14" rx="7"/><path d="M152 50l-2.500 4"/><path d="M152.500 43h11"/></g></g></g></svg>`,
+  online: `<svg class="art art-online" viewBox="0 0 240 150" aria-hidden="true"><defs><clipPath id="zw-scr"><rect x="53" y="31" width="134" height="84" rx="7"/></clipPath></defs>
+<rect class="screen d" style="--i:0" x="52" y="30" width="136" height="86" rx="8"/>
+<g clip-path="url(#zw-scr)"><path class="glare" d="M60 20h20l-34 110H26z"/></g>
+<path class="d" style="--i:1" d="M16 128h208M104 116l-4 12M136 116l4 12"/>
+<g class="nod"><circle class="d" style="--i:3" cx="120" cy="64" r="11"/></g><path class="d" style="--i:4" d="M98 100c2-12 10-18 22-18s20 6 22 18"/>
+<g class="f thin" style="--i:7"><g class="live"><circle class="ring" cx="64" cy="42" r="3"/><circle class="pt" cx="64" cy="42" r="2.400"/></g><rect class="pip" x="156" y="86" width="26" height="22" rx="5"/><circle cx="169" cy="94" r="3.500"/><path d="M162.500 105.500c1-4 3.500-5.500 6.500-5.500s5.500 1.500 6.500 5.500"/></g>
+<g class="bubble b1 thin"><rect x="150" y="40" width="30" height="17" rx="8.500"/><circle class="dot" cx="158.500" cy="48.500" r="1.400"/><circle class="dot d2" cx="165" cy="48.500" r="1.400"/><circle class="dot d3" cx="171.500" cy="48.500" r="1.400"/></g>
+<path class="wave w1" d="M204 70c6 6 6 16 0 22"/><path class="wave w2" d="M212 62c10 10 10 28 0 38"/></svg>`,
 }
+const ART = Object.fromEntries(Object.entries(ART_RAW).map(([k, v]) => [k, v.replace(/\n/g, '').replace(/class="([^"]*\bd)"/g, 'class="$1" pathLength="1"')]))
 
 const FAQ = [
   ['Was bedeutet systemische Therapie?', 'Systemische Therapie betrachtet Menschen im Zusammenhang mit ihrem Umfeld und ihren Beziehungen. Gemeinsam schauen wir auf Herausforderungen, vorhandene Stärken und neue Perspektiven, damit Veränderungen möglich werden.'],
@@ -109,22 +129,62 @@ const FAQ = [
 ]
 const faq = `<div class="faq rv">${FAQ.map(([q, a]) => `<details name="faq"><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>`
 
+// Zeichen: eine Familie, 24er Raster, nur Linie
+const ICO = {
+  book: '<path d="M4 5.500c2.500-1 5-1 8 .500v13c-3-1.500-5.500-1.500-8-.500zM20 5.500c-2.500-1-5-1-8 .500v13c3-1.500 5.500-1.500 8-.500z"/>',
+  globe: '<circle cx="12" cy="12" r="8.500"/><path d="M3.500 12h17M12 3.500c2.500 2.500 3.500 5.500 3.500 8.500s-1 6-3.500 8.500c-2.500-2.500-3.500-5.500-3.500-8.500s1-6 3.500-8.500z"/>',
+  mountain: '<path d="M3 19l6-10 4 6 2.500-3.500L21 19z"/><circle cx="17" cy="6" r="1.600"/>',
+  cap: '<path d="M2.500 9.500L12 5l9.500 4.500L12 14zM6.500 11.800V16c1.500 1.500 3.500 2.200 5.500 2.200s4-.7 5.500-2.200v-4.200M21.500 9.500v5"/>',
+  talk: '<path d="M4 6.500a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-3 2.500v-2.500a2 2 0 0 1-2-2zM16 9.500h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2v2.300l-2.800-2.300H12"/>',
+  ban: '<circle cx="12" cy="12" r="8.500"/><path d="M6 6l12 12"/>',
+  drawer: '<path d="M4.500 4.500h15v15h-15zM4.500 12h15M10 8.200h4M10 15.800h4"/>',
+  small: '<path d="M4 7a2.500 2.500 0 0 1 2.500-2.500h11A2.500 2.500 0 0 1 20 7v7a2.500 2.500 0 0 1-2.500 2.500H11l-4 3v-3h-.5A2.500 2.500 0 0 1 4 14z"/><path d="M9 10.700h.01M12 10.700h.01M15 10.700h.01"/>',
+  couple: '<circle cx="9" cy="12" r="5.500"/><circle cx="15" cy="12" r="5.500"/>',
+  steps: '<path d="M4 19h4v-4h4v-4h4V7h4"/>',
+  monitor: '<path d="M4 5.500h16V16H4zM9.500 19.500h5M12 16v3.500"/>',
+  kids: '<circle cx="7" cy="9.500" r="2.200"/><circle cx="17" cy="9.500" r="2.200"/><circle cx="12" cy="7.500" r="2.500"/><path d="M3.500 17.500c.4-2.300 1.700-3.500 3.500-3.500M20.500 17.500c-.4-2.300-1.700-3.500-3.500-3.500M7.500 19.500c.5-3 2.200-4.500 4.500-4.500s4 1.500 4.500 4.500"/>',
+  peace: '<path d="M5 19c2-7 6-11 14-14M9.500 12.500c-2.500-.5-3.500-2-3.500-4 2 0 3.500 1 3.500 4zM13.500 9c-2-1-2.500-2.500-2-4.500 2 .5 3 2 2 4.500zM12 15c2.500.5 4.500-.3 5.500-2-2-1-4-.6-5.500 2z"/>',
+  down: '<path d="M12 4.500v10M8 11l4 4 4-4M5 19.500h14"/>',
+  user: '<circle cx="12" cy="8.500" r="3.500"/><path d="M5 19.500c.8-4 3.500-6 7-6s6.200 2 7 6"/>',
+  list: '<path d="M9 7h11M9 12h11M9 17h11M4.500 7h.01M4.500 12h.01M4.500 17h.01"/>',
+  pin: '<path d="M12 20.500s6.500-5.500 6.500-10.800a6.500 6.500 0 0 0-13 0c0 5.300 6.500 10.800 6.500 10.800z"/><circle cx="12" cy="9.800" r="2.300"/>',
+  area: '<circle cx="12" cy="12" r="8.500"/><path d="M15.500 8.500l-2 5-5 2 2-5z"/>',
+  phone: '<path d="M8 3.800l-2.600.5a1.200 1.200 0 0 0-1 1.300c.6 7.400 6.600 13.400 14 14a1.200 1.200 0 0 0 1.300-1l.5-2.600a1.200 1.200 0 0 0-.7-1.300l-2.900-1.200a1.200 1.200 0 0 0-1.300.3l-1.100 1.300a9.600 9.600 0 0 1-5.400-5.400l1.300-1.100a1.200 1.200 0 0 0 .3-1.300L9.300 4.500A1.200 1.200 0 0 0 8 3.800z"/>',
+  mail: '<path d="M4 6.500h16v11H4zM4.500 7l7.500 6 7.500-6"/>',
+  cal: '<path d="M4.500 6h15v13.500h-15zM4.500 10.500h15M8.500 3.500v4M15.500 3.500v4"/>',
+}
+const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICO[n]}</svg>`
 const glance = `
-<dl class="dl rv">
-  <div><dt>Wer</dt><dd>${P.name}, systemische und traumasensible Therapeutin und Coach, Dipl. Sozialpädagogin (FH), seit über 18 Jahren selbstständig</dd></div>
-  <div><dt>Angebot</dt><dd>${services.map(s => `<a class="link" href="${s.path}">${s.name}</a>`).join(', ')}</dd></div>
-  <div><dt>Wo</dt><dd>${ADDRESS}, sowie online und als Walk and Talk<br><a class="link" href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></dd></div>
-  <div><dt>Einzugsgebiet</dt><dd>${P.areas.join(', ')} und Umgebung; online deutschlandweit, Österreich und Schweiz</dd></div>
-  <div><dt>Telefon</dt><dd><a class="link" href="tel:${P.tel}">${P.phone}</a><br>Bitte auf den Anrufbeantworter sprechen, ich rufe zurück.</dd></div>
-  <div><dt>E-Mail</dt><dd><a class="link" href="mailto:${P.mail}">${P.mail}</a></dd></div>
-  <div><dt>Schulferien</dt><dd>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Nach den Ferien melde ich mich, so schnell es mir möglich ist.</dd></div>
-</dl>`
+<div class="infos">
+  <div class="info rv">${ico('user')}<div><h3>Wer</h3><p>${P.name}, systemische und traumasensible Therapeutin und Coach, Dipl. Sozialpädagogin (FH), seit über 18 Jahren selbstständig.</p></div></div>
+  <div class="info rv" style="--d:60ms">${ico('pin')}<div><h3>Wo</h3><p>${ADDRESS}, sowie online und als Walk and Talk.</p><p><a class="link" href="${GMAPS}" target="_blank" rel="noopener">In Google Maps öffnen</a></p></div></div>
+  <div class="info rv">${ico('phone')}<div><h3>Telefon</h3><p><a class="info-big" href="tel:${P.tel}">${P.phone}</a></p><p>Bitte auf den Anrufbeantworter sprechen, ich rufe zurück.</p></div></div>
+  <div class="info rv" style="--d:60ms">${ico('mail')}<div><h3>E-Mail</h3><p><a class="info-big" href="mailto:${P.mail}">${P.mail}</a></p><p><a class="link" href="#schreiben">Oder direkt hier schreiben</a></p></div></div>
+  <div class="info is-wide rv">${ico('list')}<div><h3>Angebot</h3><p class="info-tags">${services.map(s => `<a href="${s.path}">${s.name}</a>`).join('')}</p></div></div>
+  <div class="info rv">${ico('area')}<div><h3>Einzugsgebiet</h3><p>${P.areas.join(', ')} und Umgebung. Online deutschlandweit, in Österreich und der Schweiz.</p></div></div>
+  <div class="info rv" style="--d:60ms">${ico('cal')}<div><h3>Schulferien</h3><p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Danach melde ich mich, so schnell es mir möglich ist.</p></div></div>
+</div>`
+const contactForm = `
+<form class="cform rv" id="kontakt-form" method="post" action="/api/anfrage" data-mail="${P.mail}" novalidate>
+  <input type="hidden" name="art" value="kontakt">
+  <p class="cform-trap" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+  <label class="cfield"><span>Name <i aria-hidden="true">*</i></span><input type="text" name="name" autocomplete="name" required minlength="2" maxlength="120"></label>
+  <div class="cform-row">
+    <label class="cfield"><span>E-Mail <i aria-hidden="true">*</i></span><input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="160"></label>
+    <label class="cfield"><span>Telefon (optional)</span><input type="tel" name="telefon" autocomplete="tel" inputmode="tel" maxlength="40"></label>
+  </div>
+  <label class="cfield"><span>Ihre Nachricht <i aria-hidden="true">*</i></span><textarea name="nachricht" rows="5" required minlength="5" maxlength="1500" placeholder="Worum geht es? Wann erreiche ich Sie am besten?"></textarea></label>
+  <label class="ccheck"><input type="checkbox" name="einwilligung" value="1" required><span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Nachricht verwendet werden. <a class="link" href="/datenschutz/">Datenschutz</a></span></label>
+  <p class="cform-error" data-cform-error role="alert" hidden></p>
+  <div class="cform-end"><button class="btn primary" type="submit">Nachricht senden</button><p class="small">Bitte keine Notfälle über dieses Formular. In akuten Krisen: Telefonseelsorge 0800 111 0 111.</p></div>
+  <div class="cform-done" data-cform-done hidden tabindex="-1"><h3>Danke, Ihre Nachricht ist angekommen.</h3><p>Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.</p></div>
+</form>`
 
 const COURSES = [
-  ['Eltern sein, Paar bleiben', 'Seitdem die Kinder da sind, ist alles anders? Streit nimmt zu, die Liebe ab? Dann lade ich herzlich zu diesem Paar-Seminar ein.', 'Wochenendseminar, maximal 3 Paare', '/downloads/eltern-sein-paar-bleiben.pdf'],
-  ['Schritt für Schritt als Eltern fit', 'Mehr Gelassenheit und Ruhe im Erziehungsalltag. Das Elterntraining hilft, ein kooperatives und konfliktärmeres Zusammenleben in der Familie zu entwickeln.', 'Wochenendseminar im ZeitRaum, maximal 8 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit.pdf'],
-  ['Schritt für Schritt als Eltern fit, online', 'Dasselbe Elterntraining als Online-Kurs, von zu Hause aus.', 'Online-Kurs, 10 Treffen, maximal 6 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit-online.pdf'],
-  ['Gruppe für Trennungs- und Scheidungskinder', 'In dem Gruppenangebot wird Kindern der Raum und die Möglichkeit gegeben, mit der Scheidung oder Trennung ihrer Eltern besser zurechtzukommen.', 'Für Kinder von 8 bis 10 Jahren, 10 Treffen, maximal 4 Kinder', '/downloads/gruppe-trennungs-und-scheidungskinder.pdf'],
+  ['couple', 'Eltern sein, Paar bleiben', 'Seitdem die Kinder da sind, ist alles anders? Streit nimmt zu, die Liebe ab? Dann lade ich herzlich zu diesem Paar-Seminar ein.', 'Wochenendseminar, maximal 3 Paare', '/downloads/eltern-sein-paar-bleiben.pdf'],
+  ['steps', 'Schritt für Schritt als Eltern fit', 'Mehr Gelassenheit und Ruhe im Erziehungsalltag. Das Elterntraining hilft, ein kooperatives und konfliktärmeres Zusammenleben in der Familie zu entwickeln.', 'Wochenendseminar im ZeitRaum, maximal 8 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit.pdf'],
+  ['monitor', 'Schritt für Schritt als Eltern fit, online', 'Dasselbe Elterntraining als Online-Kurs, von zu Hause aus.', 'Online-Kurs, 10 Treffen, maximal 6 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit-online.pdf'],
+  ['kids', 'Gruppe für Trennungs- und Scheidungskinder', 'In dem Gruppenangebot wird Kindern der Raum und die Möglichkeit gegeben, mit der Scheidung oder Trennung ihrer Eltern besser zurechtzukommen.', 'Für Kinder von 8 bis 10 Jahren, 10 Treffen, maximal 4 Kinder', '/downloads/gruppe-trennungs-und-scheidungskinder.pdf'],
 ]
 
 // ── Strukturierte Daten
@@ -169,7 +229,7 @@ pages.push({
 </div></section>
 
 <section class="trust-strip"><div class="wrap">
-  <a class="g-badge rv" href="#stimmen" aria-label="Google-Bewertungen: 5,0 von 5 Sternen, 2 Rezensionen">${RATE}</a>
+  <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>2 Google-Rezensionen</small></span></a>
   <ul class="quals rv" style="--d:80ms"><li>Dipl. Sozialpädagogin (FH)</li><li>Systemische Therapeutin (IFW)</li><li>Bindungspsychotherapie nach Prof. Dr. Brisch</li><li>Ausgebildete STEP-Elterntrainerin</li><li>Seit über 18 Jahren selbstständig</li></ul>
 </div></section>
 
@@ -194,7 +254,7 @@ pages.push({
 
 <section class="section" id="angebot"><div class="wrap">
   <div class="head rv"><h2>Begleitung für Einzelne, Paare, Eltern und Jugendliche</h2></div>
-  <div class="grid g4">${services.slice(0, 4).map((s, i) => `<a class="item rv" style="--d:${i * 60}ms" href="${s.path}"><h3>${nameOf(s)}</h3><p>${inline(s.card)}</p></a>`).join('')}</div>
+  <div class="grid g4">${services.slice(0, 4).map((s, i) => `<a class="item rv" style="--d:${i * 70}ms" href="${s.path}"><h3>${nameOf(s)}</h3><p>${inline(s.card)}</p><span class="more">Mehr erfahren</span></a>`).join('')}</div>
   <p class="also rv">Außerdem: ${services.slice(4).map(s => `<a class="link" href="${s.path}">${s.name}</a>`).join(', ')}</p>
 </div></section>
 
@@ -206,15 +266,14 @@ pages.push({
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Sie entscheiden, was Ihnen guttut</h2></div>
   <div class="grid g3 ways">
-    <div class="way rv"><div class="scene">${ART.praxis}<button class="hs" type="button" data-i="0" style="left:86%;top:64%" aria-label="Kleine Überraschung"></button></div><h3>In der Praxis</h3><p>${ADDRESS}</p></div>
-    <div class="way rv" style="--d:90ms"><div class="scene">${ART.walk}<button class="hs" type="button" data-i="1" style="left:82%;top:25%" aria-label="Kleine Überraschung"></button></div><h3>Walk and Talk</h3><p>Im Gehen kommt vieles in Fluss und es unterhält sich ungezwungener.</p></div>
-    <div class="way rv" style="--d:180ms"><div class="scene">${ART.online}<button class="hs" type="button" data-i="2" style="left:88%;top:53%" aria-label="Kleine Überraschung"></button></div><h3>Online</h3><p>Deutschlandweit sowie für Klienten aus Österreich und der Schweiz.</p></div>
+    <div class="way rv">${ART.praxis}<h3>In der Praxis</h3><p>${ADDRESS}</p></div>
+    <div class="way rv" style="--d:90ms">${ART.walk}<h3>Walk and Talk</h3><p>Im Gehen kommt vieles in Fluss und es unterhält sich ungezwungener.</p></div>
+    <div class="way rv" style="--d:180ms">${ART.online}<h3>Online</h3><p>Deutschlandweit sowie für Klienten aus Österreich und der Schweiz.</p></div>
   </div>
-  <p class="secret" data-secret aria-live="polite"><span></span><span></span><span></span></p>
 </div></section>
 
 <section class="section tinted" id="stimmen"><div class="wrap">
-  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><p class="g-badge g-still">${RATE}</p></div>
+  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><div class="g-score">${G}<span><b>5,0</b>${STARS}<small>2 Rezensionen auf Google</small></span></div></div>
   <div class="grid g2">
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
@@ -230,7 +289,7 @@ pages.push({
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
-    <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><p>Eltern sein, Paar bleiben. Schritt für Schritt als Eltern fit. Gruppe für Trennungs- und Scheidungskinder.</p><span class="tile-go">Alle Kurse ansehen</span></a>
+    <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><ul class="tile-list"><li>Eltern sein, Paar bleiben</li><li>Schritt für Schritt als Eltern fit</li><li>Gruppe für Trennungs- und Scheidungskinder</li></ul><span class="tile-go">Alle Kurse ansehen</span></a>
     <a class="tile rv" style="--d:80ms" href="/kurse/die-friedensstifter/"><span class="tile-kind">Für Lehrkräfte und Schulen</span><h3>Die Friedensstifter</h3><p>Persönlich begleiteter Kommunikationskurs, online oder vor Ort.</p><span class="tile-go">Zum Kurs</span></a>
     <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken zum Elternsein</h3><p>Was Kinder stärkt und wie Eltern ihren Weg finden.</p><span class="tile-go">Weiterlesen</span></a>
   </div>
@@ -270,7 +329,7 @@ for (const s of services) {
   <p class="lead rv" style="--d:260ms">${s.lead}</p>
 </div></section>
 <section class="section"><div class="wrap with-aside">
-  <div class="prose">${md(s.body)}</div>
+  <div class="prose" data-fold>${md(s.body)}</div>
   <aside class="aside rv">
     <dl>
       <div><dt>Kosten</dt><dd class="big">${s.price}</dd></div>
@@ -314,32 +373,16 @@ pages.push({
     <figcaption class="lead quote-by">Diesen Sinn möchte ich mit einer wertschätzenden und neugierigen Haltung erforschen, um mein Gegenüber individuell und bestmöglich begleiten zu können.</figcaption>
   </figure>
 </div></section>
-<section class="section"><div class="wrap split">
-  <div class="rv"><h2>Was mich ausmacht</h2><figure class="side-photo">${picture('pamela-zurbuchen', [992, 640], 'Pamela Zurbuchen in der Natur', 992, 1240)}</figure></div>
-  <div class="prose">${md(`Ich liebe tiefgründige Gespräche. Lache gerne und bin viel in der Natur. Meine feinen Antennen begleiten mich schon mein ganzes Leben und bereichern mich und meine Arbeit.
-
-### Das macht mich glücklich
-
-- Gute Bücher (egal ob Fachbuch oder Roman)
-- Reisen
-- Kraftorte
-- Fortbildungen
-- Inspirierende Gespräche
-
-### Was ich nicht mag
-
-- Respektlosigkeit gegenüber Mensch und Natur
-- Schubladendenken
-- Small-Talk`)}</div>
+<section class="section"><div class="wrap">
+  <div class="split"><h2 class="rv">Was mich ausmacht</h2><p class="lead rv" style="--d:80ms">Ich liebe tiefgründige Gespräche. Lache gerne und bin viel in der Natur. Meine feinen Antennen begleiten mich schon mein ganzes Leben und bereichern mich und meine Arbeit.</p></div>
+  <div class="likes">
+    <div class="like-card is-warm rv"><h3>Das macht mich glücklich</h3><ul class="facts">${[['book', 'Gute Bücher, ob Fachbuch oder Roman'], ['globe', 'Reisen'], ['mountain', 'Kraftorte'], ['cap', 'Fortbildungen'], ['talk', 'Inspirierende Gespräche']].map(([i, t]) => `<li>${ico(i)}<span>${t}</span></li>`).join('')}</ul></div>
+    <div class="like-card rv" style="--d:90ms"><h3>Was ich nicht mag</h3><ul class="facts">${[['ban', 'Respektlosigkeit gegenüber Mensch und Natur'], ['drawer', 'Schubladendenken'], ['small', 'Small-Talk']].map(([i, t]) => `<li>${ico(i)}<span>${t}</span></li>`).join('')}</ul></div>
+  </div>
 </div></section>
-<section class="section"><div class="wrap split">
-  <div class="rv"><h2>Meine Einstellung</h2></div>
-  <div class="prose">${md(`- Es gibt immer einen Weg.
-- Veränderung ist jederzeit möglich.
-- Schaue auf das ganze System und hinter die Kulissen, damit Du verstehen kannst.
-- Jeder Mensch, jedes System hat seine ganz individuellen Lösungsansätze.
-- Es gibt nicht nur „Schwarz oder Weiß“: in der Mitte ist es bunt.
-- Ich weiß, dass ich nichts weiß, deshalb forsche ich achtsam nach, um den anderen zu verstehen.`)}</div>
+<section class="section"><div class="wrap">
+  <div class="head rv"><h2>Meine Einstellung</h2></div>
+  <ol class="tenets">${['Es gibt immer einen Weg.', 'Veränderung ist jederzeit möglich.', 'Schaue auf das ganze System und hinter die Kulissen, damit Du verstehen kannst.', 'Jeder Mensch, jedes System hat seine ganz individuellen Lösungsansätze.', 'Es gibt nicht nur „Schwarz oder Weiß“: in der Mitte ist es bunt.', 'Ich weiß, dass ich nichts weiß, deshalb forsche ich achtsam nach, um den anderen zu verstehen.'].map((t, i) => `<li class="rv" style="--d:${i * 60}ms">${t}</li>`).join('')}</ol>
 </div></section>
 <section class="section"><div class="wrap split">
   <div class="rv"><h2>Meine wichtigsten Qualifikationen</h2></div>
@@ -368,9 +411,9 @@ pages.push({
   <p class="lead rv" style="--d:160ms">Für Eltern, Paare und Kinder, im ${P.practice} in Landsberg am Lech und online. Termine und Kursgebühr stehen im Kursblatt.</p>
 </div></section>
 <section class="section"><div class="wrap">
-  <div class="rows">${COURSES.map(([t, text, meta, pdf]) => `
-    <article class="row rv"><div><h2>${t}</h2><p class="small">${meta}</p></div><div><p>${text}</p><p class="row-links"><a class="link" href="${pdf}">Kursblatt als PDF</a><a class="link" href="/termin/?thema=kurs">Anfragen</a></p></div></article>`).join('')}
-    <article class="row rv"><div><h2>Die Friedensstifter</h2><p class="small">Für Lehrkräfte und Schulen, 4 Monate, maximal 10 Personen</p></div><div><p>Persönlich begleiteter Kommunikationskurs: schwierige Eltern- und Schülergespräche souverän, gelassen und wertschätzend führen.</p><p class="row-links"><a class="link" href="/kurse/die-friedensstifter/">Zum Kurs</a></p></div></article>
+  <div class="courses">${COURSES.map(([ic, t, text, meta, pdf], i) => `
+    <article class="course rv" style="--d:${(i % 2) * 80}ms"><span class="course-ico">${ico(ic)}</span><h2>${t}</h2><ul class="course-meta">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><p class="course-acts"><a class="btn primary sm" href="/termin/?thema=kurs">Anfragen</a><a class="course-pdf" href="${pdf}">${ico('down')}Kursblatt als PDF</a></p></article>`).join('')}
+    <article class="course is-wide rv"><span class="course-ico">${ico('peace')}</span><div><h2>Die Friedensstifter</h2><ul class="course-meta"><li>Für Lehrkräfte und Schulen</li><li>4 Monate</li><li>maximal 10 Personen</li></ul><p>Persönlich begleiteter Kommunikationskurs: schwierige Eltern- und Schülergespräche souverän, gelassen und wertschätzend führen.</p></div><p class="course-acts"><a class="btn primary sm" href="/kurse/die-friedensstifter/">Zum Kurs</a></p></article>
   </div>
 </div></section>
 ${cta(false, 'Fragen zu einem Kurs?', 'Bitte bei Kursen für Kinder das Alter des Kindes angeben.', 'kurs')}`,
@@ -388,7 +431,7 @@ for (const d of docs.filter(d => d.type === 'page')) {
   ${d.logo ? `<img class="logo rv" src="/img/die-friedensstifter-480.webp" width="480" height="480" alt="Logo Die Friedensstifter" decoding="async">` : ''}
 </div></section>
 ${d.prices ? `<section class="section"><div class="wrap"><h2 class="sr">Preise im Überblick</h2>${prices()}</div></section>` : ''}
-<section class="section"><div class="wrap with-toc">${toc(d.body)}<div class="prose">${md(d.body)}</div></div></section>
+<section class="section"><div class="wrap with-toc">${toc(d.body)}<div class="prose" data-fold>${d.path === '/preise/' ? md(d.body).replace('</p>', '</p>' + place) : md(d.body)}</div></div></section>
 ${isCourse ? cta(false, 'Kurs für Ihre Schule anfragen', 'Gerne berate ich Sie zu Ablauf, Terminen und Kosten.', 'kurs') : cta()}`,
   })
 }
@@ -445,6 +488,10 @@ pages.push({
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Auf einen Blick</h2></div>
   ${glance}
+</div></section>
+<section class="section" id="schreiben"><div class="wrap split">
+  <div class="rv"><h2>Schreiben Sie mir</h2><p class="lead" style="margin-top:16px">Ein paar Zeilen genügen. Ich antworte persönlich.</p><p style="margin-top:20px">Lieber Schritt für Schritt? <a class="link" href="/termin/">Termin in fünf Fragen anfragen</a></p></div>
+  ${contactForm}
 </div></section>
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="link" href="/preise/">Alle Preise und Informationen</a></p></div>
@@ -503,13 +550,13 @@ pages.push({
       <div class="next"><button class="btn primary" type="submit">Anfrage senden</button></div>
     </fieldset>
     <section class="step done" data-step="fertig" aria-live="polite">
-      <img src="/img/logo-192.webp" width="192" height="192" alt="">
+      <img src="/img/logo-192.webp?v=3" width="192" height="192" alt="">
       <h2 data-done-title>Danke, Ihre Anfrage ist unterwegs.</h2>
       <p class="lead" data-done-text>Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.</p>
       <div class="actions"><a class="btn primary" data-done-mail hidden href="mailto:${P.mail}">E-Mail öffnen</a><a class="btn" href="/">Zur Startseite</a></div>
     </section>
   </form>
-  <div class="flow-nav"><button type="button" data-prev aria-label="Vorherige Frage">↑</button><button type="button" data-fwd aria-label="Nächste Frage">↓</button></div>
+  <div class="flow-nav"><div class="flow-nav-in"><button class="flow-back" type="button" data-prev>Zurück</button><span class="flow-count" aria-hidden="true" data-count-label></span><button class="flow-fwd" type="button" data-fwd>Weiter</button></div></div>
 </section>`,
 })
 
@@ -521,7 +568,7 @@ for (const d of docs.filter(d => d.type === 'legal')) {
 
 pages.push({ path: '/404', file: '404.html', title: 'Seite nicht gefunden | Pamela Zurbuchen', desc: 'Diese Seite gibt es nicht.', noindex: true, body: `
 <section class="lost"><div class="wrap">
-  <img class="lost-mark" src="/img/logo-512.webp" width="512" height="512" alt="">
+  <img class="lost-mark" src="/img/logo-512.webp?v=3" width="512" height="512" alt="">
   <h1 class="glass">${glass('Hier geht es nicht weiter.')}</h1>
   <p class="lead">Die Seite wurde verschoben oder es gab sie nie. Von der Startseite aus finden Sie alles wieder.</p>
   <div class="actions"><a class="btn primary" href="/">Zur Startseite</a><a class="btn" href="/angebot/">Zum Angebot</a><a class="btn" href="/kontakt/">Kontakt</a></div>
@@ -533,7 +580,7 @@ const FOOT = [
   ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/kurse/die-friedensstifter/', 'Die Friedensstifter'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
 ]
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
-const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img src="/img/logo-96.webp" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
+const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp" srcset="/img/wortmarke-120.webp 1x, /img/wortmarke-240.webp 2x" width="457" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
 const current = (p, h) => p.path === h || p.path.startsWith(h) || (h === '/angebot/' && SERVICE_ORDER.includes(p.path))
 // Chat unten rechts, im Aufbau wie bei Primava: kompakte Taste, Fenster mit Verlauf, Vorschlägen und Eingabe.
 // Die Antworten sind feste Texte aus den Inhalten der Seite: kein Modell, kein Mensch am anderen Ende.
@@ -563,6 +610,7 @@ const widgets = `
 <div class="cw" data-chat>
   <button class="cw-backdrop" type="button" aria-label="Chat schließen" data-chat-close tabindex="-1"></button>
   <div class="cw-panel" id="chat-panel" role="dialog" aria-label="Chat mit Antworten aus dieser Website" inert>
+    <div class="cw-grip" aria-hidden="true"><span></span></div>
     <div class="cw-head">
       <img class="cw-avatar" src="/img/pamela-avatar.webp" width="34" height="34" alt="">
       <div class="cw-head-text"><p class="cw-names">${P.name}</p><p class="cw-status"><span class="cw-status-dot" aria-hidden="true"></span>Antworten sofort, aus dieser Website</p></div>
@@ -576,31 +624,19 @@ const widgets = `
   </div>
   <button class="cw-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
     <span class="cw-launcher-face" aria-hidden="true"><img src="/img/pamela-avatar.webp" width="42" height="42" alt="" loading="lazy" decoding="async"><i></i></span>
+    <span class="cw-launcher-mark" aria-hidden="true"><svg class="cw-ico" viewBox="0 0 20 20"><path d="M10 3.200c-4.100 0-7.300 2.800-7.300 6.400 0 1.900.9 3.600 2.400 4.800l-.6 2.900 3.200-1.500c.7.200 1.500.3 2.300.3 4.100 0 7.300-2.800 7.300-6.500S14.100 3.200 10 3.200z"/><circle cx="6.900" cy="9.700" r=".95"/><circle cx="10" cy="9.700" r=".95"/><circle cx="13.100" cy="9.700" r=".95"/></svg></span>
     <span class="cw-launcher-text"><span>Haben Sie Fragen?</span><small>Antworten sofort</small></span>
-    <span class="cw-launcher-mark" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 3.5h10a.5.5 0 0 1 .5.5v6.5a.5.5 0 0 1-.5.5H8.5L5.5 13.5V11H3a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5z"/></svg></span>
     <span class="cw-launcher-x" aria-hidden="true">${X}</span>
   </button>
   <script type="application/json" id="chat-data">${JSON.stringify(CHAT)}</script>
 </div>
-<div class="loc" data-loc>
-  <button class="loc-pill" type="button" data-loc-open aria-expanded="false" aria-controls="standort">${PIN}<span>Standort</span></button>
-  <section class="loc-card" id="standort" hidden aria-label="Standort der Praxis">
-    <button class="loc-x" type="button" data-loc-close aria-label="Schließen">${X}</button>
-    <div class="loc-map" data-loc-map><button class="loc-load" type="button" data-loc-load data-src="${MAPS_EMBED}">${PIN}<b>Karte laden</b></button></div>
-    <div class="loc-body">
-      <h2>${P.practice}, ${P.name}</h2>
-      <p class="loc-addr">${PIN}<span>${P.street}, ${P.zip} ${P.city}</span></p>
-      <div class="loc-acts">
-        <a class="btn primary" href="${MAPS_ROUTE}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 3 3.500 8.600l5.600 2.300 2.300 5.600z"/></svg>Route</a>
-        <a class="btn" href="tel:${P.tel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg>Anrufen</a>
-        <a class="btn loc-wide" href="${MAPS}" target="_blank" rel="noopener">In Google Maps öffnen</a>
-      </div>
-      <p class="loc-note">Beim Laden der Karte wird eine Verbindung zu Google hergestellt.</p>
-    </div>
-  </section>
-</div>
+<nav class="dock" data-dock aria-label="Schnellzugriff">
+  <a href="tel:${P.tel}" aria-label="Anrufen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg></a>
+  <a class="dock-main" href="/termin/">Termin anfragen</a>
+</nav>
 <dialog class="sheet" id="kontakt-wahl" aria-labelledby="kw-titel">
-  <div class="sheet-in">
+  <div class="sheet-in" tabindex="-1" autofocus>
+    <div class="sheet-grip" aria-hidden="true"><span></span></div>
     <button class="sheet-x" type="button" data-sheet-close aria-label="Schließen">${X}</button>
     <h2 id="kw-titel">Termin anfragen</h2>
     <p class="sheet-lead">Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Wie möchten Sie sich melden?</p>
@@ -647,14 +683,14 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <meta name="geo.placename" content="${P.city}">
 <meta name="theme-color" content="#F8F4EF">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico?v=3" sizes="32x32">
+<link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/fonts/Geist-VF-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistSerif-VF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
-<script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'})(document.documentElement)</script>
+<script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(d.dataset.theme==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#150B0E'}})(document.documentElement)</script>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/downloads/*"}},{"not":{"href_matches":"/api/*"}}]},"eagerness":"moderate"}]}</script>
 ${(p.ld || []).map(ld).join('\n')}
 </head>
@@ -663,35 +699,43 @@ ${(p.ld || []).map(ld).join('\n')}
 <header class="top"><div class="wrap top-row">
   ${brand}
   <nav class="nav" aria-label="Hauptnavigation">${NAV.map(([h, t]) => `<a href="${h}"${current(p, h) ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
+  <button class="theme-btn" type="button" data-theme-toggle aria-label="Zwischen heller und dunkler Darstellung wechseln"><svg viewBox="0 0 20 20" aria-hidden="true"><circle class="sun" cx="10" cy="10" r="3.4"/><path class="rays" d="M10 2.500v2M10 15.500v2M2.500 10h2M15.500 10h2M4.700 4.700l1.400 1.400M13.900 13.900l1.400 1.400M4.700 15.300l1.400-1.400M13.900 6.100l1.400-1.400"/><path class="moon" d="M16 11.600A6.600 6.600 0 0 1 8.400 4a6.600 6.600 0 1 0 7.600 7.600z"/></svg></button>
   <a class="btn primary sm" href="/termin/">Termin anfragen</a>
+  <a class="flow-close" href="/" aria-label="Anfrage schließen und zur Startseite"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen"><span></span><span></span></button>
 </div>
 <div class="drawer" id="menue"><div><nav class="wrap drawer-nav" aria-label="Menü">
-  ${NAV.map(([h, t], i) => `<a class="drawer-link" style="--n:${i}" href="${h}"${current(p, h) ? ' aria-current="page"' : ''}>${t}</a>`).join('')}
-  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="tel:${P.tel}">Anrufen</a><a class="btn" href="mailto:${P.mail}">E-Mail</a></div>
-  <p class="small" style="--n:${NAV.length + 1}">${ADDRESS}</p>
+  ${NAV.map(([h, t], i) => `<a class="drawer-link" style="--n:${i}" href="${h}"${current(p, h) ? ' aria-current="page"' : ''}><span>${t}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10h11M11 5.500l4.500 4.500L11 14.500"/></svg></a>`).join('')}
+  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="tel:${P.tel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.100c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg>Anrufen</a><a class="btn" href="mailto:${P.mail}"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.500" y="4.500" width="15" height="11" rx="2"/><path d="M3 6l7 5.200L17 6"/></svg>E-Mail</a></div>
+  <div class="drawer-foot" style="--n:${NAV.length + 1}">
+    <a class="drawer-place" href="${GMAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.800s5.600-4.900 5.600-9.300a5.600 5.600 0 0 0-11.200 0c0 4.400 5.600 9.300 5.600 9.300z"/><circle cx="10" cy="8.500" r="2"/></svg><span>${P.practice}<br>${P.street}, ${P.zip} ${P.city}</span></a>
+    <div class="theme" role="group" aria-label="Darstellung">
+      <button type="button" data-theme-set="light" aria-label="Hell"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.500v2M10 15.500v2M2.500 10h2M15.500 10h2M4.700 4.700l1.400 1.400M13.900 13.900l1.400 1.400M4.700 15.300l1.400-1.400M13.900 6.100l1.400-1.400"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dunkel"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 11.600A6.600 6.600 0 0 1 8.400 4a6.600 6.600 0 1 0 7.600 7.600z"/></svg></button>
+    </div>
+  </div>
 </nav></div></div>
 </header>
 <button class="scrim" type="button" data-menu-close aria-label="Menü schließen" tabindex="-1"></button>
 <main id="inhalt">${p.body}
 </main>
-<footer class="foot"><img class="foot-mark" src="/img/logo-512.webp" width="512" height="512" alt="" loading="lazy" decoding="async"><div class="wrap">
+<footer class="foot"><div class="wrap">
   ${brand}
   <p class="foot-lead">Systemische und traumasensible Begleitung für Einzelne, Paare, Eltern und Jugendliche: in Landsberg am Lech, online und als Walk and Talk.</p>
-  <a class="g-badge on-deep" href="/#stimmen" aria-label="Google-Bewertungen: 5,0 von 5 Sternen, 2 Rezensionen">${RATE}</a>
+  <a class="g-badge on-deep" href="/#stimmen">${G}<span><b>Google-Rezensionen</b><small>5,0 von 5 bei 2 Bewertungen</small></span></a>
   <div class="cols">
     ${FOOT.map(([t, links]) => `<nav aria-label="${t}"><h3>${t}</h3><ul>${links.map(([h, n]) => `<li><a href="${h}">${n}</a></li>`).join('')}</ul></nav>`).join('')}
     <div><h3>Praxis</h3><ul><li>${P.practice}</li><li>${P.street}</li><li>${P.zip} ${P.city}</li><li><a href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></li></ul></div>
     <div><h3>Kontakt</h3><ul><li><a href="tel:${P.tel}">${P.phone}</a></li><li><a href="mailto:${P.mail}">${P.mail}</a></li><li><a href="/termin/">Termin anfragen</a></li></ul></div>
   </div>
   <div class="fine">
-    <p>Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Eine Einzelsitzung kostet 100 € für 60 Minuten, ein Paargespräch 180 € für 90 Minuten. Termine können bis 72 Stunden vorher kostenfrei abgesagt werden; danach fällt ein Ausfallhonorar an. Bei finanziellem Engpass sind Sonderregelungen möglich.</p>
-    <p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Einzugsgebiet: ${P.areas.join(', ')} und Umgebung; online deutschlandweit sowie in Österreich und der Schweiz.</p>
-    <p>Der Chat auf dieser Website beantwortet allgemeine Fragen mit festen Texten aus den hier veröffentlichten Inhalten. Er ist kein Live-Gespräch und ersetzt keine Beratung. Die gezeigten Rezensionen sind Auszüge aus öffentlichen Google-Bewertungen.</p>
-    <p>In akuten Krisen erreichen Sie die Telefonseelsorge rund um die Uhr unter 0800 111 0 111 und den Notruf unter 112.</p>
+    <p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Einzugsgebiet: ${P.areas.join(', ')} und Umgebung, online auch in Österreich und der Schweiz.</p>
+    <p>Der Chat beantwortet allgemeine Fragen mit festen Texten dieser Website und ersetzt keine Beratung. Die Rezensionen sind Auszüge aus öffentlichen Google-Bewertungen.</p>
+    <p>In akuten Krisen: Telefonseelsorge rund um die Uhr unter 0800 111 0 111, Notruf 112.</p>
   </div>
   <div class="foot-end">
-    <p>© ${new Date().getFullYear()} ${P.name}. Alle Rechte vorbehalten. <a href="/impressum/">Impressum</a> <a href="/datenschutz/">Datenschutz</a> <button type="button" data-consent-open>Cookie-Einstellungen</button></p>
+    <p>© ${new Date().getFullYear()} ${P.name}</p>
+    <div class="foot-legal"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><button type="button" data-consent-open>Cookie-Einstellungen</button></div>
     <div class="theme" role="group" aria-label="Darstellung">
       <button type="button" data-theme-set="light" aria-label="Hell"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.500v2M10 15.500v2M2.500 10h2M15.500 10h2M4.700 4.700l1.400 1.400M13.900 13.900l1.400 1.400M4.700 15.300l1.400-1.400M13.900 6.100l1.400-1.400"/></svg></button>
       <button type="button" data-theme-set="system" aria-label="Wie das Gerät"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="9.500" rx="1.500"/><path d="M7.500 16.500h5M10 13.500v3"/></svg></button>
