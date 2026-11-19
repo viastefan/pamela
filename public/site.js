@@ -289,3 +289,18 @@
   })
   show(start)
 })()
+
+/* Szenen nur im Sichtfeld animieren; kleines Geheimnis */
+;(() => {
+  const ways = document.querySelectorAll('.way');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('pz', !e.isIntersecting)), { rootMargin: '80px' });
+    ways.forEach((w) => { w.classList.add('pz'); io.observe(w); });
+  }
+  const out = document.querySelectorAll('[data-secret] span');
+  const words = ['Alles', 'hat einen', 'Sinn.'];
+  document.querySelectorAll('.hs').forEach((b) => b.addEventListener('click', () => {
+    const i = +b.dataset.i; b.classList.add('found');
+    if (out[i]) { out[i].textContent = words[i]; requestAnimationFrame(() => out[i].classList.add('on')); }
+  }));
+})();
