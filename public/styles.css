@@ -1328,3 +1328,4 @@ html:not(.js) .flow-nav { display: none; }
   [data-theme="dark"] .cw-launcher-face i { border-color: #211318; }
 }
 @media (prefers-reduced-motion: reduce) { .cw-launcher, .cw-launcher-mark { transition: none; } .cw-launcher:hover, .cw-launcher:hover .cw-launcher-mark { transform: none; } }
+.nav a { white-space: nowrap; }

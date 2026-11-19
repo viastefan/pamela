@@ -699,7 +699,6 @@ ${(p.ld || []).map(ld).join('\n')}
 <header class="top"><div class="wrap top-row">
   ${brand}
   <nav class="nav" aria-label="Hauptnavigation">${NAV.map(([h, t]) => `<a href="${h}"${current(p, h) ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
-  <button class="theme-btn" type="button" data-theme-toggle aria-label="Zwischen heller und dunkler Darstellung wechseln"><svg viewBox="0 0 20 20" aria-hidden="true"><circle class="sun" cx="10" cy="10" r="3.4"/><path class="rays" d="M10 2.500v2M10 15.500v2M2.500 10h2M15.500 10h2M4.700 4.700l1.400 1.400M13.900 13.900l1.400 1.400M4.700 15.300l1.400-1.400M13.900 6.100l1.400-1.400"/><path class="moon" d="M16 11.600A6.600 6.600 0 0 1 8.400 4a6.600 6.600 0 1 0 7.600 7.600z"/></svg></button>
   <a class="btn primary sm" href="/termin/">Termin anfragen</a>
   <a class="flow-close" href="/" aria-label="Anfrage schließen und zur Startseite"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></a>
   <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menue" aria-label="Menü öffnen"><span></span><span></span></button>
