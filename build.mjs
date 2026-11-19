@@ -585,7 +585,7 @@ const FOOT = [
   ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/kurse/die-friedensstifter/', 'Die Friedensstifter'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
 ]
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
-const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp?v=4" srcset="/img/wortmarke-120.webp?v=4 1x, /img/wortmarke-240.webp?v=4 2x" width="505" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
+const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp?v=5" srcset="/img/wortmarke-120.webp?v=5 1x, /img/wortmarke-240.webp?v=5 2x" width="577" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
 const current = (p, h) => p.path === h || p.path.startsWith(h) || (h === '/angebot/' && SERVICE_ORDER.includes(p.path))
 // Chat unten rechts, im Aufbau wie bei Primava: kompakte Taste, Fenster mit Verlauf, Vorschlägen und Eingabe.
 // Die Antworten sind feste Texte aus den Inhalten der Seite: kein Modell, kein Mensch am anderen Ende.

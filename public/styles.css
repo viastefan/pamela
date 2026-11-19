@@ -1406,3 +1406,6 @@ html:not(.js) .flow-nav { display: none; }
 /* Auswahlkarten: der Tastatur-Rahmen ist ruhig und grau-braun statt weinrot, damit er nicht wie eine Vorauswahl wirkt */
 .flow .opt:has(input:focus-visible) { box-shadow: 0 0 0 2px var(--canvas), 0 0 0 3.5px rgba(110,75,60,.45); }
 [data-theme="dark"] .flow .opt:has(input:focus-visible) { box-shadow: 0 0 0 2px var(--canvas), 0 0 0 3.5px rgba(230,205,192,.5); }
+/* Wortmarke: Zeichen etwas kleiner, die Schrift bleibt gleich groß */
+@media (min-width: 961px) { :root:not([data-theme="dark"]) .top .brand .brand-word { height: 61px; margin-left: -4px; } }
+@media (min-width: 961px) and (max-width: 1180px) { :root:not([data-theme="dark"]) .top .brand .brand-word { height: 46px; margin-left: -3px; } }
