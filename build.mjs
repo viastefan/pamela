@@ -66,7 +66,7 @@ const slug = p => p.replace(/\//g, '')
 const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 const picture = (name, [big, small], alt, w, h, attrs = 'loading="lazy" decoding="async"') =>
   `<picture><source type="image/webp" srcset="/img/${name}-${small}.webp ${small}w, /img/${name}-${big}.webp ${big}w" sizes="(max-width: 960px) 74vw, 440px"><img src="/img/${name}-${big}.jpg" srcset="/img/${name}-${small}.jpg ${small}w, /img/${name}-${big}.jpg ${big}w" sizes="(max-width: 960px) 74vw, 440px" width="${w}" height="${h}" alt="${esc(alt)}" ${attrs}></picture>`
-const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
+const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="tilt"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div></div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
 const mark = `<img class="mark" src="/img/logo-512.webp?v=3" width="512" height="512" alt="" loading="lazy" decoding="async">`
 const nameOf = d => d.name.replace('Kommunikationstraining', 'Kommunikations&shy;training').replace('Erziehungsberatung', 'Erziehungs&shy;beratung')
 const card = (d, i = 0, goWord = 'Mehr erfahren') => `<a class="card rv" style="--d:${i * 60}ms" href="${d.path}"><h3>${nameOf(d)}</h3><p>${inline(d.card || d.teaser)}</p><span class="go">${goWord}</span></a>`
@@ -585,7 +585,7 @@ const FOOT = [
   ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/kurse/die-friedensstifter/', 'Die Friedensstifter'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
 ]
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
-const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp" srcset="/img/wortmarke-120.webp 1x, /img/wortmarke-240.webp 2x" width="457" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
+const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp?v=4" srcset="/img/wortmarke-120.webp?v=4 1x, /img/wortmarke-240.webp?v=4 2x" width="505" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
 const current = (p, h) => p.path === h || p.path.startsWith(h) || (h === '/angebot/' && SERVICE_ORDER.includes(p.path))
 // Chat unten rechts, im Aufbau wie bei Primava: kompakte Taste, Fenster mit Verlauf, Vorschlägen und Eingabe.
 // Die Antworten sind feste Texte aus den Inhalten der Seite: kein Modell, kein Mensch am anderen Ende.

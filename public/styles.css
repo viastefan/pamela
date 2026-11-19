@@ -1381,3 +1381,14 @@ html:not(.js) .flow-nav { display: none; }
 [data-theme="dark"] .place { --place-ink: var(--blush-300); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 60' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%23E6CDC0' stroke-width='1' vector-effect='non-scaling-stroke'%3E%3Cpath stroke-opacity='.3' d='M0 20c20-9 40-9 80 0s60 9 80 0'/%3E%3Cpath stroke-opacity='.2' d='M0 33c20-8 40-8 80 0s60 8 80 0'/%3E%3Cpath stroke-opacity='.14' d='M0 46c20-7 40-7 80 0s60 7 80 0'/%3E%3C/g%3E%3C/svg%3E"), linear-gradient(rgba(230,205,192,.1), rgba(230,205,192,.1)); }
 @media (prefers-reduced-motion: reduce) { .place { animation: none; } }
 @media (min-width: 961px) { .place { margin-left: 0; } }
+
+/* Fotos: dahinter liegt eine sandfarbene Fläche, leicht nach rechts geneigt, damit das Bild nicht allein steht */
+.tilt { position: relative; isolation: isolate; }
+.tilt::before { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: calc(var(--r-media) + 2px); background: linear-gradient(160deg, rgba(204,173,153,.42), rgba(230,205,192,.26)); transform: rotate(3deg) translate(6px, 4px); transform-origin: 50% 60%; transition: transform 1.2s var(--ease) .15s, opacity .8s ease .15s; }
+.tilt::after { content: ''; position: absolute; z-index: -1; inset: 0; border-radius: calc(var(--r-media) + 2px); border: 1px solid rgba(140,100,83,.22); transform: rotate(-1.6deg) translate(-5px, 3px); transform-origin: 50% 60%; transition: transform 1.2s var(--ease) .25s, opacity .8s ease .25s; }
+.js .portrait.rv:not(.in) .tilt::before, .js .portrait.rv:not(.in) .tilt::after { transform: none; opacity: 0; }
+@media (hover: hover) { .portrait:hover .tilt::before { transform: rotate(3.8deg) translate(8px, 4px); } .portrait:hover .tilt::after { transform: rotate(-2.1deg) translate(-6px, 3px); } }
+[data-theme="dark"] .tilt::before { background: linear-gradient(160deg, rgba(230,205,192,.12), rgba(230,205,192,.05)); }
+[data-theme="dark"] .tilt::after { border-color: rgba(230,205,192,.16); }
+@media (prefers-reduced-motion: reduce) { .tilt::before, .tilt::after { transition: none; } .js .portrait.rv:not(.in) .tilt::before, .js .portrait.rv:not(.in) .tilt::after { transform: rotate(3deg) translate(6px, 4px); opacity: 1; } }
+@media (min-width: 961px) and (max-width: 1180px) { :root:not([data-theme="dark"]) .top .brand .brand-word { height: 54px; margin-left: -4px; } .top-row { gap: 16px; } }
