@@ -1,0 +1,9 @@
+{
+  "name": "pamela",
+  "private": true,
+  "description": "zurbuchen-therapie.de, Pamela Zurbuchen, Landsberg am Lech",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs && npx --yes serve public -l 3000"
+  }
+}

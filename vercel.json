@@ -1,0 +1,32 @@
+{
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "public",
+  "framework": null,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/meine-leistungen", "destination": "/angebot/", "permanent": true },
+    { "source": "/meine-leistungen/einzeltherapie", "destination": "/einzeltherapie/", "permanent": true },
+    { "source": "/meine-leistungen/paartherapie", "destination": "/paartherapie/", "permanent": true },
+    { "source": "/meine-leistungen/jugendlichencoaching", "destination": "/jugendcoaching/", "permanent": true },
+    { "source": "/meine-leistungen/erziehungsberatung", "destination": "/erziehungsberatung/", "permanent": true },
+    { "source": "/meine-leistungen/kommunikationstraining", "destination": "/kommunikationstraining/", "permanent": true },
+    { "source": "/meine-leistungen/vortraege-und-schulungen", "destination": "/vortraege-und-schulungen/", "permanent": true },
+    { "source": "/meine-leistungen/off--und-online", "destination": "/walk-and-talk/", "permanent": true },
+    { "source": "/online-kurse", "destination": "/kurse/die-friedensstifter/", "permanent": true },
+    { "source": "/online-kurse-die-friedensstifter", "destination": "/kurse/die-friedensstifter/", "permanent": true },
+    { "source": "/aktuelle-kurse", "destination": "/kurse/", "permanent": true },
+    { "source": "/blogbeitraege", "destination": "/blog/", "permanent": true },
+    { "source": "/blogbeitraege/gedanken-zum-elternsein", "destination": "/blog/finde-deinen-weg-als-mama-oder-papa/", "permanent": true },
+    { "source": "/cookie-einstellungen", "destination": "/datenschutz/", "permanent": true },
+    { "source": "/widerruf", "destination": "/kontakt/", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }] },
+    { "source": "/(.*)", "headers": [
+      { "key": "X-Content-Type-Options", "value": "nosniff" },
+      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+      { "key": "X-Frame-Options", "value": "DENY" }
+    ] }
+  ]
+}
