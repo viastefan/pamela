@@ -85,6 +85,7 @@ const steps = du => `<div class="steps-wrap rv" data-steps><span class="steps-li
 
 const G = '<svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.500c3.540 0 6.710 1.220 9.210 3.600l6.850-6.850C35.900 2.380 30.470 0 24 0 14.620 0 6.510 5.380 2.560 13.220l7.980 6.190C12.430 13.720 17.740 9.500 24 9.500z"/><path fill="#4285F4" d="M46.980 24.550c0-1.570-.15-3.090-.38-4.550H24v9.020h12.940c-.58 2.960-2.260 5.480-4.780 7.180l7.730 6c4.510-4.180 7.090-10.360 7.090-17.650z"/><path fill="#FBBC05" d="M10.530 28.590c-.48-1.450-.76-2.990-.76-4.590s.27-3.140.76-4.590l-7.980-6.190C.92 16.460 0 20.120 0 24c0 3.880.92 7.540 2.560 10.780l7.970-6.190z"/><path fill="#34A853" d="M24 48c6.480 0 11.930-2.130 15.890-5.810l-7.730-6c-2.150 1.450-4.920 2.300-8.160 2.300-6.260 0-11.570-4.220-13.470-9.910l-7.980 6.190C6.510 42.620 14.620 48 24 48z"/></svg>'
 const STARS = '<span class="stars" role="img" aria-label="5 von 5 Sternen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.600l2.600 5.300 5.800.8-4.200 4.100 1 5.800L10 14.900l-5.200 2.700 1-5.800L1.600 7.700l5.800-.8z"/></svg></span>'
+const RATE = `${G}<b>5,0</b>${STARS}<i class="gb-sep" aria-hidden="true"></i><small>2 <span class="gb-x">Google-</span>Rezensionen</small>`
 // Drei kleine Zeichnungen, die sich bewegen: Raum, Gehen, Bildschirm
 const ART = {
   praxis: `<svg class="art" viewBox="0 0 240 150" aria-hidden="true"><path class="ground" d="M16 128h208"/><g class="lamp"><path d="M176 128V52"/><path d="M160 52h32l-7-22h-18z"/><circle class="glow" cx="176" cy="62" r="26"/></g><path d="M40 128V92c0-8 6-14 14-14h26c8 0 14 6 14 14v36M34 104h66M40 128v8M94 128v8"/><path d="M118 128v-30c0-7 5-12 12-12h22c7 0 12 5 12 12v30M112 108h58"/><path class="leaf" d="M206 128v-24c0-10 6-16 14-18-2 10-6 16-14 18M206 112c-8-2-12-8-13-16 8 1 12 6 13 16"/></svg>`,
@@ -163,7 +164,7 @@ pages.push({
 </div></section>
 
 <section class="trust-strip"><div class="wrap">
-  <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>2 Google-Rezensionen</small></span></a>
+  <a class="g-badge rv" href="#stimmen" aria-label="Google-Bewertungen: 5,0 von 5 Sternen, 2 Rezensionen">${RATE}</a>
   <ul class="quals rv" style="--d:80ms"><li>Dipl. Sozialpädagogin (FH)</li><li>Systemische Therapeutin (IFW)</li><li>Bindungspsychotherapie nach Prof. Dr. Brisch</li><li>Ausgebildete STEP-Elterntrainerin</li><li>Seit über 18 Jahren selbstständig</li></ul>
 </div></section>
 
@@ -207,7 +208,7 @@ pages.push({
 </div></section>
 
 <section class="section tinted" id="stimmen"><div class="wrap">
-  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><div class="g-score">${G}<span><b>5,0</b>${STARS}<small>2 Rezensionen auf Google</small></span></div></div>
+  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><p class="g-badge g-still">${RATE}</p></div>
   <div class="grid g2">
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
@@ -657,7 +658,7 @@ ${(p.ld || []).map(ld).join('\n')}
 <footer class="foot"><img class="foot-mark" src="/img/logo-512.webp" width="512" height="512" alt="" loading="lazy" decoding="async"><div class="wrap">
   ${brand}
   <p class="foot-lead">Systemische und traumasensible Begleitung für Einzelne, Paare, Eltern und Jugendliche: in Landsberg am Lech, online und als Walk and Talk.</p>
-  <a class="g-badge on-deep" href="/#stimmen">${G}<span><b>Google-Rezensionen</b><small>5,0 von 5 bei 2 Bewertungen</small></span></a>
+  <a class="g-badge on-deep" href="/#stimmen" aria-label="Google-Bewertungen: 5,0 von 5 Sternen, 2 Rezensionen">${RATE}</a>
   <div class="cols">
     ${FOOT.map(([t, links]) => `<nav aria-label="${t}"><h3>${t}</h3><ul>${links.map(([h, n]) => `<li><a href="${h}">${n}</a></li>`).join('')}</ul></nav>`).join('')}
     <div><h3>Praxis</h3><ul><li>${P.practice}</li><li>${P.street}</li><li>${P.zip} ${P.city}</li><li><a href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></li></ul></div>
