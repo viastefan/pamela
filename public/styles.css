@@ -1403,3 +1403,6 @@ html:not(.js) .flow-nav { display: none; }
 .flow-bar i { height: 100%; border-radius: 4px; background: var(--wine-700); }
 /* Lesefortschritt unter dem Kopf: Sandton statt Weinrot */
 @supports (animation-timeline: scroll()) { .top::after { background: var(--blush-500); } [data-theme="dark"] .top::after { background: rgba(230,205,192,.5); } }
+/* Auswahlkarten: der Tastatur-Rahmen ist ruhig und grau-braun statt weinrot, damit er nicht wie eine Vorauswahl wirkt */
+.flow .opt:has(input:focus-visible) { box-shadow: 0 0 0 2px var(--canvas), 0 0 0 3.5px rgba(110,75,60,.45); }
+[data-theme="dark"] .flow .opt:has(input:focus-visible) { box-shadow: 0 0 0 2px var(--canvas), 0 0 0 3.5px rgba(230,205,192,.5); }
