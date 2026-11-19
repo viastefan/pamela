@@ -1427,3 +1427,7 @@ html:not(.js) .flow-nav { display: none; }
 /* Der kleine Pfeil bleibt auch beim Überfahren und im geöffneten Zustand stehen */
 .quick select:hover { background: no-repeat right 4px center / 12px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%236F2039' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
 [data-theme="dark"] .quick select:hover { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23E6CDC0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+
+/* Zitat im dunklen Band: größer, heller und etwas kräftiger gezeichnet (die Serifenschrift hat nur einen Schnitt) */
+.deep .quote { font-size: calc(var(--fs-quote) * 1.2); line-height: 1.14; color: #FFF8F1; -webkit-text-stroke: .55px currentColor; paint-order: stroke fill; max-width: 16em; }
+@media (max-width: 960px) { .deep .quote { font-size: calc(var(--fs-quote) * 1.14); -webkit-text-stroke-width: .4px; } }
