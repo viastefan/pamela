@@ -413,3 +413,64 @@
   })
   show(start)
 })()
+
+// Auswahl im Hero: am Desktop ein eigenes kleines Menü, am Handy bleibt die Auswahl des Geräts
+;(function () {
+  var doc = document
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return
+  var menu = null, owner = null, at = 0
+  var close = function (focus) {
+    if (!menu) return
+    menu.remove(); owner.setAttribute('aria-expanded', 'false')
+    if (focus) owner.focus({ preventScroll: true })
+    menu = null; owner = null
+  }
+  var mark = function (i) {
+    var items = menu.children
+    at = (i + items.length) % items.length
+    for (var k = 0; k < items.length; k++) items[k].classList.toggle('on', k === at)
+  }
+  var pick = function (i) {
+    var sel = owner
+    if (sel.selectedIndex !== i) { sel.selectedIndex = i; sel.dispatchEvent(new Event('input', { bubbles: true })); sel.dispatchEvent(new Event('change', { bubbles: true })) }
+    close(true)
+  }
+  var open = function (sel) {
+    if (menu) { var same = owner === sel; close(false); if (same) return }
+    owner = sel; menu = doc.createElement('div'); menu.className = 'qmenu'; menu.setAttribute('role', 'listbox')
+    ;[].forEach.call(sel.options, function (o, i) {
+      var b = doc.createElement('button'); b.type = 'button'; b.tabIndex = -1; b.textContent = o.textContent
+      b.setAttribute('role', 'option'); b.setAttribute('aria-selected', String(i === sel.selectedIndex))
+      b.addEventListener('click', function () { pick(i) })
+      b.addEventListener('mousemove', function () { mark(i) })
+      menu.appendChild(b)
+    })
+    doc.body.appendChild(menu); sel.setAttribute('aria-expanded', 'true')
+    var r = sel.getBoundingClientRect(), w = menu.offsetWidth, h = menu.offsetHeight
+    var left = Math.max(12, Math.min(r.left - 8, innerWidth - w - 12))
+    var top = r.bottom + 8 + h > innerHeight - 8 && r.top - 8 - h > 8 ? r.top - 8 - h : r.bottom + 8
+    menu.style.left = left + scrollX + 'px'; menu.style.top = top + scrollY + 'px'
+    mark(sel.selectedIndex)
+  }
+  ;[].forEach.call(doc.querySelectorAll('.quick select'), function (sel) {
+    sel.setAttribute('aria-haspopup', 'listbox'); sel.setAttribute('aria-expanded', 'false')
+    sel.addEventListener('mousedown', function (e) { if (e.button) return; e.preventDefault(); sel.focus({ preventScroll: true }); open(sel) })
+    sel.addEventListener('keydown', function (e) {
+      var k = e.key
+      if (!menu || owner !== sel) {
+        if (k === ' ' || k === 'Enter' || k === 'ArrowDown' || k === 'ArrowUp') { e.preventDefault(); open(sel) }
+        return
+      }
+      if (k === 'ArrowDown') { e.preventDefault(); mark(at + 1) }
+      else if (k === 'ArrowUp') { e.preventDefault(); mark(at - 1) }
+      else if (k === 'Home') { e.preventDefault(); mark(0) }
+      else if (k === 'End') { e.preventDefault(); mark(menu.children.length - 1) }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); pick(at) }
+      else if (k === 'Escape') { e.preventDefault(); close(true) }
+      else if (k === 'Tab') close(false)
+    })
+    sel.addEventListener('blur', function () { setTimeout(function () { if (menu && owner === sel && !menu.contains(doc.activeElement)) close(false) }, 120) })
+  })
+  doc.addEventListener('mousedown', function (e) { if (menu && !menu.contains(e.target) && e.target !== owner) close(false) })
+  addEventListener('resize', function () { close(false) })
+})()
