@@ -21,7 +21,12 @@ const P = {
   areas: ['Landsberg am Lech', 'Kaufering', 'Buchloe', 'Dießen am Ammersee', 'Weilheim', 'Bad Wörishofen', 'Türkheim', 'Mindelheim'],
 }
 const ADDRESS = `${P.practice}, ${P.street}, ${P.zip} ${P.city}`
-const MAPS = 'https://www.openstreetmap.org/search?query=' + encodeURIComponent(`${P.street}, ${P.zip} ${P.city}`)
+// Standort: Google Maps. Die Karte selbst lädt erst nach einem Klick, vorher geht keine Anfrage an Google.
+const MAPS_Q = encodeURIComponent(`${P.practice} ${P.name}, ${P.street}, ${P.zip} ${P.city}`)
+const MAPS = 'https://www.google.com/maps/search/?api=1&query=' + MAPS_Q
+const MAPS_ROUTE = 'https://www.google.com/maps/dir/?api=1&destination=' + MAPS_Q
+const MAPS_EMBED = 'https://www.google.com/maps?q=' + MAPS_Q + '&hl=de&z=16&output=embed'
+const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.500s7-6 7-11.500a7 7 0 0 0-14 0c0 5.500 7 11.500 7 11.500z"/><circle cx="12" cy="10" r="2.600"/></svg>'
 const NAV = [['/angebot/', 'Angebot'], ['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt']]
 
 
@@ -576,10 +581,23 @@ const widgets = `
   </button>
   <script type="application/json" id="chat-data">${JSON.stringify(CHAT)}</script>
 </div>
-<nav class="dock" data-dock aria-label="Schnellzugriff">
-  <a href="tel:${P.tel}" aria-label="Anrufen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg></a>
-  <a class="dock-main" href="/termin/">Termin anfragen</a>
-</nav>
+<div class="loc" data-loc>
+  <button class="loc-pill" type="button" data-loc-open aria-expanded="false" aria-controls="standort">${PIN}<span>Standort</span></button>
+  <section class="loc-card" id="standort" hidden aria-label="Standort der Praxis">
+    <button class="loc-x" type="button" data-loc-close aria-label="Schließen">${X}</button>
+    <div class="loc-map" data-loc-map><button class="loc-load" type="button" data-loc-load data-src="${MAPS_EMBED}">${PIN}<b>Karte laden</b></button></div>
+    <div class="loc-body">
+      <h2>${P.practice}, ${P.name}</h2>
+      <p class="loc-addr">${PIN}<span>${P.street}, ${P.zip} ${P.city}</span></p>
+      <div class="loc-acts">
+        <a class="btn primary" href="${MAPS_ROUTE}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 3 3.500 8.600l5.600 2.300 2.300 5.600z"/></svg>Route</a>
+        <a class="btn" href="tel:${P.tel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg>Anrufen</a>
+        <a class="btn loc-wide" href="${MAPS}" target="_blank" rel="noopener">In Google Maps öffnen</a>
+      </div>
+      <p class="loc-note">Beim Laden der Karte wird eine Verbindung zu Google hergestellt.</p>
+    </div>
+  </section>
+</div>
 <dialog class="sheet" id="kontakt-wahl" aria-labelledby="kw-titel">
   <div class="sheet-in">
     <button class="sheet-x" type="button" data-sheet-close aria-label="Schließen">${X}</button>

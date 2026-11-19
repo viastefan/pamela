@@ -13,7 +13,7 @@ E-Mail: [zurbuchen-therapie@gmx.de](mailto:zurbuchen-therapie@gmx.de)
 
 ## Was diese Website nicht tut
 
-Diese Website setzt keine Cookies, nutzt derzeit keine Analyse- oder Werbedienste und bindet keine Inhalte von Dritten ein. Ihre Auswahl in den Cookie-Einstellungen wird in Ihrem Browser gespeichert. Schriften, Bilder und alle Dateien werden von dieser Website selbst ausgeliefert.
+Diese Website setzt keine Cookies, nutzt derzeit keine Analyse- oder Werbedienste und bindet Inhalte von Dritten nur nach Ihrem Klick ein (Karte von Google Maps, siehe unten). Ihre Auswahl in den Cookie-Einstellungen wird in Ihrem Browser gespeichert. Schriften, Bilder und alle Dateien werden von dieser Website selbst ausgeliefert.
 
 ## Aufruf der Website
 
@@ -26,6 +26,10 @@ Wenn Sie die Terminanfrage ausfüllen, verarbeite ich Ihre Angaben (Anliegen, ge
 ## Kontakt per Telefon oder E-Mail
 
 Wenn Sie mich anrufen oder mir schreiben, verarbeite ich Ihre Angaben, um Ihre Anfrage zu beantworten (Art. 6 Abs. 1 lit. b DSGVO). Bitte senden Sie per E-Mail keine sensiblen Gesundheitsdaten.
+
+## Karte von Google Maps
+
+Die Karte zum Standort der Praxis wird erst geladen, wenn Sie auf „Karte laden“ tippen. Vorher wird keine Verbindung zu Google hergestellt. Beim Laden erhält Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, Ihre IP-Adresse und kann Cookies setzen; eine Übermittlung in die USA ist möglich. Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Auch die Links „Route“ und „In Google Maps öffnen“ führen zu Google.
 
 ## Ihre Rechte
 

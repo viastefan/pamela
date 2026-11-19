@@ -109,7 +109,7 @@ h1, h2, h3 { hyphens: manual; overflow-wrap: break-word; }
 .hero .lead + .lead { margin-top: 14px; }
 
 
-.page-hero { padding: 88px 0 72px; }
+.page-hero { padding: 112px 0 72px; }
 .page-hero h1 { max-width: 15em; }
 .page-hero .lead { margin-top: 24px; }
 .page-hero + .section { padding-top: 0; }
@@ -253,7 +253,7 @@ html:not(.js) .flow-nav, html:not(.js) .flow-bar, html:not(.js) .count, html:not
   .nav, .top .btn { display: none; }
 }
 @media (max-width: 768px) {
-  .page-hero { padding: 44px 0 40px; }
+  .page-hero { padding: 68px 0 40px; }
   .g2, .g4, .opts.two { grid-template-columns: minmax(0, 1fr); }
   .head { margin-bottom: 36px; }
   .card { padding: 24px; } .voice { padding: 26px; } .voice .quote { font-size: 20px; }
@@ -329,12 +329,12 @@ a.card:focus-visible { border-radius: var(--r-card); }
 .quick select { background: no-repeat right 4px center / 12px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%236F2039' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); border-bottom: 1.5px solid var(--wine-300); border-radius: 0; padding: 0 22px 0 2px; margin: 0; }
 .quick select:hover { background-color: transparent; border-bottom-color: var(--wine-700); }
 .quick-foot { margin-top: 28px; gap: 16px 20px; }
-.hero { padding: 120px 0 136px; }
+.hero { padding: 144px 0 136px; }
 .hero .lead { margin-top: 24px; max-width: 28em; }
 
 
 @media (max-width: 960px) {
-  .hero { padding: 64px 0 96px; }
+  .hero { padding: 88px 0 96px; }
   .hero-grid { gap: 56px; }
   .quick { margin-top: 36px; }
   .quick .btn { width: 100%; height: 56px; }
@@ -548,16 +548,32 @@ html:not(.js) .cw, .top[data-open] ~ .cw, .top[data-open] ~ .notice { display: n
   .top[data-open] ~ .scrim { opacity: 1; pointer-events: auto; }
 }
 
-/* Leiste unten am Handy: erscheint erst beim Scrollen, links neben der Chat-Taste */
-.dock { display: none; }
-@media (max-width: 960px) {
-  .dock { position: fixed; z-index: 24; left: 14px; bottom: max(14px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); border: 1px solid var(--line-2); box-shadow: 0 1px 2px rgba(59,15,28,.05), 0 14px 36px rgba(59,15,28,.18); opacity: 0; translate: 0 90px; pointer-events: none; transition: translate .6s var(--ease), opacity .35s ease; }
-  .dock.show { opacity: 1; translate: 0 0; pointer-events: auto; }
-  .dock a { height: 44px; min-width: 44px; display: grid; place-items: center; border-radius: 999px; color: var(--ink-1); transition: transform .2s var(--ease); }
-  .dock a:active { transform: scale(.94); }
-  .dock svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
-  .dock .dock-main { padding: 0 20px; background: var(--wine-700); color: var(--pk-ink); font-size: 15px; font-weight: var(--wt-text); white-space: nowrap; }
-  .cw.is-open ~ .dock, .top[data-open] ~ .dock, .top[data-open] ~ .cw { opacity: 0; pointer-events: none; }
+/* Standort unten links: eine kleine Taste, die beim Scrollen erscheint und die Karte mit Adresse, Route und Anruf öffnet */
+.loc { position: fixed; z-index: 26; left: clamp(14px, 2vw, 22px); bottom: calc(clamp(14px, 2vw, 22px) + env(safe-area-inset-bottom, 0px)); opacity: 0; pointer-events: none; transition: opacity .3s ease; }
+.loc.show, .loc.open { opacity: 1; pointer-events: auto; }
+.loc-pill { display: flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px 0 16px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(255,255,255,.82); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); box-shadow: 0 1px 2px rgba(59,15,28,.05), 0 12px 32px rgba(59,15,28,.14); color: var(--ink-1); font: inherit; font-size: 15px; font-weight: var(--wt-text); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.loc svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.loc.open .loc-pill { display: none; }
+.loc-card { position: relative; width: min(340px, calc(100vw - 28px)); overflow: hidden; border-radius: 24px; background: var(--card); border: 1px solid var(--line-2); box-shadow: 0 1px 2px rgba(59,15,28,.06), 0 24px 60px rgba(59,15,28,.24); }
+.loc-card[hidden] { display: none; }
+.loc-x { position: absolute; z-index: 2; top: 12px; right: 12px; width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: #3B0F1C; cursor: pointer; }
+.loc-x svg { width: 16px; height: 16px; }
+.loc-map { position: relative; height: 168px; background: var(--wine-950); }
+.loc-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.loc-load { width: 100%; height: 100%; display: grid; place-content: center; justify-items: center; gap: 10px; border: 0; background: none; color: #FBF4EE; font: inherit; cursor: pointer; }
+.loc-load svg { width: 30px; height: 30px; }
+.loc-load b { font-size: 13px; font-weight: var(--wt-strong); letter-spacing: .12em; text-transform: uppercase; }
+.loc-body { padding: 20px 20px 18px; }
+.loc-body h2 { font-size: 21px; line-height: 1.25; }
+.loc-addr { display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+.loc-addr svg { width: 18px; height: 18px; margin-top: 2px; color: var(--wine-700); }
+.loc-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+.loc-acts .btn { height: 48px; padding: 0 12px; gap: 8px; font-size: 15px; }
+.loc-acts .btn svg { width: 18px; height: 18px; }
+.loc-acts .loc-wide { grid-column: 1 / -1; }
+.loc-note { margin-top: 12px; font-size: 12px; line-height: 1.5; color: var(--ink-3); }
+.cw.is-open ~ .loc, .top[data-open] ~ .loc { opacity: 0; pointer-events: none; }
+@media (max-width: 960px) { .top[data-open] ~ .cw { opacity: 0; pointer-events: none; } .loc.open ~ .cw, .cw:has(~ .loc.open) { opacity: 0; pointer-events: none; } }
   .cw-launcher { min-height: 54px; padding: 5px; }
   .cw-launcher-mark { width: 44px; height: 44px; }
 }
@@ -748,10 +764,11 @@ html:not(.js) .cw, .top[data-open] ~ .cw, .top[data-open] ~ .notice { display: n
 [data-theme="dark"] .brand { color: var(--ink-1); } [data-theme="dark"] .brand small { color: var(--ink-3); }
 [data-theme="dark"] :is(.fee-price, .quick select, .link:hover, .links a:hover, .row h2 a:hover, .toc a:hover, .drawer-link[aria-current="page"]) { color: var(--blush-300); }
 [data-theme="dark"] .quick select { border-bottom-color: var(--blush-500); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%23E6CDC0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-[data-theme="dark"] :is(.cw-launcher, .dock, .consent) { background: rgba(33,19,24,.9); }
+[data-theme="dark"] :is(.cw-launcher, .loc-pill, .consent) { background: rgba(33,19,24,.9); }
+[data-theme="dark"] .loc-addr svg { color: var(--blush-300); }
 [data-theme="dark"] .consent-foot .btn { color: var(--canvas); } [data-theme="dark"] .consent-foot .btn:hover { background: #FFFFFF; }
 [data-theme="dark"] .art { stroke: var(--blush-300); } [data-theme="dark"] .steps li.on::before { background: var(--blush-200); border-color: var(--blush-200); color: var(--pk-ink); } [data-theme="dark"] .steps-line i { background: var(--blush-300); }
-[data-theme="dark"] .dock .dock-main, [data-theme="dark"] :is(.cw-chip.is-primary, .cw-cta, .cw-send, .cw-msg-user p, .pick.is-main) { color: #FBF4EE; }
+[data-theme="dark"] :is(.cw-chip.is-primary, .cw-cta, .cw-send, .cw-msg-user p, .pick.is-main) { color: #FBF4EE; }
 [data-theme="dark"] .opt:has(input:checked) { border-color: var(--blush-500); }
 [data-theme="dark"] .sheet::backdrop, [data-theme="dark"] .scrim { background-color: rgba(0,0,0,.6); }
 

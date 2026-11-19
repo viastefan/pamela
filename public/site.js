@@ -5,12 +5,24 @@
 
   // Kopf: Linie erst beim Scrollen, Menü am Handy
   var top = doc.querySelector('.top'), btn = doc.querySelector('.menu-btn')
-  var dock = doc.querySelector('[data-dock]')
+  var loc = doc.querySelector('[data-loc]')
   var onScroll = function () {
     top.classList.toggle('scrolled', scrollY > 8)
-    if (dock) dock.classList.toggle('show', scrollY > innerHeight * .6)
+    if (loc) loc.classList.toggle('show', scrollY > innerHeight * .6)
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll()
+  // Standort: Taste öffnet die Karte, die Google-Karte lädt erst auf Klick
+  if (loc) {
+    var locPill = loc.querySelector('[data-loc-open]'), locCard = loc.querySelector('.loc-card'), locLoad = loc.querySelector('[data-loc-load]')
+    var setLoc = function (open) { loc.classList.toggle('open', open); locCard.hidden = !open; locPill.setAttribute('aria-expanded', String(open)) }
+    locPill.addEventListener('click', function () { setLoc(true); loc.querySelector('[data-loc-close]').focus() })
+    loc.querySelector('[data-loc-close]').addEventListener('click', function () { setLoc(false); locPill.focus() })
+    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && loc.classList.contains('open')) { setLoc(false); locPill.focus() } })
+    locLoad.addEventListener('click', function () {
+      var f = doc.createElement('iframe'); f.src = locLoad.dataset.src; f.title = 'Karte: Standort der Praxis'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'
+      locLoad.replaceWith(f)
+    })
+  }
   if (btn) {
     var setMenu = function (open) {
       top.toggleAttribute('data-open', open)
