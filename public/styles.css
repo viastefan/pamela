@@ -1392,3 +1392,14 @@ html:not(.js) .flow-nav { display: none; }
 [data-theme="dark"] .tilt::after { border-color: rgba(230,205,192,.16); }
 @media (prefers-reduced-motion: reduce) { .tilt::before, .tilt::after { transition: none; } .js .portrait.rv:not(.in) .tilt::before, .js .portrait.rv:not(.in) .tilt::after { transform: rotate(3deg) translate(6px, 4px); opacity: 1; } }
 @media (min-width: 961px) and (max-width: 1180px) { :root:not([data-theme="dark"]) .top .brand .brand-word { height: 54px; margin-left: -4px; } .top-row { gap: 16px; } }
+
+/* Terminanfrage: der Schein beginnt ganz oben hinter dem Kopf, keine Kante mehr unter der Kopfzeile */
+.flow::before { content: none; }
+.flow-page { background: radial-gradient(70% 520px at 50% 0, color-mix(in srgb, var(--blush-200) 70%, transparent), transparent 72%) no-repeat var(--canvas); }
+[data-theme="dark"] .flow-page { background: radial-gradient(70% 520px at 50% 0, rgba(230,205,192,.07), transparent 72%) no-repeat var(--canvas); }
+.flow-page .top, .flow-page .top.scrolled { border-bottom-color: transparent; }
+/* Fortschritt: kurze runde Leiste in der Mitte statt einer Linie am oberen Bildschirmrand */
+.flow-bar { position: static; inset: auto; z-index: auto; width: min(184px, 46vw); height: 4px; margin: 12px auto 0; border-radius: 4px; background: var(--line-2); overflow: hidden; }
+.flow-bar i { height: 100%; border-radius: 4px; background: var(--wine-700); }
+/* Lesefortschritt unter dem Kopf: Sandton statt Weinrot */
+@supports (animation-timeline: scroll()) { .top::after { background: var(--blush-500); } [data-theme="dark"] .top::after { background: rgba(230,205,192,.5); } }

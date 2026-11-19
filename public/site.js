@@ -315,7 +315,7 @@
     at = Math.max(0, Math.min(last, i))
     var s = steps[at]
     s.classList.toggle('back', !!back); s.classList.add('on')
-    bar.style.width = (at / last) * 100 + '%'
+    bar.style.width = Math.min(1, (at + 1) / last) * 100 + '%'
     prev.disabled = at === 0 || at === last
     fwd.textContent = at === last - 1 ? 'Anfrage senden' : 'Weiter'
     fwd.classList.toggle('send', at === last - 1)
