@@ -598,6 +598,23 @@ html:not(.js) .cw, .top[data-open] ~ .cw, .top[data-open] ~ .notice { display: n
 .cw-launcher-mark { background: none; color: var(--ink-1); }
 .cw-launcher { padding: 4px 16px 4px 6px; }
 @media (max-width: 960px) { .cw-launcher { min-height: 52px; padding: 4px; } }
+.cw-launcher-face { display: none; }
+@media (min-width: 961px) {
+  .cw-launcher { min-height: 58px; gap: 12px; padding: 7px 8px 7px 7px; background: rgba(255,255,255,.86); box-shadow: 0 1px 2px rgba(59,15,28,.06), 0 14px 36px -8px rgba(59,15,28,.22); }
+  .cw-launcher:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(59,15,28,.07), 0 20px 44px -10px rgba(59,15,28,.28); }
+  .cw-launcher:focus-visible { border-radius: 999px; }
+  .cw-launcher-face { position: relative; display: block; width: 42px; height: 42px; flex: none; }
+  .cw-launcher-face img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+  .cw-launcher-face i { position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 50%; background: #3F9B6B; border: 2px solid #FFFFFF; }
+  .cw-launcher-text { gap: 3px; padding-right: 4px; font-size: 15px; line-height: 1.15; letter-spacing: -.005em; white-space: nowrap; }
+  .cw-launcher-text small { display: block; font-size: 12.5px; letter-spacing: 0; color: var(--ink-3); }
+  .cw-launcher-mark { width: 40px; height: 40px; border-radius: 50%; background: var(--pk-bg); color: var(--pk-ink); transition: background .3s var(--ease), transform .3s var(--ease); }
+  .cw-launcher:hover .cw-launcher-mark { background: var(--pk-hover); transform: scale(1.05); }
+  .cw.is-open .cw-launcher { min-height: 48px; padding: 5px; }
+  .cw.is-open .cw-launcher-face { display: none; }
+  [data-theme="dark"] .cw-launcher-face i { border-color: #211318; }
+}
+@media (prefers-reduced-motion: reduce) { .cw-launcher, .cw-launcher-mark { transition: none; } .cw-launcher:hover, .cw-launcher:hover .cw-launcher-mark { transform: none; } }
 @media (max-width: 640px) { .foot .brand small { display: none; } }
 
 /* Kosten: eine Fläche, Zeile für Zeile */

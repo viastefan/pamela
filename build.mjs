@@ -575,8 +575,9 @@ const widgets = `
     <p class="cw-note">Automatische Antworten, kein Live-Gespräch. In akuten Krisen: Telefonseelsorge 0800 111 0 111 oder Notruf 112.</p>
   </div>
   <button class="cw-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
+    <span class="cw-launcher-face" aria-hidden="true"><img src="/img/pamela-avatar.webp" width="42" height="42" alt="" loading="lazy" decoding="async"><i></i></span>
+    <span class="cw-launcher-text"><span>Haben Sie Fragen?</span><small>Antworten sofort</small></span>
     <span class="cw-launcher-mark" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 3.5h10a.5.5 0 0 1 .5.5v6.5a.5.5 0 0 1-.5.5H8.5L5.5 13.5V11H3a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5z"/></svg></span>
-    <span class="cw-launcher-text"><span>Fragen?</span><small>Antworten sofort</small></span>
     <span class="cw-launcher-x" aria-hidden="true">${X}</span>
   </button>
   <script type="application/json" id="chat-data">${JSON.stringify(CHAT)}</script>
