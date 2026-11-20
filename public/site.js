@@ -103,7 +103,7 @@
     root.dataset.themeChoice = t
     root.dataset.theme = t === 'dark' || (t === 'system' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'
     themeBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)) })
-    var meta = doc.querySelector('meta[name=theme-color]'); if (meta) meta.content = root.dataset.theme === 'dark' ? '#121814' : '#F6F6F0'
+    var meta = doc.querySelector('meta[name=theme-color]'); if (meta) meta.content = root.dataset.theme === 'dark' ? '#121814' : '#F8F6EE'
   }
   doc.querySelectorAll('[data-theme-toggle]').forEach(function (b) { b.addEventListener('click', function () { setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark') }) })
   if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener && matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { if (root.dataset.themeChoice === 'system') setTheme('system') })

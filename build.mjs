@@ -715,7 +715,7 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <meta name="twitter:image" content="${ORIGIN}/img/og.jpg">
 <meta name="geo.region" content="DE-BY">
 <meta name="geo.placename" content="${P.city}">
-<meta name="theme-color" content="#F6F6F0">
+<meta name="theme-color" content="#F8F6EE">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="/favicon.ico?v=4" sizes="32x32">
 <link rel="icon" href="/favicon.png?v=4" type="image/png" sizes="48x48">
@@ -789,7 +789,7 @@ const indexed = pages.filter(p => !p.noindex)
 const today = new Date().toISOString().slice(0, 10)
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`)
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
-write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F6F6F0', theme_color: '#4E6E52', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
+write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#5E7347', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
 
