@@ -1660,3 +1660,16 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Leistungsseiten-Zeichnungen: Flächen und Schatten wie in den Szenen */
 .art-svc .seat { fill: var(--card); }
 .art-svc .shadow { animation: none; }
+
+/* Handy-Hero moderner: Foto als abgerundete Bildkarte mit Rand zum Bildschirm, Text darunter luftiger und kompakter */
+@media (max-width: 960px) {
+  .hero.hero-photo { padding: 10px 10px 8px; }
+  .hero-photo .hero-bg { display: block; border-radius: 28px; overflow: hidden; box-shadow: 0 2px 6px rgba(46,58,42,.06), 0 24px 50px -28px rgba(46,58,42,.45); }
+  .hero-photo .hero-bg img { aspect-ratio: 4 / 4.4; object-position: 70% 12%; border-radius: 28px; }
+  .hero-card { margin: 26px 12px 0; }
+  .hero-photo h1 { font-size: clamp(31px, 8.4vw, 38px); line-height: 1.07; letter-spacing: -.028em; }
+  .hero-photo .lead { margin-top: 14px; font-size: 17px; }
+  .hero-photo .quick { margin-top: 22px; padding-top: 20px; }
+  .hero-photo .quick-line { font-size: 19px; line-height: 1.9; }
+  .hero-photo .quick-foot { margin-top: 20px; }
+}
