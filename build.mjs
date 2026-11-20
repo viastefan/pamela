@@ -237,7 +237,6 @@ pages.push({
     </form>
   </div>
 </div>
-  <p class="hero-tag"><b>${P.name}</b><span>Dipl. Sozialpädagogin (FH), systemische Therapeutin (IFW)</span></p>
 </section>
 
 <section class="trust-strip"><div class="wrap">
