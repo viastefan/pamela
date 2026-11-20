@@ -1471,7 +1471,6 @@ html:not(.js) .flow-nav { display: none; }
 /* Leistungsseiten: eine Zeichnung im Stil der Startseite neben der Überschrift */
 .svc-art { margin: 28px 0 0; max-width: 420px; }
 .svc-art .art { display: block; background: var(--blush-100); }
-.art-svc * { animation: none; }
 @media (min-width: 961px) {
   .page-hero .wrap.has-art { display: grid; grid-template-columns: minmax(0, 1fr) 360px; column-gap: 72px; align-items: start; }
   .page-hero .wrap.has-art > :not(.svc-art) { grid-column: 1; }
@@ -1513,3 +1512,32 @@ html:not(.js) .flow-nav { display: none; }
 .trust-strip .quals li::before { background-color: rgba(78,110,82,.12); }
 .place { --place-ink: #3F6345; }
 @media (min-width: 961px) { .hero-tag { bottom: 104px; } }
+
+/* ── Szenen verfeinert: ruhigere Linien, weiche Flächen, kleine Farbakzente aus dem Logo */
+.art { stroke-width: 1.8; }
+.art .thin { stroke-width: 1.5; }
+.art .rug { fill: var(--wine-300); fill-opacity: .3; stroke: none; }
+.art .seat, .art .pot { fill: var(--card); }
+.art .pane { fill: var(--lc-blue); fill-opacity: .2; stroke: none; }
+.art .cone { fill: #F2D9A8; opacity: .38; } @keyframes cone { to { opacity: .55; } }
+.art .shade { fill: var(--card); }
+.art .hillfill { fill: var(--wine-300); fill-opacity: .2; stroke: none; }
+.art .tree { stroke: var(--wine-300); }
+.art .crown { fill: var(--wine-300); fill-opacity: .45; stroke: none; }
+.art .shadow { fill: var(--wine-700); fill-opacity: .12; stroke: none; transform-box: fill-box; transform-origin: center; animation: shadow .6s ease-in-out infinite alternate; }
+.art .w2 .shadow { animation-delay: -.3s; }
+@keyframes shadow { to { transform: scaleX(.8); } }
+.art-walk .sun { fill: var(--lc-orange); fill-opacity: .35; }
+.art-walk .halo { fill: var(--lc-orange); fill-opacity: .14; }
+.art .live .pt { fill: #5FA36C; }
+.art-svc .beat { fill: var(--lc-pink); fill-opacity: .55; stroke: none; transform-box: fill-box; transform-origin: center; animation: beat 2.8s ease-in-out infinite; }
+@keyframes beat { 0%, 55%, 100% { transform: scale(1); } 18% { transform: scale(1.18); } 32% { transform: scale(1); } 42% { transform: scale(1.1); } }
+.art-svc .glowsun { fill: var(--lc-orange); fill-opacity: .32; transform-box: fill-box; transform-origin: center; animation: halo 5s ease-in-out infinite alternate; }
+.art-svc .float { animation: floaty 3.6s ease-in-out infinite alternate; }
+@keyframes floaty { to { transform: translateY(-3px); } }
+.art-svc .trail { animation: trail 2.4s linear infinite; }
+@keyframes trail { to { stroke-dashoffset: -20; } }
+.art-svc .sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 5s ease-in-out infinite alternate; }
+[data-theme="dark"] .art :is(.seat, .pot, .shade) { fill: var(--card); }
+[data-theme="dark"] .art .cone { fill: var(--wine-500); }
+@media (prefers-reduced-motion: reduce) { .art-svc * { animation: none !important; } }
