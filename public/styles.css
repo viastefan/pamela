@@ -1652,3 +1652,11 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 }
 @media (max-width: 1180px) and (min-width: 961px) { .hero-card { max-width: 460px; } .hero-photo .quick-foot .small { flex-basis: 100%; } }
 @media (max-width: 960px) { .hero-photo::after { display: none; } .hero-card { margin-top: 28px; } }
+
+/* Cookie-Hinweis: Tasten wieder dunkel, unabhängig vom Feinschliff der übrigen Tasten */
+.consent .consent-foot .btn { background: var(--ink-1); color: #FFFFFF; border-color: transparent; box-shadow: none; }
+.consent .consent-foot .btn:hover { background: var(--wine-950); }
+[data-theme="dark"] .consent .consent-foot .btn { background: var(--ink-1); color: var(--canvas); }
+/* Leistungsseiten-Zeichnungen: Flächen und Schatten wie in den Szenen */
+.art-svc .seat { fill: var(--card); }
+.art-svc .shadow { animation: none; }
