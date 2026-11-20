@@ -2,7 +2,8 @@
 // 1. die Benachrichtigung an die Praxis (Antwort geht direkt an die anfragende Person),
 // 2. eine Bestätigung an die anfragende Person, wenn sie eine E-Mail-Adresse angegeben hat.
 // Umgebungsvariablen: RESEND_API_KEY und ANFRAGE_TO (Empfängerin) sind Pflicht,
-// ANFRAGE_FROM (verifizierter Absender) und ANFRAGE_REPLY (Antwortadresse der Bestätigung) sind optional.
+// ANFRAGE_FROM (verifizierter Absender), ANFRAGE_REPLY (Antwortadresse der Bestätigung) und
+// ANFRAGE_COPY (stille Kopie der Anfrage an die Betreuung der Website) sind optional.
 // Fehlen die Pflichtangaben, antwortet die Funktion mit 503 und die Seite weicht auf das Mailprogramm aus.
 // Gespeichert wird nichts.
 
@@ -65,6 +66,9 @@ module.exports = async (req, res) => {
   const { RESEND_API_KEY: key, ANFRAGE_TO: to } = process.env
   const from = process.env.ANFRAGE_FROM || DEFAULT_FROM, reply = process.env.ANFRAGE_REPLY || PRAXIS.mail
   if (!key || !to) return done(503, { error: 'not_configured' })
+  // Optionale stille Kopie der Anfrage (ANFRAGE_COPY, mehrere Adressen mit Komma). Standard: keine Kopie.
+  const copy = (process.env.ANFRAGE_COPY || '').split(',').map(x => x.trim()).filter(Boolean)
+  const bcc = copy.length ? { bcc: copy } : {}
 
   const wish = [['Anliegen', thema], ['Form', ort], ['Wunschzeit', zeit.join(', ')]]
   const contact = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
@@ -73,7 +77,7 @@ module.exports = async (req, res) => {
   if (kontakt) {
     const rows = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
     const sent = await send(key, {
-      from, to: [to], subject: `Neue Nachricht über die Website (${name})`, ...(email ? { reply_to: email } : {}),
+      from, to: [to], ...bcc, subject: `Neue Nachricht über die Website (${name})`, ...(email ? { reply_to: email } : {}),
       text: `Neue Nachricht über die Website\n\n${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}`,
       html: mail({ title: 'Neue Nachricht', intro: `${esc(name)} hat über das Kontaktformular geschrieben.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
     })
@@ -88,7 +92,7 @@ module.exports = async (req, res) => {
 
   // 1. An die Praxis. Ohne diese Mail gilt die Anfrage als nicht zugestellt.
   const lead = await send(key, {
-    from, to: [to], subject: `Neue Terminanfrage: ${thema} (${name})`, ...(email ? { reply_to: email } : {}),
+    from, to: [to], ...bcc, subject: `Neue Terminanfrage: ${thema} (${name})`, ...(email ? { reply_to: email } : {}),
     text: `Neue Terminanfrage über die Website\n\n${plain([...wish, ...contact])}`,
     html: mail({ title: 'Neue Terminanfrage', intro: `${esc(name)} hat über die Website einen Termin angefragt.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows: [...wish, ...contact], foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
   })
