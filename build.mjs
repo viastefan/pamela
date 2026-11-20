@@ -322,15 +322,22 @@ pages.push({
 ${cta()}`,
 })
 
+const SVC_ART = {
+  '/einzeltherapie/': ART.praxis,
+  '/paartherapie/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><circle cx="120" cy="44" r="26" fill="var(--blush-300)" stroke="none" opacity=".45"/><path stroke="var(--wine-300)" d="M16 130h208"/><g transform="translate(96 0)"><circle cx="0" cy="56" r="8"/><path d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><path d="M-3 102v28M4 102v28"/><path d="M7 73l11 13"/><path d="M-7 73l-5 17"/></g><g transform="translate(144 0)"><circle cx="0" cy="56" r="8"/><path d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><path d="M-3 102v28M4 102v28"/><path d="M-7 73l-11 13"/><path d="M7 73l5 17"/></g><path d="M120 51c-6.500-4.800-9-8-9-11.200a4.500 4.500 0 0 1 9-1.300 4.500 4.500 0 0 1 9 1.300c0 3.200-2.500 6.400-9 11.200z" fill="var(--wine-300)" stroke="none"/><g stroke-width="1.5"><rect x="46" y="34" width="26" height="15" rx="7.500"/><path d="M64 49l3 4"/><path d="M53 41.500h12"/><rect x="168" y="30" width="26" height="15" rx="7.500"/><path d="M176 45l-3 4"/><path d="M175 37.500h12"/></g><path d="M206 130v-22c0-9 5-15 13-17-2 9-5 15-13 17M206 114c-7-2-11-7-12-15 7 1 11 6 12 15"/><path stroke="var(--wine-300)" d="M24 130v-14c0-6 4-10 9-11-1 6-4 10-9 11"/></svg>`,
+  '/jugendcoaching/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><circle cx="190" cy="40" r="13" fill="var(--blush-300)" stroke="none"/><circle cx="190" cy="40" r="22" fill="var(--blush-300)" stroke="none" opacity=".35"/><path stroke="var(--wine-300)" d="M-4 112c36-26 70-26 104-4s70 20 144-8"/><path stroke="var(--wine-300)" d="M16 130h208"/><path stroke-dasharray="3 7" d="M98 130c26-6 44-20 58-40s22-30 34-36"/><g transform="translate(72 0)"><circle cx="0" cy="56" r="8"/><path d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><path d="M-3 102v28M4 102v28"/><rect x="-15" y="70" width="9" height="20" rx="4"/><path d="M7 73l9 12 8-4"/></g><path d="M150 130V84"/><path d="M150 88h24l6 6-6 6h-24z"/><path d="M150 106h-20l-6 6 6 6h20z" stroke="var(--wine-300)"/><g stroke-width="1.5"><path d="M38 44l3.200 6.400 7 1-5.100 5 1.200 7-6.300-3.300-6.300 3.300 1.200-7-5.100-5 7-1z"/></g></svg>`,
+  '/erziehungsberatung/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><circle cx="196" cy="38" r="12" fill="var(--blush-300)" stroke="none"/><circle cx="196" cy="38" r="21" fill="var(--blush-300)" stroke="none" opacity=".35"/><path stroke="var(--wine-300)" d="M16 130h208"/><path d="M30 130V86l30-24 30 24v44"/><path d="M52 130v-26h16v26"/><path stroke="var(--wine-300)" d="M66 78h10v10H66z"/><g transform="translate(128 0)"><circle cx="0" cy="56" r="8"/><path d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><path d="M-3 102v28M4 102v28"/><path d="M-7 73l-6 16"/><path d="M7 73l14 20"/></g><g transform="translate(164 49) scale(.62)"><circle cx="0" cy="56" r="8"/><path d="M-7 69c4-3 10-3 14 0l3 33h-20z"/><path d="M-3 102v28M4 102v28"/><path d="M7 73l6 16"/><path d="M-7 73l-13 12"/></g><path d="M206 130v-22c0-9 5-15 13-17-2 9-5 15-13 17M206 114c-7-2-11-7-12-15 7 1 11 6 12 15"/><path d="M112 40c-3.600-2.700-5-4.500-5-6.300a2.500 2.500 0 0 1 5-.7 2.500 2.500 0 0 1 5 .7c0 1.800-1.400 3.600-5 6.300z" fill="var(--wine-300)" stroke="none"/></svg>`,
+}
 for (const s of services) {
   pages.push({
     path: s.path, title: s.title, desc: s.desc,
     ld: [crumbs(['Angebot', '/angebot/'], [s.name, s.path]), { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.desc, url: ORIGIN + s.path, provider: { '@id': ORIGIN + '/#praxis' }, areaServed: P.areas.concat(['Deutschland', 'Österreich', 'Schweiz']) }],
     body: `
-<section class="page-hero"><div class="wrap">
+<section class="page-hero"><div class="wrap${SVC_ART[s.path] ? ' has-art' : ''}">
   <p class="small crumb rv"><a class="link" href="/angebot/">Angebot</a></p>
   <h1 class="glass">${glass(s.h1)}</h1>
   <p class="lead rv" style="--d:260ms">${s.lead}</p>
+  ${SVC_ART[s.path] ? `<figure class="svc-art rv" style="--d:320ms">${SVC_ART[s.path]}</figure>` : ''}
 </div></section>
 <section class="section"><div class="wrap with-aside">
   <div class="prose" data-fold>${md(s.body)}</div>
