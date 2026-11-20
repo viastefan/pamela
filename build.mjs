@@ -301,7 +301,7 @@ pages.push({
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
     <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><ul class="tile-list"><li>Eltern sein, Paar bleiben</li><li>Schritt für Schritt als Eltern fit</li><li>Gruppe für Trennungs- und Scheidungskinder</li></ul><span class="tile-go">Alle Kurse ansehen</span></a>
-    <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken zum Elternsein</h3><p>Was Kinder stärkt und wie Eltern ihren Weg finden.</p><span class="tile-go">Weiterlesen</span></a>
+    <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><p>Zu Erschöpfung, Partnerschaft, Elternsein und systemischer Therapie.</p><span class="tile-go">Weiterlesen</span></a>
   </div>
 </div></section>
 
@@ -454,13 +454,13 @@ ${isCourse ? cta(false, 'Kurs für Ihre Schule anfragen', 'Gerne berate ich Sie 
 
 pages.push({
   path: '/blog/',
-  title: 'Blog: Gedanken zum Elternsein | Pamela Zurbuchen',
-  desc: 'Gedanken zum Elternsein von Pamela Zurbuchen: was es braucht, damit Kinder glücklich und gesund aufwachsen, und wie Eltern ihren eigenen Weg finden.',
+  title: 'Blog: Gedanken zu Therapie, Partnerschaft und Elternsein | Pamela Zurbuchen',
+  desc: 'Der Blog von Pamela Zurbuchen, Landsberg am Lech: Impulse zu Erschöpfung, Partnerschaft, Elternsein, Walk and Talk und systemischer Therapie.',
   ld: [crumbs(['Blog', '/blog/'])],
   body: `
 <section class="page-hero"><div class="wrap">
-  <h1 class="glass">${glass('Gedanken zum Elternsein')}</h1>
-  <p class="lead rv" style="--d:200ms">Was braucht es, damit Kinder und Menschen glücklich und gesund aufwachsen und bleiben? Hier teile ich, was ich dazu entdeckt, beobachtet und gelernt habe.</p>
+  <h1 class="glass">${glass('Gedanken und Impulse')}</h1>
+  <p class="lead rv" style="--d:200ms">Was hilft, wenn alles zu viel wird? Wie finden Paare wieder zueinander, und was brauchen Kinder? Hier teile ich, was ich in meiner Arbeit beobachte und gelernt habe.</p>
 </div></section>
 <section class="section"><div class="wrap"><h2 class="sr">Artikel</h2><div class="grid g2">${posts.map((p, i) => card(p, i, 'Weiterlesen')).join('')}</div></div></section>
 ${cta()}`,
