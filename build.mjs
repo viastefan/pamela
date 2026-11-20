@@ -717,7 +717,7 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <meta name="geo.region" content="DE-BY">
 <meta name="geo.placename" content="${P.city}">
 <meta name="theme-color" content="#F6F6F0">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <link rel="icon" href="/favicon.ico?v=4" sizes="32x32">
 <link rel="icon" href="/favicon.png?v=4" type="image/png" sizes="48x48">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
