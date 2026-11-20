@@ -67,7 +67,7 @@ const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script
 const picture = (name, [big, small], alt, w, h, attrs = 'loading="lazy" decoding="async"') =>
   `<picture><source type="image/webp" srcset="/img/${name}-${small}.webp ${small}w, /img/${name}-${big}.webp ${big}w" sizes="(max-width: 960px) 74vw, 440px"><img src="/img/${name}-${big}.jpg" srcset="/img/${name}-${small}.jpg ${small}w, /img/${name}-${big}.jpg ${big}w" sizes="(max-width: 960px) 74vw, 440px" width="${w}" height="${h}" alt="${esc(alt)}" ${attrs}></picture>`
 const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="tilt"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div></div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
-const mark = `<img class="mark" src="/img/logo-512.webp?v=3" width="512" height="512" alt="" loading="lazy" decoding="async">`
+const mark = `<img class="mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="" loading="lazy" decoding="async">`
 const nameOf = d => d.name.replace('Kommunikationstraining', 'Kommunikations&shy;training').replace('Erziehungsberatung', 'Erziehungs&shy;beratung')
 const card = (d, i = 0, goWord = 'Mehr erfahren') => `<a class="card rv" style="--d:${i * 60}ms" href="${d.path}"><h3>${nameOf(d)}</h3><p>${inline(d.card || d.teaser)}</p><span class="go">${goWord}</span></a>`
 const book = (thema, cls = 'primary', label = 'Termin anfragen') => `<a class="btn ${cls}" href="/termin/${thema ? '?thema=' + thema : ''}">${label}</a>`
@@ -221,8 +221,10 @@ pages.push({
   desc: 'Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching und Erziehungsberatung in Landsberg am Lech. In der Praxis, online oder als Walk and Talk. Erstgespräch kostenfrei.',
   ld: [business, person, { '@context': 'https://schema.org', '@type': 'WebSite', name: P.name, url: ORIGIN + '/', inLanguage: 'de' }, { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
   body: `
-<section class="hero"><div class="wrap hero-grid">
-  <div>
+<section class="hero hero-photo">
+  <picture class="hero-bg"><source type="image/webp" media="(max-width: 960px)" srcset="/img/hero-900.webp"><source type="image/webp" srcset="/img/hero-1366.webp"><img src="/img/hero-1366.jpg" width="1366" height="768" alt="" fetchpriority="high" decoding="async"></picture>
+  <div class="wrap hero-grid">
+  <div class="hero-card">
     <h1 class="glass">${glass('Systemische und traumasensible Therapie in')} <span class="place">${['Landsberg', 'am&nbsp;Lech'].map((w, i) => `<span class="gw" style="--i:${i + 5}">${w}</span>`).join(' ')}</span></h1>
     <p class="lead rv" style="--d:80ms">Für Einzelne, Paare, Eltern und Jugendliche: in der Praxis, online oder im Gehen.</p>
     <form class="quick rv" style="--d:160ms" action="/termin/" method="get" aria-label="Termin anfragen">
@@ -230,8 +232,9 @@ pages.push({
       <div class="quick-foot"><button class="btn primary" type="submit">Termin anfragen</button><span class="small">Kostenfreies Erstgespräch, etwa 30 Minuten</span></div>
     </form>
   </div>
-  ${portrait('pamela-zurbuchen', [992, 640], 'Pamela Zurbuchen, systemische und traumasensible Therapeutin in Landsberg am Lech', 992, 1240, `${P.name}|Dipl. Sozialpädagogin (FH), systemische Therapeutin (IFW)`)}
-</div></section>
+</div>
+  <p class="hero-tag"><b>${P.name}</b><span>Dipl. Sozialpädagogin (FH), systemische Therapeutin (IFW)</span></p>
+</section>
 
 <section class="trust-strip"><div class="wrap">
   <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>2 Google-Rezensionen</small></span></a>
@@ -560,7 +563,7 @@ pages.push({
       <div class="next"><button class="btn primary" type="submit">Anfrage senden</button></div>
     </fieldset>
     <section class="step done" data-step="fertig" aria-live="polite">
-      <img src="/img/logo-192.webp?v=3" width="192" height="192" alt="">
+      <img src="/img/logo-192.webp?v=4" width="192" height="192" alt="">
       <h2 data-done-title>Danke, Ihre Anfrage ist unterwegs.</h2>
       <p class="lead" data-done-text>Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.</p>
       <div class="actions"><a class="btn primary" data-done-mail hidden href="mailto:${P.mail}">E-Mail öffnen</a><a class="btn" href="/">Zur Startseite</a></div>
@@ -578,7 +581,7 @@ for (const d of docs.filter(d => d.type === 'legal')) {
 
 pages.push({ path: '/404', file: '404.html', title: 'Seite nicht gefunden | Pamela Zurbuchen', desc: 'Diese Seite gibt es nicht.', noindex: true, body: `
 <section class="lost"><div class="wrap">
-  <img class="lost-mark" src="/img/logo-512.webp?v=3" width="512" height="512" alt="">
+  <img class="lost-mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="">
   <h1 class="glass">${glass('Hier geht es nicht weiter.')}</h1>
   <p class="lead">Die Seite wurde verschoben oder es gab sie nie. Von der Startseite aus finden Sie alles wieder.</p>
   <div class="actions"><a class="btn primary" href="/">Zur Startseite</a><a class="btn" href="/angebot/">Zum Angebot</a><a class="btn" href="/kontakt/">Kontakt</a></div>
@@ -590,7 +593,7 @@ const FOOT = [
   ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
 ]
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
-const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp?v=5" srcset="/img/wortmarke-120.webp?v=5 1x, /img/wortmarke-240.webp?v=5 2x" width="577" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
+const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-mark" src="/img/logo-96.webp?v=4" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
 const current = (p, h) => p.path === h || p.path.startsWith(h) || (h === '/angebot/' && SERVICE_ORDER.includes(p.path))
 // Chat unten rechts, im Aufbau wie bei Primava: kompakte Taste, Fenster mit Verlauf, Vorschlägen und Eingabe.
 // Die Antworten sind feste Texte aus den Inhalten der Seite: kein Modell, kein Mensch am anderen Ende.
@@ -709,16 +712,16 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <meta name="twitter:image" content="${ORIGIN}/img/og.jpg">
 <meta name="geo.region" content="DE-BY">
 <meta name="geo.placename" content="${P.city}">
-<meta name="theme-color" content="#FBF5EC">
+<meta name="theme-color" content="#F6F6F0">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="/favicon.ico?v=3" sizes="32x32">
-<link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="48x48">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="icon" href="/favicon.ico?v=4" sizes="32x32">
+<link rel="icon" href="/favicon.png?v=4" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/fonts/Geist-VF-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistSerif-VF.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
-<script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(d.dataset.theme==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#150B0E'}})(document.documentElement)</script>
+<script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(d.dataset.theme==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#121814'}})(document.documentElement)</script>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/downloads/*"}},{"not":{"href_matches":"/api/*"}}]},"eagerness":"moderate"}]}</script>
 ${(p.ld || []).map(ld).join('\n')}
 </head>
@@ -783,7 +786,7 @@ const indexed = pages.filter(p => !p.noindex)
 const today = new Date().toISOString().slice(0, 10)
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`)
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
-write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F4EF', theme_color: '#6F2039', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
+write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F6F6F0', theme_color: '#4E6E52', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
 
