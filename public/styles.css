@@ -1635,3 +1635,20 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 @media (prefers-reduced-motion: reduce) { .hero-photo .hero-bg img, .hero-card { animation: none; } .btn.primary:hover, a.card:hover, .way:hover, .course:hover, a.tile:hover { transform: none; } }
 [data-theme="dark"] .btn:not(.primary):not(.gold) { background: transparent; }
 [data-theme="dark"] .hero-card { background: rgba(28,36,30,.9); border-color: rgba(255,255,255,.06); }
+
+/* Hero ohne Kasten: Text liegt direkt auf dem Foto, ein weicher heller Verlauf von links sorgt für Lesbarkeit */
+.hero-card { max-width: 600px; padding: 0; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border: 0; box-shadow: none; }
+.hero-photo::after { background: linear-gradient(90deg, rgba(248,246,238,.97) 0%, rgba(248,246,238,.9) 30%, rgba(248,246,238,.55) 46%, rgba(248,246,238,0) 62%), linear-gradient(180deg, rgba(248,246,238,0) 75%, rgba(248,246,238,.35) 100%); }
+.hero-photo .hero-bg img { object-position: 80% 30%; }
+.hero-photo .quick { border-top-color: rgba(51,53,43,.12); }
+[data-theme="dark"] .hero-card { background: none; border: 0; }
+[data-theme="dark"] .hero-photo::after { background: linear-gradient(90deg, rgba(18,24,20,.95) 0%, rgba(18,24,20,.85) 32%, rgba(18,24,20,.4) 50%, rgba(18,24,20,0) 66%); }
+@media (max-width: 1180px) and (min-width: 961px) { .hero-card { max-width: 500px; } .hero-photo .hero-bg img { object-position: 74% 30%; } }
+@media (max-width: 960px) {
+  .hero.hero-photo { padding-bottom: 8px; }
+  .hero-photo .hero-bg img { aspect-ratio: 4 / 3.6; object-position: 72% 18%; }
+  .hero-photo::after { display: block; top: auto; height: 46%; background: linear-gradient(180deg, rgba(248,246,238,0), var(--canvas)); bottom: auto; }
+  .hero-card { position: relative; margin: -40px var(--gutter) 0; padding: 0; background: none; box-shadow: none; }
+}
+@media (max-width: 1180px) and (min-width: 961px) { .hero-card { max-width: 460px; } .hero-photo .quick-foot .small { flex-basis: 100%; } }
+@media (max-width: 960px) { .hero-photo::after { display: none; } .hero-card { margin-top: 28px; } }
