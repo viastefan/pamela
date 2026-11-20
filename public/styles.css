@@ -1764,3 +1764,4 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Fuß am Handy: keine Trennlinien, Links ohne Silbentrennung */
 @media (max-width: 960px) { .foot .cols, .foot .fine, .foot-end { border-top: 0 !important; border-bottom: 0 !important; } .foot .g-badge { margin-bottom: 0; } }
 .foot li, .foot a { hyphens: none; -webkit-hyphens: none; }
+@media (max-width: 960px) { .foot li { overflow-wrap: normal; word-break: normal; } .foot .cols { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px 16px; } .foot li { font-size: 14px; } }
