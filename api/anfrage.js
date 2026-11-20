@@ -16,15 +16,19 @@ const ZEIT = { vormittags: 'Vormittags', nachmittags: 'Nachmittags', abends: 'Am
 const DEFAULT_FROM = 'Pamela Zurbuchen <noreply@festag.app>'
 const PRAXIS = { name: 'Pamela Zurbuchen', phone: '0176-43 45 22 86', mail: 'zurbuchen-therapie@gmx.de', site: 'www.zurbuchen-therapie.de' }
 
-// Eine ruhige Mail: Überschrift, ein Satz, die Angaben als Tabelle, Fußzeile.
-const mail = ({ title, intro, rows, foot }) => `<!doctype html><html lang="de"><body style="margin:0;background:#F8F4EF;padding:32px 16px;font:16px/1.55 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:#53474A">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#FFFFFF;border-radius:16px;border:1px solid #EFE7E0"><tr><td style="padding:32px">
-<p style="margin:0 0 20px;font-size:13px;letter-spacing:.02em;color:#6F2039">${PRAXIS.name}</p>
-<h1 style="margin:0 0 12px;font:400 26px/1.2 Georgia,'Times New Roman',serif;color:#241A1C">${title}</h1>
+// Eine ruhige Mail im Stil der Website: Logo, Überschrift, ein Satz, die Angaben als Tabelle, Kontakt, Fußzeile.
+const SITE = process.env.SITE_URL || 'https://pamela-festag.vercel.app'
+const C = { bg: '#F8F6EE', card: '#FFFFFF', line: '#E6EEE0', ink: '#33352B', ink2: '#56574B', ink3: '#767567', brand: '#5E7B53', tint: '#EFF4EA' }
+const mail = ({ title, intro, rows, foot, cta }) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${title}</title></head>
+<body style="margin:0;background:${C.bg};padding:32px 16px;font:16px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.ink2}">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto"><tr><td style="padding:0 4px 18px">
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:middle"><img src="${SITE}/img/icon-512.png" width="36" height="36" alt="" style="display:block;border:0"></td><td style="padding-left:12px;vertical-align:middle;font:400 19px/1.2 Georgia,'Times New Roman',serif;color:${C.ink}">${PRAXIS.name}<br><span style="font:12px/1.4 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.brand}">Systemische und traumasensible Einzel- und Paartherapie</span></td></tr></table>
+</td></tr><tr><td style="background:${C.card};border-radius:18px;border:1px solid ${C.line};padding:32px 30px">
+<h1 style="margin:0 0 12px;font:400 26px/1.25 Georgia,'Times New Roman',serif;color:${C.ink}">${title}</h1>
 <p style="margin:0 0 24px">${intro}</p>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #EFE7E0">${rows.map(([k, v]) => `<tr><td style="padding:12px 16px 12px 0;border-bottom:1px solid #EFE7E0;font-size:13px;color:#74686B;vertical-align:top;white-space:nowrap">${k}</td><td style="padding:12px 0;border-bottom:1px solid #EFE7E0;color:#241A1C">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}</table>
-<p style="margin:24px 0 0;font-size:13px;line-height:1.5;color:#74686B">${foot}</p>
-</td></tr></table></body></html>`
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line}">${rows.map(([k, v]) => `<tr><td style="padding:12px 16px 12px 0;border-bottom:1px solid ${C.line};font-size:13px;color:${C.ink3};vertical-align:top;white-space:nowrap">${k}</td><td style="padding:12px 0;border-bottom:1px solid ${C.line};color:${C.ink}">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}</table>
+${cta ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:26px"><tr><td style="background:${C.brand};border-radius:999px"><a href="${cta[1]}" style="display:inline-block;padding:12px 24px;font-size:15px;color:#FFFFFF;text-decoration:none">${cta[0]}</a></td></tr></table>` : ''}
+</td></tr><tr><td style="padding:20px 6px 0;font-size:13px;line-height:1.55;color:${C.ink3}">${foot}</td></tr></table></body></html>`
 
 // Höchstens acht Sekunden warten; bei einem Fehler nur den Status festhalten, keine Angaben der Person.
 const send = (key, body) => fetch('https://api.resend.com/emails', {
@@ -71,13 +75,13 @@ module.exports = async (req, res) => {
     const sent = await send(key, {
       from, to: [to], subject: `Neue Nachricht über die Website (${name})`, ...(email ? { reply_to: email } : {}),
       text: `Neue Nachricht über die Website\n\n${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}`,
-      html: mail({ title: 'Neue Nachricht', intro: `${esc(name)} hat über das Kontaktformular geschrieben.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt.' }),
+      html: mail({ title: 'Neue Nachricht', intro: `${esc(name)} hat über das Kontaktformular geschrieben.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
     })
     if (!sent) return done(502, { error: 'send_failed' })
     if (email) await send(key, {
       from, to: [email], reply_to: reply, subject: 'Ihre Nachricht ist angekommen',
       text: `Guten Tag ${name},\n\nvielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.\n\n${PRAXIS.name}\n${PRAXIS.phone}\n${PRAXIS.mail}`,
-      html: mail({ title: 'Ihre Nachricht ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: [['Ihre Nachricht', nachricht]], foot: `${PRAXIS.name}, ${PRAXIS.phone}, ${PRAXIS.mail}<br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.` }),
+      html: mail({ title: 'Ihre Nachricht ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: [['Ihre Nachricht', nachricht]], foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br>${PRAXIS.phone} · <a href="mailto:${PRAXIS.mail}" style="color:${C.brand}">${PRAXIS.mail}</a><br><br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.<br>In akuten Krisen: Telefonseelsorge 0800 111 0 111, Notruf 112.`, cta: ['Zur Website', SITE] }),
     })
     return done(200, { ok: true })
   }
@@ -86,7 +90,7 @@ module.exports = async (req, res) => {
   const lead = await send(key, {
     from, to: [to], subject: `Neue Terminanfrage: ${thema} (${name})`, ...(email ? { reply_to: email } : {}),
     text: `Neue Terminanfrage über die Website\n\n${plain([...wish, ...contact])}`,
-    html: mail({ title: 'Neue Terminanfrage', intro: `${esc(name)} hat über die Website einen Termin angefragt.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows: [...wish, ...contact], foot: 'Diese Nachricht wurde automatisch von der Website verschickt.' }),
+    html: mail({ title: 'Neue Terminanfrage', intro: `${esc(name)} hat über die Website einen Termin angefragt.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows: [...wish, ...contact], foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
   })
   if (!lead) return done(502, { error: 'send_failed' })
 
@@ -94,7 +98,7 @@ module.exports = async (req, res) => {
   if (email) await send(key, {
     from, to: [email], reply_to: reply, subject: 'Ihre Terminanfrage ist angekommen',
     text: `Guten Tag ${name},\n\nvielen Dank für Ihre Anfrage. Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.\n\n${plain(wish)}\n\n${PRAXIS.name}\n${PRAXIS.phone}\n${PRAXIS.mail}`,
-    html: mail({ title: 'Ihre Anfrage ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: wish, foot: `${PRAXIS.name}, ${PRAXIS.phone}, ${PRAXIS.mail}<br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.` }),
+    html: mail({ title: 'Ihre Anfrage ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: wish, foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br>${PRAXIS.phone} · <a href="mailto:${PRAXIS.mail}" style="color:${C.brand}">${PRAXIS.mail}</a><br><br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.<br>In akuten Krisen: Telefonseelsorge 0800 111 0 111, Notruf 112.`, cta: ['Zur Website', SITE] }),
   })
   return done(200, { ok: true })
 }
