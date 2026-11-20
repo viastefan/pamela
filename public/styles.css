@@ -1431,3 +1431,39 @@ html:not(.js) .flow-nav { display: none; }
 /* Zitat im dunklen Band: größer, heller und etwas kräftiger gezeichnet (die Serifenschrift hat nur einen Schnitt) */
 .deep .quote { font-size: calc(var(--fs-quote) * 1.2); line-height: 1.14; color: #FFF8F1; -webkit-text-stroke: .55px currentColor; paint-order: stroke fill; max-width: 16em; }
 @media (max-width: 960px) { .deep .quote { font-size: calc(var(--fs-quote) * 1.14); -webkit-text-stroke-width: .4px; } }
+
+/* ── Wärmere, hellere Farbwelt (Wunsch der Auftraggeberin): Creme statt Grau-Beige, warmes Braun statt hartem Schwarz,
+   ein wärmeres Rot, und die bisher dunklen Flächen werden hell und freundlich. Die dunkle Darstellung bleibt, wie sie ist. */
+:root:not([data-theme="dark"]) {
+  --canvas: #FBF5EC; --content: #FDF9F2; --sunken: #F4E8DA; --card: #FFFFFF;
+  --ink-1: #3A2A26; --ink-2: #5F4E48; --ink-3: #7D6B64;
+  --line: rgba(58,42,38,.09); --line-2: rgba(58,42,38,.15); --line-3: rgba(58,42,38,.26);
+  --wine-950: #5E1F2C; --wine-900: #732733; --wine-700: #8E2E3E; --wine-500: #B25C68; --wine-300: #DDAFAE; --wine-100: #F8E7E2;
+  --blush-100: #FAEEE4; --blush-200: #F4DFD0; --tint: #FAEEE4; --tint-2: #FAEEE4;
+  --fill: rgba(142,46,62,.05); --fill-hover: rgba(142,46,62,.09);
+  --head-bg: rgba(251,245,236,.84);
+  --ring: 0 0 0 3px var(--canvas), 0 0 0 5.5px var(--wine-500);
+}
+:root:not([data-theme="dark"]) :is(.deep, .aside, .cta, .tile-deep) { --deep-ink-1: var(--ink-1); --deep-ink-2: var(--ink-2); --deep-line: rgba(58,42,38,.14); color: var(--ink-2); }
+:root:not([data-theme="dark"]) .deep { background: linear-gradient(120deg, #F7E6D6 0%, #F5DDD0 55%, #F3D5CB 100%); }
+:root:not([data-theme="dark"]) .cta { background: radial-gradient(90% 120% at 50% 0, #FBEBDD 0%, #F5DCCF 60%, #F2D3C9 100%); }
+:root:not([data-theme="dark"]) .tile-deep { background: linear-gradient(160deg, #F8E8D9, #F3D7CB); }
+:root:not([data-theme="dark"]) .aside { background: #F9EADC; border: 1px solid rgba(58,42,38,.08); }
+:root:not([data-theme="dark"]) .deep .quote { color: var(--wine-950); -webkit-text-stroke-width: .35px; }
+:root:not([data-theme="dark"]) .deep .link { color: var(--wine-700); }
+:root:not([data-theme="dark"]) :is(.deep, .cta, .tile-deep) .mark { opacity: .2; filter: none; }
+:root:not([data-theme="dark"]) :is(.deep, .aside, .cta, .tile-deep) .btn.gold { background: var(--pk-bg); color: var(--pk-ink); }
+:root:not([data-theme="dark"]) :is(.deep, .aside, .cta, .tile-deep) .btn.gold:hover { background: var(--pk-hover); }
+:root:not([data-theme="dark"]) .cta .actions .btn.on-deep { background: rgba(255,255,255,.55); border-color: rgba(58,42,38,.16); color: var(--ink-1); }
+:root:not([data-theme="dark"]) .cta .actions .btn.on-deep:hover, :root:not([data-theme="dark"]) .btn.on-deep:hover { background: #FFFFFF; border-color: rgba(58,42,38,.28); }
+:root:not([data-theme="dark"]) .loc-map { background: linear-gradient(160deg, #F8E8D9, #F3D7CB); }
+:root:not([data-theme="dark"]) .loc-load { color: var(--wine-950); }
+:root:not([data-theme="dark"]) .sum .box { background: var(--wine-950); }
+
+/* Ort in der Überschrift: die Fläche ist jetzt selbst eine Welle */
+.place { border-radius: 0; padding: .06em .2em .12em; margin: 0 -.2em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 60' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%238C6453' stroke-width='1' vector-effect='non-scaling-stroke'%3E%3Cpath stroke-opacity='.3' d='M0 22c20-9 40-9 80 0s60 9 80 0'/%3E%3Cpath stroke-opacity='.2' d='M0 33c20-8 40-8 80 0s60 8 80 0'/%3E%3Cpath stroke-opacity='.14' d='M0 44c20-7 40-7 80 0s60 7 80 0'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath fill='%23EBCDB6' fill-opacity='.62' d='M0 13C22 3 46 2 72 9s52 9 78 1 38-6 50-1v38c-22 10-46 11-72 4s-52-9-78-1-38 6-50 1z'/%3E%3C/svg%3E"); }
+@media (min-width: 961px) { .place { margin-left: -.04em; } }
+[data-theme="dark"] .place { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 60' preserveAspectRatio='none'%3E%3Cg fill='none' stroke='%23E6CDC0' stroke-width='1' vector-effect='non-scaling-stroke'%3E%3Cpath stroke-opacity='.3' d='M0 22c20-9 40-9 80 0s60 9 80 0'/%3E%3Cpath stroke-opacity='.2' d='M0 33c20-8 40-8 80 0s60 8 80 0'/%3E%3Cpath stroke-opacity='.14' d='M0 44c20-7 40-7 80 0s60 7 80 0'/%3E%3C/g%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'%3E%3Cpath fill='%23E6CDC0' fill-opacity='.12' d='M0 13C22 3 46 2 72 9s52 9 78 1 38-6 50-1v38c-22 10-46 11-72 4s-52-9-78-1-38 6-50 1z'/%3E%3C/svg%3E"); }
+.bento:has(> .tile:nth-child(2):last-child) .tile-deep { grid-row: auto; min-height: 320px; }
+:root:not([data-theme="dark"]) .cta .mark { opacity: .1; }

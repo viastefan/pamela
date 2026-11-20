@@ -295,7 +295,6 @@ pages.push({
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
     <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><ul class="tile-list"><li>Eltern sein, Paar bleiben</li><li>Schritt für Schritt als Eltern fit</li><li>Gruppe für Trennungs- und Scheidungskinder</li></ul><span class="tile-go">Alle Kurse ansehen</span></a>
-    <a class="tile rv" style="--d:80ms" href="/kurse/die-friedensstifter/"><span class="tile-kind">Für Lehrkräfte und Schulen</span><h3>Die Friedensstifter</h3><p>Persönlich begleiteter Kommunikationskurs, online oder vor Ort.</p><span class="tile-go">Zum Kurs</span></a>
     <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken zum Elternsein</h3><p>Was Kinder stärkt und wie Eltern ihren Weg finden.</p><span class="tile-go">Weiterlesen</span></a>
   </div>
 </div></section>
@@ -408,7 +407,7 @@ ${cta()}`,
 pages.push({
   path: '/kurse/',
   title: 'Kurse und Seminare für Eltern, Paare und Kinder | Pamela Zurbuchen',
-  desc: 'Kurse in Landsberg am Lech und online: Eltern sein, Paar bleiben. Schritt für Schritt als Eltern fit. Gruppe für Trennungs- und Scheidungskinder. Kommunikationskurs für Lehrkräfte.',
+  desc: 'Kurse in Landsberg am Lech und online: Eltern sein, Paar bleiben. Schritt für Schritt als Eltern fit. Gruppe für Trennungs- und Scheidungskinder.',
   ld: [crumbs(['Kurse', '/kurse/'])],
   body: `
 <section class="page-hero"><div class="wrap">
@@ -418,7 +417,6 @@ pages.push({
 <section class="section"><div class="wrap">
   <div class="courses">${COURSES.map(([ic, t, text, meta, pdf], i) => `
     <article class="course rv" style="--d:${(i % 2) * 80}ms"><span class="course-ico">${ico(ic)}</span><h2>${t}</h2><ul class="course-meta">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><p class="course-acts"><a class="btn primary sm" href="/termin/?thema=kurs">Anfragen</a><a class="course-pdf" href="${pdf}">${ico('down')}Kursblatt als PDF</a></p></article>`).join('')}
-    <article class="course is-wide rv"><span class="course-ico">${ico('peace')}</span><div><h2>Die Friedensstifter</h2><ul class="course-meta"><li>Für Lehrkräfte und Schulen</li><li>4 Monate</li><li>maximal 10 Personen</li></ul><p>Persönlich begleiteter Kommunikationskurs: schwierige Eltern- und Schülergespräche souverän, gelassen und wertschätzend führen.</p></div><p class="course-acts"><a class="btn primary sm" href="/kurse/die-friedensstifter/">Zum Kurs</a></p></article>
   </div>
 </div></section>
 ${cta(false, 'Fragen zu einem Kurs?', 'Bitte bei Kursen für Kinder das Alter des Kindes angeben.', 'kurs')}`,
@@ -582,7 +580,7 @@ pages.push({ path: '/404', file: '404.html', title: 'Seite nicht gefunden | Pame
 // ── Hülle
 const FOOT = [
   ['Angebot', services.map(s => [s.path, s.name])],
-  ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/kurse/die-friedensstifter/', 'Die Friedensstifter'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
+  ['Mehr', [['/ueber-mich/', 'Über mich'], ['/kurse/', 'Kurse'], ['/preise/', 'Preise'], ['/blog/', 'Blog'], ['/kontakt/', 'Kontakt'], ['/termin/', 'Termin anfragen']]],
 ]
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
 const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-word" src="/img/wortmarke-120.webp?v=5" srcset="/img/wortmarke-120.webp?v=5 1x, /img/wortmarke-240.webp?v=5 2x" width="577" height="120" alt=""><img class="brand-mark" src="/img/logo-96.webp?v=3" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
@@ -704,7 +702,7 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <meta name="twitter:image" content="${ORIGIN}/img/og.jpg">
 <meta name="geo.region" content="DE-BY">
 <meta name="geo.placename" content="${P.city}">
-<meta name="theme-color" content="#F8F4EF">
+<meta name="theme-color" content="#FBF5EC">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="/favicon.ico?v=3" sizes="32x32">
 <link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="48x48">

@@ -25,5 +25,3 @@ Erfolgreiche Kommunikation ist kein Zufall, sondern ein erlernbarer Soft Skill. 
 ## Bereit für eine bessere Gesprächskultur?
 
 Möchten Sie oder Ihr Team die Kniffe und Tricks moderner Kommunikation kennenlernen? Lassen Sie uns gemeinsam ein Miteinander aufbauen, das auf Vertrauen und Klarheit basiert.
-
-Für Lehrkräfte und Schulen gibt es den begleiteten Kommunikationskurs [Die Friedensstifter](/kurse/die-friedensstifter/).
