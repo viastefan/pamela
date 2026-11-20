@@ -1761,3 +1761,6 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Handy: keine Leiste unten links, nur der Chat-Knopf */
 @media (max-width: 960px) { .dock, .loc { display: none !important; } }
 @media (max-width: 960px) { .hero-photo .hero-grid { padding: 0; } .hero-photo .hero-card { margin: -72px 18px 0 !important; width: auto; max-width: none; } }
+/* Fuß am Handy: keine Trennlinien, Links ohne Silbentrennung */
+@media (max-width: 960px) { .foot .cols, .foot .fine, .foot-end { border-top: 0 !important; border-bottom: 0 !important; } .foot .g-badge { margin-bottom: 0; } }
+.foot li, .foot a { hyphens: none; -webkit-hyphens: none; }
