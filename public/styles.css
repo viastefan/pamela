@@ -1724,3 +1724,16 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 @media (min-width: 961px) and (max-width: 1180px) { .hero-card { max-width: 44vw; } .hero-photo .hero-bg, .hero-photo::before { width: 42vw; } .hero-photo h1 { font-size: 40px; } }
 [data-theme="dark"] .hero-photo::before { background: linear-gradient(160deg, #1E2A21, #26342A); }
 @media (min-width: 961px) { .hero.hero-photo { overflow-x: clip; overflow-y: visible; } }
+
+/* Stehlampe: die Zugschnur wird gezogen, das Licht flackert an, bleibt eine Weile an und geht wieder aus */
+.art .lampon { animation: lamp-light 9s ease-in-out 1.2s infinite both; }
+.art .bulb { fill: #F6D98C; stroke: none; opacity: 0; animation: lamp-light 9s ease-in-out 1.2s infinite both; }
+.art .shade { animation: lamp-shade 9s ease-in-out 1.2s infinite both; }
+.art .pull { animation: lamp-pull 9s cubic-bezier(.3,.7,.3,1) 1.2s infinite both; }
+.art .cord { stroke-width: 1.2; }
+.art .knob { fill: var(--wine-700); stroke: none; }
+@keyframes lamp-pull { 0%, 4% { transform: none; } 6.500% { transform: translateY(6px); } 10%, 78% { transform: none; } 80.500% { transform: translateY(6px); } 84%, 100% { transform: none; } }
+@keyframes lamp-light { 0%, 7% { opacity: 0; } 8.500% { opacity: .9; } 9.500% { opacity: .2; } 11% { opacity: .75; } 12% { opacity: .35; } 14%, 80% { opacity: 1; } 82%, 100% { opacity: 0; } }
+@keyframes lamp-shade { 0%, 7% { fill: var(--card); } 14%, 80% { fill: #FBEFD2; } 82%, 100% { fill: var(--card); } }
+[data-theme="dark"] .art .knob { fill: var(--blush-300); }
+@media (prefers-reduced-motion: reduce) { .art :is(.lampon, .bulb) { animation: none; opacity: 1; } .art .shade { animation: none; fill: #FBEFD2; } .art .pull { animation: none; } }

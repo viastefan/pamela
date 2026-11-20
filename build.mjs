@@ -103,7 +103,7 @@ const ART_RAW = {
 <path class="d" style="--i:1" d="M26 116V93a12 12 0 0 1 12-12h26a12 12 0 0 1 12 12v23"/><path class="seat d" style="--i:2" d="M20 105a4 4 0 0 1 4-4h54a4 4 0 0 1 4 4v11H20z"/><path class="d" style="--i:2" d="M25 116v8M77 116v8"/>
 <path class="d" style="--i:3" d="M124 116V95a10 10 0 0 1 10-10h22a10 10 0 0 1 10 10v21"/><path class="seat d" style="--i:3" d="M119 106a4 4 0 0 1 4-4h44a4 4 0 0 1 4 4v10h-52z"/><path class="d" style="--i:3" d="M124 116v8M166 116v8"/>
 <g class="thin"><path class="d" style="--i:6" d="M91 104h18M100 104v20"/><path class="d" style="--i:7" d="M96 104v-6h8v6M104 99.500h2.500v3H104"/><path class="steam" d="M98 94c-2.500-3 2.500-5 0-8.500"/><path class="steam s2" d="M102.500 94c-2.500-3 2.500-5 0-8.500"/></g>
-<path class="d" style="--i:4" d="M190 124V52M182 124h16"/><path class="shade d" style="--i:5" d="M178 52h24l-6-20h-12z"/>
+<path class="d" style="--i:4" d="M190 124V52M182 124h16"/><path class="shade d" style="--i:5" d="M178 52h24l-6-20h-12z"/><ellipse class="bulb" cx="190" cy="53" rx="9" ry="2.600"/><g class="pull"><path class="cord" d="M197.500 52v11"/><circle class="knob" cx="197.500" cy="64.500" r="1.900"/></g>
 <circle class="mote" cx="186" cy="98" r="1.100"/><circle class="mote m2" cx="195" cy="106" r=".9"/><circle class="mote m3" cx="182" cy="112" r="1"/>
 <path class="pot d" style="--i:6" d="M208 124l-2-11h18l-2 11z"/><g class="leaf" style="transform-origin:215px 113px"><path class="d" style="--i:7" d="M215 113c0-10 4-17 11-20-1 9-4 16-11 20"/></g><g class="leaf l2" style="transform-origin:215px 113px"><path class="d" style="--i:8" d="M215 113c-1-8-5-14-12-15 1 8 5 13 12 15"/></g></svg>`,
   walk: `<svg class="art art-walk" viewBox="0 0 240 150" aria-hidden="true">
