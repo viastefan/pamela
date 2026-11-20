@@ -1562,3 +1562,76 @@ html:not(.js) .flow-nav { display: none; }
 }
 .hero-photo .place { text-decoration: none; }
 @media (min-width: 961px) and (max-width: 1180px) { :root:not([data-theme="dark"]) .top .brand .brand-text small, .top .brand small { display: none; } .top-row { gap: 18px; } .nav a { padding: 8px 9px; } }
+
+/* ══ Hochwertiger Feinschliff: gleiche Inhalte, ruhigere Typografie, mehr Tiefe, feinere Bewegung ══ */
+:root { --shadow-sm: 0 1px 2px rgba(46,58,42,.04), 0 2px 6px rgba(46,58,42,.04); --shadow-md: 0 1px 2px rgba(46,58,42,.05), 0 12px 32px -14px rgba(46,58,42,.18); --shadow-lg: 0 2px 6px rgba(46,58,42,.05), 0 30px 70px -28px rgba(46,58,42,.32); }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+h1, h2 { letter-spacing: -.022em; }
+h2 { font-feature-settings: "kern", "liga"; }
+::selection { background: rgba(94,123,83,.18); color: var(--ink-1); }
+
+/* Kopf: feiner Strich unter dem aktiven Punkt statt Fläche */
+.nav a { position: relative; background: none !important; }
+.nav a::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1.5px; border-radius: 2px; background: var(--wine-700); transform: scaleX(0); transform-origin: 50% 50%; transition: transform .45s var(--ease); }
+.nav a:hover::after { transform: scaleX(.6); }
+.nav a[aria-current="page"]::after { transform: scaleX(1); }
+.top.scrolled { box-shadow: 0 1px 0 var(--line), 0 10px 30px -24px rgba(46,58,42,.35); border-bottom-color: transparent; }
+
+/* Tasten: satter, mit Lichtkante und weichem Schatten */
+.btn { transition: background-color .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease); }
+.btn.primary { box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 1px 2px rgba(46,58,42,.16), 0 10px 22px -12px rgba(62,82,54,.55); }
+.btn.primary:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 2px 4px rgba(46,58,42,.18), 0 16px 30px -14px rgba(62,82,54,.6); }
+.btn.primary:active { transform: translateY(0); }
+.btn:not(.primary):not(.gold) { background: rgba(255,255,255,.6); }
+
+/* Karten: ruhiger Rand, weiche Tiefe, sanftes Anheben */
+.card, .way, .fees, .faq details, .course, .tile, .info, .aside { box-shadow: var(--shadow-sm); }
+a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.way, a.card, .course, a.tile { transition: transform .55s var(--ease), box-shadow .55s var(--ease), border-color .55s var(--ease); }
+
+/* Abschnittsköpfe: kleine Linie als ruhiger Auftakt */
+.head h2::before, .rev-head h2::before { content: ''; display: block; width: 36px; height: 2px; margin-bottom: 22px; border-radius: 2px; background: linear-gradient(90deg, var(--wine-700), var(--wine-300)); }
+
+/* Startseite: Foto mit ruhigem Einschwingen, Karte klarer und edler */
+.hero.hero-photo { min-height: min(86vh, 760px); margin: 0 10px; border-radius: 0 0 32px 32px; }
+.hero-photo .hero-bg img { animation: hero-zoom 2.4s cubic-bezier(.2,.7,.1,1) both; }
+@keyframes hero-zoom { from { transform: scale(1.06); filter: saturate(.9); } }
+.hero-photo::after { background: linear-gradient(90deg, rgba(248,246,238,.5) 0%, rgba(248,246,238,.16) 40%, rgba(248,246,238,0) 60%), linear-gradient(180deg, rgba(46,58,42,0) 70%, rgba(46,58,42,.16) 100%); }
+.hero-card { max-width: 580px; padding: 48px 50px 40px; border-radius: 28px; background: rgba(255,255,255,.9); -webkit-backdrop-filter: blur(14px) saturate(130%); backdrop-filter: blur(14px) saturate(130%); border: 1px solid rgba(255,255,255,.75); box-shadow: var(--shadow-lg); animation: card-in 1.1s var(--ease) .15s both; }
+@keyframes card-in { from { opacity: 0; transform: translateY(18px); } }
+.hero-photo h1 { font-size: clamp(38px, 3.5vw + 4px, 56px); line-height: 1.06; letter-spacing: -.026em; }
+.hero-photo .lead { margin-top: 18px; font-size: 18.5px; line-height: 1.55; max-width: 30em; }
+.hero-photo .quick { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
+.hero-photo .quick-foot { margin-top: 24px; }
+.hero-photo .quick-foot .small { color: var(--ink-3); }
+
+/* Vertrauensleiste: ruhiger, gleichmäßige Abstände */
+.trust-strip .wrap { align-items: center; }
+.trust-strip .quals li { color: var(--ink-2); }
+.g-badge { box-shadow: var(--shadow-sm); }
+
+/* Liste „Was beschäftigt Sie gerade?“: Pfeil beim Überfahren */
+.links a span::after { content: '→'; display: inline-block; margin-left: 8px; color: var(--wine-700); opacity: 0; transform: translateX(-6px); transition: opacity .35s ease, transform .45s var(--ease); }
+@media (hover: hover) { .links a:hover span::after { opacity: 1; transform: none; } }
+
+/* Zitat-Band und Abschluss: weicher Verlauf, mehr Luft */
+:root:not([data-theme="dark"]) .deep { background: radial-gradient(120% 140% at 0% 0%, #F2F7EE 0%, #E6EEE0 55%, #DDE8D5 100%); }
+:root:not([data-theme="dark"]) .cta { background: radial-gradient(90% 130% at 50% 0%, #F3F7EF 0%, #E6EEE0 60%, #DAE6D2 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
+
+/* Häufige Fragen und Preise: klarere Flächen */
+.faq details { border-radius: 16px; }
+.fees { border-radius: 22px; }
+
+/* Fuß: feinere Linien */
+.foot .cols { border-top: 1px solid var(--line); }
+
+@media (max-width: 960px) {
+  .hero.hero-photo { margin: 0; border-radius: 0; }
+  .hero-card { padding: 28px 22px 26px; border-radius: 24px; -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--card); }
+  .hero-photo h1 { font-size: clamp(30px, 8.2vw, 38px); }
+  .hero-photo .quick { margin-top: 22px; padding-top: 20px; }
+  .head h2::before, .rev-head h2::before { margin-bottom: 16px; width: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .hero-photo .hero-bg img, .hero-card { animation: none; } .btn.primary:hover, a.card:hover, .way:hover, .course:hover, a.tile:hover { transform: none; } }
+[data-theme="dark"] .btn:not(.primary):not(.gold) { background: transparent; }
+[data-theme="dark"] .hero-card { background: rgba(28,36,30,.9); border-color: rgba(255,255,255,.06); }
