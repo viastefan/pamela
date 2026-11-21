@@ -2096,3 +2096,9 @@ label.opt, .opt { box-shadow: var(--lift); }
 :root:not([data-theme="dark"]) .deep { background: linear-gradient(120deg, #F1F4E8 0%, #E3EDE2 55%, #F1E8D6 100%); }
 :root:not([data-theme="dark"]) .cta { background: radial-gradient(90% 120% at 50% 0, #F6F3E9 0%, #E4EEE3 60%, #F0E6D2 100%); }
 :root:not([data-theme="dark"]) .tile-deep { background: linear-gradient(160deg, #EEF3E8, #E0EBDF); }
+
+/* Startseite: Landsberg am Lech kräftiger (Schrift hat keine Gewichtsachse: feiner Strich in gleicher Farbe, etwa +35), FAQ-Kopf mit Luft zwischen Titel und Button */
+.hero-photo .place-h, .place-h { -webkit-text-stroke: .022em currentColor; paint-order: stroke fill; }
+.faq-split > div:first-child h2 { margin-bottom: 22px; }
+.faq-split > div:first-child .btn { margin-top: 0; }
+@media (max-width: 960px) { .faq-split { row-gap: 28px; } .faq-split > div:first-child h2 { margin-bottom: 20px; } }
