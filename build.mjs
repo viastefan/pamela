@@ -827,7 +827,6 @@ ${(p.ld || []).map(ld).join('\n')}
 <footer class="foot"><div class="wrap">
   ${brand}
   <p class="foot-lead">Systemische und traumasensible Begleitung für Einzelne, Paare, Eltern und Jugendliche: in Landsberg am Lech, online und als Walk and Talk.</p>
-  <a class="g-badge on-deep" href="/#stimmen">${G}<span><b>Google-Rezensionen</b><small>5,0 von 5 Sternen</small></span></a>
   <div class="cols">
     ${FOOT.map(([t, links]) => `<nav aria-label="${t}"><h3>${t}</h3><ul>${links.map(([h, n]) => `<li><a href="${h}">${n}</a></li>`).join('')}</ul></nav>`).join('')}
     <div><h3>Praxis</h3><ul><li>${P.practice}</li><li>${P.street}</li><li>${P.zip} ${P.city}</li><li><a href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></li></ul></div>
@@ -835,7 +834,7 @@ ${(p.ld || []).map(ld).join('\n')}
   </div>
   <div class="fine">
     <p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Einzugsgebiet: ${P.areas.join(', ')} und Umgebung, online auch in Österreich und der Schweiz.</p>
-    <p>Der Chat beantwortet allgemeine Fragen mit festen Texten dieser Website und ersetzt keine Beratung. Die Rezensionen sind Auszüge aus öffentlichen Google-Bewertungen. Die Inhalte ersetzen keine ärztliche oder psychotherapeutische Behandlung.</p>
+    <p>Der Chat und die Inhalte dieser Website ersetzen keine ärztliche oder psychotherapeutische Behandlung.</p>
     <p>In akuten Krisen: Telefonseelsorge rund um die Uhr unter 0800 111 0 111, Notruf 112.</p>
   </div>
   <div class="foot-end">

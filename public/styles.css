@@ -2380,3 +2380,13 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 /* Walk and Talk: Haare gefüllt, Kragen und Gürtellinie als feine Details */
 .art-walk .hairfill { fill: var(--wine-700); stroke: none; }
 .art-walk .collar { stroke-width: 1.5; opacity: .8; }
+
+/* Footer: ruhiger, in Karten-Optik, ohne Bewertungs-Marke */
+.foot-lead { margin: 20px 0 8px !important; font-size: 17px !important; line-height: 1.55 !important; max-width: 26em; }
+.foot .cols { margin-top: 28px; padding: 22px 22px 6px; background: #fff; border-radius: 12px; box-shadow: var(--lift, var(--shadow-sm)); gap: 20px 24px !important; }
+.foot .cols h3 { font-size: 12.5px !important; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--wine-700) !important; margin-bottom: 10px; }
+.foot .cols a, .foot .cols li { font-size: 15px !important; }
+.foot .cols ul { gap: 2px; }
+.foot .fine { margin-top: 18px; }
+.foot .fine p { font-size: 12.5px !important; line-height: 1.55 !important; color: var(--ink-3) !important; }
+@media (max-width: 640px) { .foot .cols { display: grid !important; grid-template-columns: 1fr 1fr; padding: 20px 18px 8px; } .foot .cols a { display: inline-block; padding: 5px 0; } }
