@@ -655,45 +655,23 @@ const FOOT = [
 const SLOGAN = 'Systemische und traumasensible Einzel- und Paartherapie'
 const brand = `<a class="brand" href="/" aria-label="${P.name}, Startseite"><img class="brand-mark" src="/img/logo-96.webp?v=4" width="96" height="96" alt=""><span class="brand-text"><b>${P.name}</b><small>${SLOGAN}</small></span></a>`
 const current = (p, h) => p.path === h || p.path.startsWith(h) || (h === '/angebot/' && SERVICE_ORDER.includes(p.path))
-// Chat unten rechts, im Aufbau wie bei Primava: kompakte Taste, Fenster mit Verlauf, Vorschlägen und Eingabe.
-// Die Antworten sind feste Texte aus den Inhalten der Seite: kein Modell, kein Mensch am anderen Ende.
-const ANSWERS = [
-  { q: 'Was kostet eine Sitzung?', k: ['kost', 'preis', 'euro', '€', 'teuer', 'honorar', 'bezahl'], a: FAQ[5][1], to: ['/preise/', 'Alle Preise'] },
-  { q: 'Wie läuft das Erstgespräch ab?', k: ['erstgespr', 'erste', 'kennenlern', 'ablauf', 'anfang'], a: FAQ[1][1] },
-  { q: 'Geht das auch online?', k: ['online', 'video', 'zoom', 'fern', 'walk', 'natur', 'spazier'], a: FAQ[4][1], to: ['/walk-and-talk/', 'Walk and Talk und Online'] },
-  { q: 'Wo ist die Praxis?', k: ['wo ', 'adresse', 'praxis', 'ort', 'anfahrt', 'landsberg', 'zeitraum'], a: FAQ[6][1], to: ['/kontakt/', 'Kontakt'] },
-  { q: 'Hilfe für Jugendliche', k: ['jugend', 'teen', 'schule', 'sohn', 'tochter'], a: FAQ[2][1], to: ['/jugendcoaching/', 'Zum Jugendcoaching'] },
-  { q: 'Beratung für Eltern', k: ['eltern', 'erzieh', 'kind', 'famil', 'mutter', 'vater'], a: FAQ[3][1], to: ['/erziehungsberatung/', 'Zur Erziehungsberatung'] },
-  { q: 'Was heißt systemisch?', k: ['system', 'method', 'ansatz', 'trauma'], a: FAQ[0][1], to: ['/einzeltherapie/', 'Zur Einzeltherapie'] },
-  { q: 'Termin absagen', k: ['absag', 'storn', 'ausfall', 'verschieb'], a: 'Bis zu 72 Stunden vor dem Termin können Termine kostenfrei abgesagt werden. Danach fällt ein Ausfallhonorar an.', to: ['/preise/', 'Alle Regelungen'] },
-  { q: 'Paartherapie', k: ['paar', 'beziehung', 'ehe', 'partner', 'trennung'], a: 'In der Paartherapie schaffen wir Raum, unterschiedliche Sichtweisen zu verstehen und wiederkehrende Gespräche behutsam anders zu führen. Ein Paargespräch dauert 90 Minuten und kostet 180 €.', to: ['/paartherapie/', 'Zur Paartherapie'] },
-]
-const topics = ANSWERS.slice(0, 6).map((x, i) => ({ label: x.q, to: 'a' + i }))
-const CHAT = {
-  nodes: {
-    welcome: { text: ['Hallo, schön, dass Sie da sind.', 'Wobei kann ich Ihnen weiterhelfen?'], chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, ...topics] },
-    menu: { text: ['Gern. Wählen Sie ein Thema oder schreiben Sie Ihre Frage.'], chips: topics },
-    kontakt: { text: ['Das beantwortet Ihnen Pamela Zurbuchen am besten persönlich.', 'Während der bayerischen Schulferien ist die Praxis nicht besetzt.'], chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Anrufen', href: `tel:${P.tel}` }, { label: 'E-Mail schreiben', href: `mailto:${P.mail}` }, { label: 'Zurück zu den Themen', to: 'menu' }] },
-    ...Object.fromEntries(ANSWERS.map((x, i) => ['a' + i, { text: [x.a], chips: [...(x.to ? [{ label: x.to[1], href: x.to[0] }] : []), { label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Andere Frage', to: 'menu' }] }])),
-  },
-  intents: ANSWERS.map((x, i) => ({ k: x.k, to: 'a' + i })),
-}
+// Chat unten rechts: Fenster mit Verlauf, Vorschlägen und Eingabe. Die Antworten holt die Seite von /api/chat (feste Wissensbasis, kein Sprachmodell, nichts wird gespeichert).
 const X = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>'
 const widgets = `
 <div class="cw" data-chat>
   <button class="cw-backdrop" type="button" aria-label="Chat schließen" data-chat-close tabindex="-1"></button>
-  <div class="cw-panel" id="chat-panel" role="dialog" aria-label="Chat mit Antworten aus dieser Website" inert>
+  <div class="cw-panel" id="chat-panel" role="dialog" aria-label="Chat mit der digitalen Assistenz" inert>
     <div class="cw-grip" aria-hidden="true"><span></span></div>
     <div class="cw-head">
-      <img class="cw-avatar" src="/img/pamela-avatar.webp?v=2" width="34" height="34" alt="">
-      <div class="cw-head-text"><p class="cw-names">${P.name}</p><p class="cw-status"><span class="cw-status-dot" aria-hidden="true"></span>Antworten sofort, aus dieser Website</p></div>
+      <img class="cw-avatar" src="/img/pamela-avatar.webp?v=2" width="44" height="44" alt="">
+      <div class="cw-head-text"><p class="cw-names">${P.name}</p><p class="cw-status"><span class="cw-status-dot" aria-hidden="true"></span>Digitale Assistenz der Praxis</p></div>
       <button class="cw-close" type="button" aria-label="Schließen" data-chat-close>${X}</button>
     </div>
     <div class="cw-thread" aria-live="polite"></div>
     <div class="cw-chips" role="group" aria-label="Vorschläge"></div>
     <div class="cw-foot-cta"><a class="cw-cta" href="/termin/">Termin anfragen</a></div>
     <form class="cw-composer"><input name="q" type="text" autocomplete="off" maxlength="200" placeholder="Frage schreiben…" aria-label="Nachricht"><button class="cw-send" type="submit" aria-label="Senden"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></form>
-    <p class="cw-note">Automatische Antworten, kein Live-Gespräch. In akuten Krisen: Telefonseelsorge 0800 111 0 111 oder Notruf 112.</p>
+    <p class="cw-note">Automatische Antworten, kein Live-Gespräch. Bitte keine Gesundheitsdaten eingeben. In akuten Krisen: Telefonseelsorge 0800 111 0 111 oder Notruf 112.</p>
   </div>
   <button class="cw-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
     <span class="cw-launcher-face" aria-hidden="true"><img src="/img/pamela-avatar.webp?v=2" width="42" height="42" alt="" loading="lazy" decoding="async"><i></i></span>
@@ -701,7 +679,6 @@ const widgets = `
     <span class="cw-launcher-text"><span>Haben Sie Fragen?</span><small>Antworten sofort</small></span>
     <span class="cw-launcher-x" aria-hidden="true">${X}</span>
   </button>
-  <script type="application/json" id="chat-data">${JSON.stringify(CHAT)}</script>
 </div>
 <nav class="dock" data-dock aria-label="Schnellzugriff">
   <a href="tel:${P.tel}" aria-label="Anrufen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg></a>

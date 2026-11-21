@@ -48,7 +48,7 @@ Wenn Sie mich anrufen oder mir schreiben, verarbeite ich Ihre Angaben, um Ihr An
 
 ## 7. Fragen-Assistent (Chat)
 
-Der Fragen-Assistent auf dieser Website arbeitet vollständig in Ihrem Browser. Er beantwortet allgemeine Fragen mit festen Texten aus den Inhalten dieser Website. Was Sie in das Eingabefeld schreiben, wird weder an mich noch an Dritte übertragen und nicht gespeichert. Es handelt sich nicht um ein Live-Gespräch und nicht um eine künstliche Intelligenz.
+Der Fragen-Assistent beantwortet allgemeine Fragen mit festen Texten aus den Inhalten dieser Website. Wenn Sie eine Frage stellen oder einen Vorschlag anklicken, wird der Text an die Server-Funktion dieser Website bei Vercel (siehe Abschnitt Hosting) übertragen, damit dort die passende Antwort ausgewählt werden kann. Der Text wird dabei nur für die Dauer der Anfrage verarbeitet. Er wird weder gespeichert noch protokolliert, nicht an mich weitergegeben und nicht an andere Dritte übermittelt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Beantwortung Ihrer Anfrage, Betrieb der Website). Es handelt sich nicht um ein Live-Gespräch und nicht um eine künstliche Intelligenz. Bitte geben Sie im Chat keine Gesundheitsdaten oder andere sensible Angaben ein.
 
 ## 8. Google Maps
 

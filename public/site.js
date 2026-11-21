@@ -239,47 +239,45 @@
   // Chat: geführte Antworten aus den Inhalten der Seite, Aufbau wie bei Primava
   var cw = doc.querySelector('[data-chat]')
   if (cw) {
-    var chatData = JSON.parse(doc.getElementById('chat-data').textContent)
     var launcher = cw.querySelector('.cw-launcher'), panel = cw.querySelector('.cw-panel'), thread = cw.querySelector('.cw-thread')
-    var chips = cw.querySelector('.cw-chips'), composer = cw.querySelector('.cw-composer'), started = false, typing = null
+    var chips = cw.querySelector('.cw-chips'), composer = cw.querySelector('.cw-composer'), started = false, typing = null, busy = false
     var el = function (tag, cls, text) { var n = doc.createElement(tag); n.className = cls; if (text) n.textContent = text; return n }
     var down = function () { thread.scrollTo({ top: thread.scrollHeight, behavior: calm ? 'auto' : 'smooth' }) }
+    // Antworten kommen vom Server (/api/chat); fällt er aus, bleibt ein ehrlicher Hinweis mit den Kontaktwegen
+    var OFFLINE = { text: ['Die Antwort ist gerade nicht erreichbar. Pamela Zurbuchen erreichen Sie unter 0176-43 45 22 86 oder per E-Mail an zurbuchen-therapie@gmx.de.'], chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Anrufen', href: 'tel:+4917643452286' }] }
+    var api = function (body) {
+      var opt = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}
+      return fetch('/api/chat', opt).then(function (r) { if (!r.ok) throw new Error('chat'); return r.json() }).catch(function () { return OFFLINE })
+    }
     var setChips = function (list) {
       chips.textContent = ''; chips.hidden = !list.length
       list.forEach(function (c) {
         var n = el(c.href ? 'a' : 'button', 'cw-chip' + (c.primary ? ' is-primary' : ''), c.label)
         if (c.href) n.href = c.href
-        else { n.type = 'button'; n.addEventListener('click', function () { user(c.label); bot(c.to) }) }
+        else { n.type = 'button'; n.addEventListener('click', function () { if (!busy) { user(c.label); ask({ ask: c.ask }) } }) }
         chips.appendChild(n)
       })
     }
     var user = function (text) { var m = el('div', 'cw-msg cw-msg-user'); m.appendChild(el('p', '', text)); thread.appendChild(m); down() }
     var botRow = function () {
       var m = el('div', 'cw-msg cw-msg-bot'), av = el('img', 'cw-msg-avatar')
-      av.src = '/img/pamela-avatar.webp?v=2'; av.alt = ''; av.width = 22; av.height = 22
+      av.src = '/img/pamela-avatar.webp?v=2'; av.alt = ''; av.width = 28; av.height = 28
       m.appendChild(av); m.appendChild(el('div', 'cw-bubble')); return m
     }
-    var bot = function (id, now) {
-      var node = chatData.nodes[id] || chatData.nodes.kontakt, wait = botRow()
+    var ask = function (body, now) {
+      var wait = botRow(); busy = true
       wait.lastChild.className = 'cw-bubble cw-typing'
       for (var i = 0; i < 3; i++) wait.lastChild.appendChild(doc.createElement('span'))
-      setChips([]); clearTimeout(typing)
-      var show = function () {
-        wait.remove()
-        var m = botRow(); node.text.forEach(function (t) { m.lastChild.appendChild(el('p', '', t)) })
-        thread.appendChild(m); setChips(node.chips || []); down()
-      }
-      if (now || calm) return show()
-      thread.appendChild(wait); down()
-      typing = setTimeout(show, 420 + Math.min(720, node.text.join(' ').length * 3.5))
-    }
-    var match = function (text) {
-      var t = ' ' + text.toLowerCase() + ' ', best = 'kontakt', score = 0
-      chatData.intents.forEach(function (x) {
-        var n = x.k.filter(function (k) { return t.indexOf(k) > -1 }).length
-        if (n > score) { score = n; best = x.to }
+      setChips([]); clearTimeout(typing); thread.appendChild(wait); down()
+      var t0 = Date.now()
+      api(body).then(function (node) {
+        var len = (node.text || []).join(' ').length, delay = calm || now ? 0 : Math.max(0, 450 + Math.min(900, len * 3) - (Date.now() - t0))
+        typing = setTimeout(function () {
+          wait.remove()
+          var m = botRow(); (node.text || []).forEach(function (t) { m.lastChild.appendChild(el('p', '', t)) })
+          thread.appendChild(m); setChips(node.chips || []); down(); busy = false
+        }, delay)
       })
-      return best
     }
     // Am Handy folgt das Fenster dem sichtbaren Bereich, damit die Tastatur nichts verdeckt
     var vv = window.visualViewport
@@ -297,18 +295,19 @@
       launcher.setAttribute('aria-label', on ? 'Chat schließen' : 'Chat öffnen')
       if (innerWidth <= 640) doc.body.style.overflow = on ? 'hidden' : ''
       syncViewport()
-      if (on && !started) { started = true; bot('welcome', true) }
+      if (on && !started) { started = true; ask(null, true) }
       if (on && matchMedia('(pointer: fine)').matches) setTimeout(function () { composer.q.focus({ preventScroll: true }) }, 280)
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
-    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .74, 620) } })
+    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .88, 780) } })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })
     composer.addEventListener('submit', function (e) {
       e.preventDefault()
       var q = composer.q.value.trim(); if (!q) return
-      composer.q.value = ''; user(q); bot(match(q))
+      if (busy) return
+      composer.q.value = ''; user(q); ask({ q: q })
     })
   }
 
