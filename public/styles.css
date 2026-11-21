@@ -2315,3 +2315,9 @@ html, body { overflow-x: clip; max-width: 100%; }
 .links li:last-child a::after { background: rgba(255,255,255,.16); color: #fff; }
 @media (min-width: 961px) { .links a { font-size: 22px !important; padding: 18px 18px 18px 24px !important; } }
 [data-theme="dark"] .links a { background: var(--card); }
+
+/* Band unten: auf dem Handy beide Knöpfe volle Breite */
+@media (max-width: 640px) {
+  .cta .actions { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .cta .actions .btn { width: 100%; }
+}
