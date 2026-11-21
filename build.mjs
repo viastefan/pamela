@@ -335,22 +335,6 @@ pages.push({
 ${cta()}`,
 })
 
-pages.push({
-  path: '/angebot/',
-  title: 'Angebot: Therapie, Coaching und Beratung in Landsberg am Lech | Pamela Zurbuchen',
-  desc: 'Einzeltherapie, Paartherapie, Jugendcoaching, Erziehungsberatung, Kommunikationstraining, Vorträge und Schulungen. In Landsberg am Lech, online und als Walk and Talk.',
-  ld: [crumbs(['Angebot', '/angebot/']), { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: ORIGIN + s.path })) }],
-  body: `
-<section class="page-hero"><div class="wrap">
-  <h1 class="glass">${glass('Meine Leistungen')}</h1>
-  <p class="lead rv" style="--d:160ms">Therapie, Coaching und Beratung für Einzelpersonen, Eltern, Paare, Jugendliche und Organisationen. Ich arbeite on- und offline.</p>
-</div></section>
-<section class="section"><div class="wrap">
-  <div class="rows">${services.map(s => `<article class="row rv"><div><h2><a href="${s.path}">${nameOf(s)}</a></h2><p class="small">${s.price === 'nach Absprache' ? 'Kosten nach Absprache' : s.price}</p></div><div><p>${inline(s.card)}</p><p class="row-links"><a class="link" href="${s.path}">Mehr erfahren</a><a class="link" href="/termin/?thema=${['kommunikationstraining', 'vortraege-und-schulungen'].includes(slug(s.path)) ? 'kurs' : slug(s.path) === 'walk-and-talk' ? 'offen&ort=walk' : slug(s.path)}">Termin anfragen</a></p></div></article>`).join('')}</div>
-</div></section>
-${cta()}`,
-})
-
 const SVC_ART = {
   '/einzeltherapie/': ART.praxis,
   '/walk-and-talk/': ART.walk,
@@ -385,6 +369,26 @@ const SVC_ART = {
 <g transform="translate(154 40) scale(.66)"><ellipse class="shadow" cx="0" cy="130.500" rx="11" ry="1.800"/><path d="M-3 101v29M3.500 101v29"/><path class="coat" d="M-6 66c3-3 9-3 12 0 2 10 3 22 4 35H-10c1-13 2-25 4-35z"/><circle class="head" cx="0" cy="55" r="7.500"/><path d="M-5 72l-14 16"/><path d="M5 72l5 15"/></g>
 </svg>`,
 }
+const SVC_ART_MINI = {
+  '/kommunikationstraining/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><path stroke="var(--wine-300)" d="M12 126h216"/><g class="say"><rect class="seat" x="38" y="36" width="92" height="44" rx="14"/><path d="M62 80l-8 16 24-16"/><path d="M56 52h54M56 64h34"/></g><g class="say y2"><rect class="seat" x="112" y="70" width="92" height="44" rx="14"/><path d="M176 114l8 14-24-14"/><circle class="dot" cx="138" cy="92" r="2.500"/><circle class="dot d2" cx="158" cy="92" r="2.500"/><circle class="dot d3" cx="178" cy="92" r="2.500"/></g></svg>`,
+  '/vortraege-und-schulungen/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><path stroke="var(--wine-300)" d="M12 126h216"/><rect class="seat" x="62" y="22" width="116" height="68" rx="6"/><path d="M82 44h48M82 58h76M82 72h34"/><circle class="head" cx="60" cy="108" r="7"/><circle class="head" cx="100" cy="108" r="7"/><circle class="head" cx="140" cy="108" r="7"/><circle class="head" cx="180" cy="108" r="7"/><path d="M50 126c2-8 18-8 20 0M90 126c2-8 18-8 20 0M130 126c2-8 18-8 20 0M170 126c2-8 18-8 20 0"/></svg>`,
+}
+pages.push({
+  path: '/angebot/',
+  title: 'Angebot: Therapie, Coaching und Beratung in Landsberg am Lech | Pamela Zurbuchen',
+  desc: 'Einzeltherapie, Paartherapie, Jugendcoaching, Erziehungsberatung, Kommunikationstraining, Vorträge und Schulungen. In Landsberg am Lech, online und als Walk and Talk.',
+  ld: [crumbs(['Angebot', '/angebot/']), { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.name, url: ORIGIN + s.path })) }],
+  body: `
+<section class="page-hero"><div class="wrap">
+  <h1 class="glass">${glass('Meine Leistungen')}</h1>
+  <p class="lead rv" style="--d:160ms">Therapie, Coaching und Beratung für Einzelpersonen, Eltern, Paare, Jugendliche und Organisationen. Ich arbeite on- und offline.</p>
+</div></section>
+<section class="section"><div class="wrap">
+  <div class="svc-grid">${services.map((s, i) => { const sl = slug(s.path); const th = ['kommunikationstraining', 'vortraege-und-schulungen'].includes(sl) ? 'kurs' : sl === 'walk-and-talk' ? 'offen&ort=walk' : sl; const art = SVC_ART[s.path] || SVC_ART_MINI[s.path] || ''; return `<article class="svc-tile rv" style="--d:${(i % 3) * 80}ms"><div class="svc-pic">${art}</div><div class="svc-txt"><h2><a href="${s.path}">${nameOf(s)}</a></h2><p class="svc-price">${s.price === 'nach Absprache' ? 'Kosten nach Absprache' : s.price}</p><p>${inline(s.card)}</p><p class="svc-acts"><span class="svc-more">Mehr erfahren</span><a class="svc-go" href="/termin/?thema=${th}">Termin anfragen</a></p></div></article>` }).join('')}</div>
+</div></section>
+${cta()}`,
+})
+
 for (const s of services) {
   pages.push({
     path: s.path, title: s.title, desc: s.desc,
