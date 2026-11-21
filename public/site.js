@@ -41,13 +41,45 @@
       var d = st.d; if (!d) return
       st.d = null
       var v = (e.clientY - d.y) / Math.max(1, Date.now() - d.t), target
-      if (v < -.4) target = 1
+      if (v < -.18) target = 1
       else if (d.ty > d.z.half * .3 || (v > .5 && d.p0 < .5 && d.p < .02)) target = -1
       else if (v > .5) target = 0
       else target = d.p > .5 ? 1 : 0
       el.classList.remove('is-drag')
       if (target < 0) { var t = d.ty; el.style.transform = ''; o.close(); return }
       apply(target, 0)
+    }
+    // Wischen im Inhalt: erst zieht es das Fenster hoch, ist es ganz oben, scrollt der Inhalt weiter; ganz oben am Anfang zieht Wischen nach unten es wieder zurück
+    var finish = function (y) { up({ clientY: y }) }
+    if (o.content) {
+      var c = o.content, ts = null
+      c.addEventListener('touchstart', function (e) {
+        if (!mq.matches || !st.on || e.touches.length !== 1) { ts = null; return }
+        ts = { y: e.touches[0].clientY, undecided: true, drag: false, sc: c.scrollTop, last: e.touches[0].clientY }
+      }, { passive: true })
+      c.addEventListener('touchmove', function (e) {
+        if (!ts) return
+        var y = e.touches[0].clientY, dy = y - ts.y; ts.last = y
+        if (ts.undecided) {
+          if (Math.abs(dy) < 6) return
+          ts.undecided = false
+          var isFull = st.p > .98
+          if ((dy < 0 && !isFull) || (dy > 0 && !isFull) || (dy > 0 && isFull && c.scrollTop <= 0)) {
+            var z = sizes()
+            st.d = { y: y, t: Date.now(), p0: st.p, h0: z.half + st.p * (z.full - z.half), z: z, p: st.p, ty: 0, sc0: c.scrollTop }
+            ts.drag = true; el.classList.add('is-drag')
+          }
+        }
+        if (ts.drag && st.d) {
+          if (e.cancelable) e.preventDefault()
+          var d = st.d, h = d.h0 - (y - d.y), p, ty = 0
+          if (h > d.z.full) { c.scrollTop = d.sc0 + (h - d.z.full); h = d.z.full }
+          if (h >= d.z.half) p = Math.min(1, (h - d.z.half) / (d.z.full - d.z.half)); else { p = 0; ty = d.z.half - h }
+          d.p = p; d.ty = ty; apply(p, ty)
+        }
+      }, { passive: false })
+      var tend = function () { if (ts && ts.drag && st.d) finish(ts.last); ts = null }
+      c.addEventListener('touchend', tend); c.addEventListener('touchcancel', tend)
     }
     ;(o.grips || []).forEach(function (g) {
       if (!g) return
@@ -300,7 +332,7 @@
       if (on && matchMedia('(pointer: fine)').matches) setTimeout(function () { composer.q.focus({ preventScroll: true }) }, 280)
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
-    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .72, 640) } })
+    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], content: thread, box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .72, 640) } })
     ;['focus', 'input', 'pointerdown'].forEach(function (ev) { composer.q.addEventListener(ev, function () { if (chatSnap) chatSnap.expand() }) })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
@@ -527,7 +559,7 @@
   })
   doc.querySelectorAll('.course-sheet').forEach(function (dlg) {
     dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-sheet-close]')) dlg.close() })
-    var snap = sheetSnap({ el: dlg, grips: [dlg.querySelector('.sheet-grip')], gap: 8, close: function () { dlg.close() } })
+    var snap = sheetSnap({ el: dlg, grips: [dlg.querySelector('.sheet-grip')], content: dlg.querySelector('.sheet-in'), gap: 8, close: function () { dlg.close() } })
     dlg._snap = snap
     dlg.addEventListener('close', function () { snap.reset(false) })
   })
