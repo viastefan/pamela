@@ -30,7 +30,9 @@
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/fonts/Geist-VF-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistSerif-VF.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
+<link rel="preload" as="image" type="image/webp" href="/img/hero-900.webp" media="(max-width: 960px)" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="/img/hero-1366.webp" media="(min-width: 961px)" fetchpriority="high">
+<link rel="stylesheet" href="/styles.min.css?v=71e239a5">
 <script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(d.dataset.theme==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#121814'}})(document.documentElement)</script>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/downloads/*"}},{"not":{"href_matches":"/api/*"}}]},"eagerness":"moderate"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://www.zurbuchen-therapie.de/#praxis","name":"Pamela Zurbuchen, ZeitRaum","description":"Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching und Erziehungsberatung in Landsberg am Lech, online und als Walk and Talk.","url":"https://www.zurbuchen-therapie.de/","logo":"https://www.zurbuchen-therapie.de/img/icon-512.png","image":"https://www.zurbuchen-therapie.de/img/pamela-zurbuchen-992.jpg","telephone":"+4917643452286","email":"zurbuchen-therapie@gmx.de","priceRange":"€€","address":{"@type":"PostalAddress","streetAddress":"Weilheimer Str. 9","postalCode":"86899","addressLocality":"Landsberg am Lech","addressRegion":"Bayern","addressCountry":"DE"},"areaServed":[{"@type":"City","name":"Landsberg am Lech"},{"@type":"City","name":"Kaufering"},{"@type":"City","name":"Buchloe"},{"@type":"City","name":"Dießen am Ammersee"},{"@type":"City","name":"Weilheim"},{"@type":"City","name":"Bad Wörishofen"},{"@type":"City","name":"Türkheim"},{"@type":"City","name":"Mindelheim"},{"@type":"Country","name":"Deutschland"},{"@type":"Country","name":"Österreich"},{"@type":"Country","name":"Schweiz"}],"availableLanguage":"de","founder":{"@id":"https://www.zurbuchen-therapie.de/#pamela-zurbuchen"},"makesOffer":[{"@type":"Offer","name":"Erstgespräch (ca. 30 Minuten)","price":"0","priceCurrency":"EUR"},{"@type":"Offer","name":"Einzelsitzung (60 Minuten)","price":"100","priceCurrency":"EUR"},{"@type":"Offer","name":"Paargespräch (90 Minuten)","price":"180","priceCurrency":"EUR"},{"@type":"Offer","name":"Jugendcoaching (60 Minuten)","price":"100","priceCurrency":"EUR"},{"@type":"Offer","name":"Erziehungsberatung (60 Minuten)","price":"100","priceCurrency":"EUR"},{"@type":"Offer","name":"Onlineberatung (60 Minuten)","price":"100","priceCurrency":"EUR"}],"potentialAction":{"@type":"ReserveAction","name":"Termin anfragen","target":"https://www.zurbuchen-therapie.de/termin/"}}</script>
@@ -92,7 +94,7 @@
   </ul>
 </div></section>
 
-<section class="deep"><img class="mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="" loading="lazy" decoding="async"><div class="wrap">
+<section class="deep"><div class="wrap">
   <figure class="rv">
     <blockquote class="quote">„Ich weiß, dass ich nichts weiß – alles hat einen Sinn.“</blockquote>
     <figcaption class="lead quote-by"><a class="link" href="/ueber-mich/">Mehr über mich</a></figcaption>
@@ -136,7 +138,7 @@
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
-    <a class="tile tile-deep rv" href="/kurse/"><img class="mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="" loading="lazy" decoding="async"><span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><span class="tile-go">Alle Kurse ansehen</span></a>
+    <a class="tile tile-deep rv" href="/kurse/"><span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><span class="tile-go">Alle Kurse ansehen</span></a>
     <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><span class="tile-go">Weiterlesen</span></a>
   </div>
 </div></section>
@@ -147,7 +149,7 @@
 </div></section>
 
 <section class="cta-wrap"><div class="cta rv">
-  <img class="mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="" loading="lazy" decoding="async">
+  
   <h2>Der erste Schritt ist ein Gespräch.</h2>
   <p>Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten.</p>
   <div class="actions"><a class="btn gold" href="/termin/">Termin anfragen</a><a class="btn on-deep" href="mailto:zurbuchen-therapie@gmx.de">E-Mail schreiben</a></div>
@@ -231,6 +233,6 @@
     <a class="pick" href="mailto:zurbuchen-therapie@gmx.de"><span><b>E-Mail schreiben</b><small>zurbuchen-therapie@gmx.de</small></span></a>
   </div>
 </dialog>
-<script src="/site.js" defer></script>
+<script src="/site.min.js?v=c9970b06" defer></script>
 </body>
 </html>

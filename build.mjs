@@ -1,13 +1,28 @@
-// Baut die statische Seite nach ./public — `node build.mjs`. Keine Abhängigkeiten.
+// Baut die statische Seite nach ./public — `node build.mjs`. Optional: esbuild minimiert CSS und JS (ohne esbuild werden die Dateien unverändert ausgeliefert).
 // Texte: von www.zurbuchen-therapie.de (Stand 18.11.2026) und aus Pamela Zurbuchens Entwurf. Fließtexte liegen in ./content/*.md.
 // Nichts erfunden: keine Zahlen, Stimmen oder Bilder, die nicht vorlagen.
 import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { createHash } from 'node:crypto'
 
 const ROOT = dirname(fileURLToPath(import.meta.url))
 const OUT = join(ROOT, 'public')
 const ORIGIN = 'https://www.zurbuchen-therapie.de'
+
+// CSS und JS: minimiert, mit Inhalts-Kennung in der Adresse, damit sie dauerhaft im Browser bleiben dürfen
+let esbuild = null
+try { esbuild = await import('esbuild') } catch (e) { console.warn('esbuild fehlt: CSS und JS werden nicht minimiert') }
+const asset = (file, loader) => {
+  const src = readFileSync(join(OUT, file), 'utf8')
+  let out = src
+  if (esbuild) { try { out = esbuild.transformSync(src, { loader, minify: true, legalComments: 'none', target: 'es2019' }).code } catch (e) { console.warn('Minimieren fehlgeschlagen:', file, e.message) } }
+  const name = file.replace(/\.(css|js)$/, '.min.$1')
+  writeFileSync(join(OUT, name), out)
+  return `/${name}?v=${createHash('sha1').update(out).digest('hex').slice(0, 8)}`
+}
+const CSS_URL = asset('styles.css', 'css')
+const JS_URL = asset('site.js', 'js')
 
 const P = {
   name: 'Pamela Zurbuchen',
@@ -67,7 +82,7 @@ const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script
 const picture = (name, [big, small], alt, w, h, attrs = 'loading="lazy" decoding="async"') =>
   `<picture><source type="image/webp" srcset="/img/${name}-${small}.webp ${small}w, /img/${name}-${big}.webp ${big}w" sizes="(max-width: 960px) 74vw, 440px"><img src="/img/${name}-${big}.jpg" srcset="/img/${name}-${small}.jpg ${small}w, /img/${name}-${big}.jpg ${big}w" sizes="(max-width: 960px) 74vw, 440px" width="${w}" height="${h}" alt="${esc(alt)}" ${attrs}></picture>`
 const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="tilt"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div></div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
-const mark = `<img class="mark" src="/img/logo-512.webp?v=4" width="512" height="512" alt="" loading="lazy" decoding="async">`
+const mark = ''
 const nameOf = d => d.name.replace('Kommunikationstraining', 'Kommunikations&shy;training').replace('Erziehungsberatung', 'Erziehungs&shy;beratung')
 const card = (d, i = 0, goWord = 'Mehr erfahren') => `<a class="card rv" style="--d:${i * 60}ms" href="${d.path}"><h3>${nameOf(d)}</h3><p>${inline(d.card || d.teaser)}</p><span class="go">${goWord}</span></a>`
 const book = (thema, cls = 'primary', label = 'Termin anfragen') => `<a class="btn ${cls}" href="/termin/${thema ? '?thema=' + thema : ''}">${label}</a>`
@@ -756,7 +771,8 @@ ${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="can
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/fonts/Geist-VF-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistSerif-VF.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css">
+${p.path === '/' ? `<link rel="preload" as="image" type="image/webp" href="/img/hero-900.webp" media="(max-width: 960px)" fetchpriority="high">\n<link rel="preload" as="image" type="image/webp" href="/img/hero-1366.webp" media="(min-width: 961px)" fetchpriority="high">` : ''}
+<link rel="stylesheet" href="${CSS_URL}">
 <script>(function(d){d.classList.add('js');var t='light';try{t=localStorage.getItem('zt-theme')||'light'}catch(e){}d.dataset.themeChoice=t;d.dataset.theme=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';if(d.dataset.theme==='dark'){var m=document.querySelector('meta[name=theme-color]');if(m)m.content='#121814'}})(document.documentElement)</script>
 <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/downloads/*"}},{"not":{"href_matches":"/api/*"}}]},"eagerness":"moderate"}]}</script>
 ${(p.ld || []).map(ld).join('\n')}
@@ -810,7 +826,7 @@ ${(p.ld || []).map(ld).join('\n')}
   </div>
 </div></footer>
 ${p.bodyClass ? '' : widgets}
-<script src="/site.js" defer></script>
+<script src="${JS_URL}" defer></script>
 </body>
 </html>
 `

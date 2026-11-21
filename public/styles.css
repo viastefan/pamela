@@ -2256,3 +2256,17 @@ label.opt, .opt { box-shadow: var(--lift); }
   .cw-composer { padding: 8px 14px 6px 16px !important; }
   .cw-note { padding: 2px 18px 12px !important; }
 }
+
+/* ── Tempo: Menü schneller, Einblendungen kürzer, kein Weichzeichner mehr (spart Rechenzeit beim Scrollen und Laden) */
+* { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+:root:not([data-theme="dark"]) { --head-bg: rgba(248,246,238,.97); }
+.hero-card { background: rgba(255,255,255,.95) !important; }
+.loc-pill, .cw-launcher { background: rgba(255,255,255,.96) !important; }
+.js .rv { transform: translateY(8px); transition-duration: .3s !important; transition-delay: calc(var(--d, 0ms) * .35) !important; }
+.js .head.rv, .js .split > h2.rv, .js figure.rv > .quote { filter: none !important; transition: opacity .3s var(--ease), transform .3s var(--ease) !important; transition-delay: calc(var(--d, 0ms) * .35) !important; }
+.hero-photo .hero-bg img { animation-duration: 1s !important; }
+@media (max-width: 960px) {
+  .drawer { transition: grid-template-rows .24s cubic-bezier(.2, .8, .2, 1) !important; }
+  .drawer-nav > * { filter: none !important; transform: translateY(-6px); transition: opacity .16s ease, transform .24s var(--ease) !important; }
+  .top[data-open] .drawer-nav > * { transition-delay: calc(var(--n) * 12ms + 20ms) !important; }
+}
