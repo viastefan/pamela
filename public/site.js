@@ -299,7 +299,7 @@
       if (on && matchMedia('(pointer: fine)').matches) setTimeout(function () { composer.q.focus({ preventScroll: true }) }, 280)
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
-    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .88, 780) } })
+    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .72, 640) } })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })

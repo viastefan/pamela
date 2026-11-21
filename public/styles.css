@@ -2223,3 +2223,36 @@ label.opt, .opt { box-shadow: var(--lift); }
 .fee-note { font-size: 14px; }
 @media (min-width: 961px) { .fee { padding: 24px !important; } .fee-price, .fee:first-child .fee-price { margin-top: 4px; font-size: 24px !important; } }
 .drawer-acts .btn:not(.primary) { grid-column: 1 / -1; }
+
+/* Chat: schlichter Kopf ohne Grün, rundere Ecken, weniger Höhe, Hintergrund nur abgedunkelt */
+.cw-panel { border-radius: 22px !important; height: min(620px, calc(100dvh - 104px)); }
+.cw { right: 14px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+.cw-head { background: var(--card) !important; color: var(--ink-1) !important; border-bottom: 1px solid var(--line) !important; padding: 16px 16px 14px 20px !important; }
+.cw-grip { background: var(--card) !important; }
+.cw-grip span { background: rgba(51,53,43,.2) !important; }
+.cw-avatar { width: 42px !important; height: 42px !important; box-shadow: none !important; }
+.cw-names { color: var(--ink-1) !important; font-size: 16.5px !important; }
+.cw-status { color: var(--ink-3) !important; }
+.cw-status-dot { background: #5BAE72 !important; box-shadow: 0 0 0 3px rgba(91,174,114,.18) !important; }
+.cw-close { background: var(--sunken) !important; color: var(--ink-1) !important; border-radius: 50% !important; }
+.cw-close:hover { background: var(--line-2) !important; }
+.cw-bubble { border-radius: 18px 18px 18px 6px !important; }
+.cw-msg-user p { border-radius: 18px 18px 6px 18px !important; }
+.cw-chip { border-radius: 12px !important; }
+.cw-composer input { border-radius: 14px !important; }
+.cw-send { border-radius: 14px !important; }
+@media (max-width: 640px) {
+  .cw.is-open .cw-panel { border-radius: 22px 22px calc(22px * (1 - var(--p, 0))) calc(22px * (1 - var(--p, 0))) !important; margin: 0 calc(6px * (1 - var(--p, 0))) calc(6px * (1 - var(--p, 0))) !important; }
+  .cw.is-open { bottom: 0; right: 0; }
+}
+/* Hintergrund hinter dem Fenster: nur abdunkeln, kein Weichzeichner */
+.cw.is-open .cw-backdrop { background: rgba(20,24,18,.32) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+@media (max-width: 640px) {
+  .cw-chips { flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important; max-height: none !important; padding: 10px 14px 6px !important; scrollbar-width: none; }
+  .cw-chips::-webkit-scrollbar { display: none; }
+  .cw-chip { white-space: nowrap !important; }
+  .cw-head { padding: 6px 14px 12px 18px !important; }
+  .cw-grip { height: 26px !important; }
+  .cw-composer { padding: 8px 14px 6px 16px !important; }
+  .cw-note { padding: 2px 18px 12px !important; }
+}
