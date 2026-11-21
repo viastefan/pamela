@@ -86,10 +86,10 @@
 <form class="cform rv" id="kontakt-form" method="post" action="/api/anfrage" data-mail="zurbuchen-therapie@gmx.de" novalidate>
   <input type="hidden" name="art" value="kontakt">
   <p class="cform-trap" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
-  <label class="cfield"><span>Name <i aria-hidden="true">*</i></span><input type="text" name="name" autocomplete="name" required minlength="2" maxlength="120"></label>
+  <label class="cfield"><span>Name <i aria-hidden="true">*</i></span><input placeholder=" " type="text" name="name" autocomplete="name" required minlength="2" maxlength="120"></label>
   <div class="cform-row">
-    <label class="cfield"><span>E-Mail <i aria-hidden="true">*</i></span><input type="email" name="email" autocomplete="email" inputmode="email" required maxlength="160"></label>
-    <label class="cfield"><span>Telefon (optional)</span><input type="tel" name="telefon" autocomplete="tel" inputmode="tel" maxlength="40"></label>
+    <label class="cfield"><span>E-Mail <i aria-hidden="true">*</i></span><input placeholder=" " type="email" name="email" autocomplete="email" inputmode="email" required maxlength="160"></label>
+    <label class="cfield"><span>Telefon (optional)</span><input placeholder=" " type="tel" name="telefon" autocomplete="tel" inputmode="tel" maxlength="40"></label>
   </div>
   <label class="cfield"><span>Ihre Nachricht <i aria-hidden="true">*</i></span><textarea name="nachricht" rows="5" required minlength="5" maxlength="1500" placeholder="Worum geht es? Wann erreiche ich Sie am besten?"></textarea></label>
   <label class="ccheck"><input type="checkbox" name="einwilligung" value="1" required><span>Ich willige ein, dass meine Angaben, auch zu meiner Gesundheit, zur Beantwortung meiner Nachricht verarbeitet werden. Widerruf jederzeit möglich. <a class="link" href="/datenschutz/">Datenschutz</a></span></label>
