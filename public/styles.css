@@ -1831,3 +1831,4 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
   .top[data-open] ~ main .svc-book, body:has(.cw.is-open) .svc-book, body:has(.consent:not([hidden])) .svc-book { opacity: 0; pointer-events: none; }
   body:has(.svc-book) .foot { padding-bottom: 96px; }
 }
+@media (max-width: 960px) { :is(.cta, .deep, .tile-deep) .mark { display: none !important; } }
