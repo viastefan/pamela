@@ -183,7 +183,7 @@ const contactForm = `
     <label class="cfield"><span>Telefon (optional)</span><input type="tel" name="telefon" autocomplete="tel" inputmode="tel" maxlength="40"></label>
   </div>
   <label class="cfield"><span>Ihre Nachricht <i aria-hidden="true">*</i></span><textarea name="nachricht" rows="5" required minlength="5" maxlength="1500" placeholder="Worum geht es? Wann erreiche ich Sie am besten?"></textarea></label>
-  <label class="ccheck"><input type="checkbox" name="einwilligung" value="1" required><span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Nachricht verwendet werden. <a class="link" href="/datenschutz/">Datenschutz</a></span></label>
+  <label class="ccheck"><input type="checkbox" name="einwilligung" value="1" required><span>Ich willige ein, dass meine Angaben, auch zu meiner Gesundheit, zur Beantwortung meiner Nachricht verarbeitet werden. Widerruf jederzeit möglich. <a class="link" href="/datenschutz/">Datenschutz</a></span></label>
   <p class="cform-error" data-cform-error role="alert" hidden></p>
   <div class="cform-end"><button class="btn primary" type="submit">Nachricht senden</button><p class="small">Bitte keine Notfälle über dieses Formular. In akuten Krisen: Telefonseelsorge 0800 111 0 111.</p></div>
   <div class="cform-done" data-cform-done hidden tabindex="-1"><h3>Danke, Ihre Nachricht ist angekommen.</h3><p>Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.</p></div>
@@ -612,7 +612,7 @@ pages.push({
       <p class="hint">Freiwillig. Bitte keine sensiblen Details, die besprechen wir im Gespräch.</p>
       <div class="fields">
         <div class="field"><label for="f-msg">Ihre Nachricht</label><textarea id="f-msg" name="nachricht" maxlength="1500" placeholder="Zum Beispiel: Rückruf am liebsten ab 17 Uhr"></textarea></div>
-        <label class="check"><input type="checkbox" name="einwilligung" value="ja" required><span>Ich bin einverstanden, dass meine Angaben verwendet werden, um meine Anfrage zu beantworten. Mehr dazu im <a class="link" href="/datenschutz/">Datenschutz</a>.</span></label>
+        <label class="check"><input type="checkbox" name="einwilligung" value="ja" required><span>Ich willige ein, dass meine Angaben, auch zu meiner Gesundheit, zur Beantwortung meiner Anfrage verarbeitet werden. Widerruf jederzeit möglich. Mehr dazu im <a class="link" href="/datenschutz/">Datenschutz</a>.</span></label>
       </div>
       <p class="err" role="alert"></p>
       <div class="next"><button class="btn primary" type="submit">Anfrage senden</button></div>
@@ -730,17 +730,7 @@ const widgets = `
     <a class="pick" href="tel:${P.tel}"><span><b>Anrufen</b><small>${P.phone}, bitte auf den Anrufbeantworter sprechen</small></span></a>
     <a class="pick" href="mailto:${P.mail}"><span><b>E-Mail schreiben</b><small>${P.mail}</small></span></a>
   </div>
-</dialog>
-<section class="consent" data-consent hidden aria-labelledby="consent-titel">
-  <h2 id="consent-titel"><i aria-hidden="true"></i>Ihre Privatsphäre</h2>
-  <p>Notwendige Speicher halten diese Seite am Laufen. Statistik gibt es nur mit Ihrer Zustimmung: anonym, ohne Cookies, ohne Werbung, ohne Profil. <a href="/datenschutz/">Datenschutz</a></p>
-  <div class="consent-opts" hidden>
-    <label><span><b>Notwendig</b><small>Merkt sich Ihre Auswahl. Immer aktiv.</small></span><input type="checkbox" checked disabled aria-label="Notwendig"></label>
-    <label><span><b>Statistik</b><small>Anonyme Besuchszahlen. Derzeit ist kein Dienst eingebunden.</small></span><input type="checkbox" data-consent-stats aria-label="Statistik"></label>
-  </div>
-  <button class="btn consent-more" type="button" data-consent-more>Einstellungen</button>
-  <div class="consent-foot"><button class="btn" type="button" data-consent-set="necessary">Ablehnen</button><button class="btn" type="button" data-consent-set="all">Akzeptieren</button></div>
-</section>`
+</dialog>`
 
 
 const layout = p => `<!doctype html>
@@ -815,12 +805,12 @@ ${(p.ld || []).map(ld).join('\n')}
   </div>
   <div class="fine">
     <p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Einzugsgebiet: ${P.areas.join(', ')} und Umgebung, online auch in Österreich und der Schweiz.</p>
-    <p>Der Chat beantwortet allgemeine Fragen mit festen Texten dieser Website und ersetzt keine Beratung. Die Rezensionen sind Auszüge aus öffentlichen Google-Bewertungen.</p>
+    <p>Der Chat beantwortet allgemeine Fragen mit festen Texten dieser Website und ersetzt keine Beratung. Die Rezensionen sind Auszüge aus öffentlichen Google-Bewertungen. Die Inhalte ersetzen keine ärztliche oder psychotherapeutische Behandlung.</p>
     <p>In akuten Krisen: Telefonseelsorge rund um die Uhr unter 0800 111 0 111, Notruf 112.</p>
   </div>
   <div class="foot-end">
     <p>© ${new Date().getFullYear()} ${P.name}</p>
-    <div class="foot-legal"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a><button type="button" data-consent-open>Cookie-Einstellungen</button></div>
+    <div class="foot-legal"><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></div>
     <div class="theme" role="group" aria-label="Darstellung">
       <button type="button" data-theme-set="light" aria-label="Hell"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.2"/><path d="M10 2.500v2M10 15.500v2M2.500 10h2M15.500 10h2M4.700 4.700l1.400 1.400M13.900 13.900l1.400 1.400M4.700 15.300l1.400-1.400M13.900 6.100l1.400-1.400"/></svg></button>
       <button type="button" data-theme-set="system" aria-label="Wie das Gerät"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="9.500" rx="1.500"/><path d="M7.500 16.500h5M10 13.500v3"/></svg></button>
