@@ -2270,3 +2270,17 @@ label.opt, .opt { box-shadow: var(--lift); }
   .drawer-nav > * { filter: none !important; transform: translateY(-6px); transition: opacity .16s ease, transform .24s var(--ease) !important; }
   .top[data-open] .drawer-nav > * { transition-delay: calc(var(--n) * 12ms + 20ms) !important; }
 }
+
+/* Chat: Eingabefeld schlicht (nicht gefärbt, flacher), Ecken 16 px */
+.cw-panel { border-radius: 16px !important; }
+.cw-composer { padding: 10px 14px 6px 14px !important; gap: 8px !important; }
+.cw-composer input { height: 42px !important; padding: 0 14px !important; border: 1px solid var(--line-2) !important; background: #fff !important; border-radius: 12px !important; font-size: 16px !important; box-shadow: none !important; }
+.cw-composer input:focus { border-color: var(--wine-700) !important; background: #fff !important; box-shadow: none !important; }
+.cw-composer input::placeholder { color: var(--ink-3); opacity: .7; }
+.cw-send { width: 42px !important; height: 42px !important; border-radius: 12px !important; background: var(--wine-700) !important; }
+.cw-send svg { width: 15px; height: 15px; }
+@media (max-width: 640px) {
+  .cw.is-open .cw-panel { border-radius: 16px 16px calc(16px * (1 - var(--p, 0))) calc(16px * (1 - var(--p, 0))) !important; }
+  .cw-composer input { font-size: 16px !important; }
+}
+[data-theme="dark"] .cw-composer input, [data-theme="dark"] .cw-composer input:focus { background: transparent !important; }

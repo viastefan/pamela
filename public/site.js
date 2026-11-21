@@ -17,6 +17,7 @@
       el.classList.toggle('is-full', p > .98)
     }
     var api = {
+      expand: function () { if (st.on && mq.matches && st.p < .98) apply(1, 0) },
       reset: function (on) {
         st.on = !!on; el.classList.remove('is-drag', 'is-full')
         if (!on || !mq.matches) { el.style.removeProperty('--p'); el.style.height = ''; el.style.transform = ''; st.p = 0; return }
@@ -300,6 +301,7 @@
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
     chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .72, 640) } })
+    composer.q.addEventListener('focus', function () { if (chatSnap) chatSnap.expand() })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })
