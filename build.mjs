@@ -84,6 +84,11 @@ const cta = (du, title, text, thema) => `
   <div class="actions">${book(thema, 'gold')}<a class="btn on-deep" href="tel:${P.tel}">${P.phone}</a><a class="btn on-deep" href="mailto:${P.mail}">E-Mail schreiben</a></div>
 </div></section>`
 
+const stepsShort = () => `<div class="steps-wrap rv" data-steps><span class="steps-line" aria-hidden="true"><i></i></span><ol class="steps">
+    <li><h3>Erstgespräch</h3><p>Kostenfrei, etwa 30 Minuten.</p></li>
+    <li><h3>Passt es?</h3><p>Wir klären es gemeinsam.</p></li>
+    <li><h3>Ihr Rhythmus</h3><p>Meist genügen wenige Termine.</p></li>
+  </ol></div>`
 const steps = du => `<div class="steps-wrap rv" data-steps><span class="steps-line" aria-hidden="true"><i></i></span><ol class="steps">
     <li><h3>Erstgespräch</h3><p>Kostenfrei, etwa 30 Minuten. ${du ? 'Du erzählst, was Dich gerade bewegt und was sich verändern soll.' : 'Sie schildern, was Sie zurzeit bewegt und was sich verändern soll.'}</p></li>
     <li><h3>Passt es?</h3><p>Gemeinsam klären wir, ob meine Begleitung zu ${du ? 'Deinem' : 'Ihrem'} Anliegen passt.</p></li>
@@ -252,7 +257,7 @@ pages.push({
   <div class="wrap hero-grid">
   <div class="hero-card">
     <h1 class="glass">${glass('Systemische und traumasensible Therapie in')} <span class="place-h">${['Landsberg', 'am&nbsp;Lech'].map((w, i) => `<span class="gw" style="--i:${i + 5}">${w}</span>`).join(' ')}</span></h1>
-    <p class="lead rv" style="--d:80ms">Für Einzelne, Paare, Eltern und Jugendliche: in der Praxis, online oder im Gehen.</p>
+    <p class="lead rv" style="--d:80ms">In der Praxis, online oder im Gehen.</p>
     <form class="quick rv" style="--d:160ms" action="/termin/" method="get" aria-label="Termin anfragen">
       <p class="quick-line">Ich suche <label><span class="sr">Anliegen</span><select name="thema"><option value="einzeltherapie">eine Einzeltherapie</option><option value="paartherapie">eine Paartherapie</option><option value="jugendcoaching">ein Jugendcoaching</option><option value="erziehungsberatung">eine Erziehungsberatung</option><option value="kurs">einen Kurs oder ein Training</option><option value="offen">erst einmal Orientierung</option></select></label>, am liebsten <label><span class="sr">Form</span><select name="ort"><option value="praxis">in der Praxis</option><option value="online">online</option><option value="walk">beim Walk and Talk</option><option value="egal">egal wo</option></select></label> und <label><span class="sr">Wunschzeit</span><select name="zeit"><option value="vormittags">vormittags</option><option value="nachmittags">nachmittags</option><option value="abends">am frühen Abend</option><option value="flexibel">zeitlich flexibel</option></select></label>.</p>
       <div class="quick-foot"><button class="btn primary" type="submit">Termin anfragen</button><ul class="quick-facts"><li><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>Erstgespräch kostenfrei</li><li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.8"/><path d="M8 4.8V8l2.200 1.400"/></svg>ca. 30 Minuten</li></ul></div>
@@ -263,10 +268,10 @@ pages.push({
 
 <section class="trust-strip"><div class="wrap">
   <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>Google-Bewertungen</small></span></a>
-  <ul class="quals rv" style="--d:80ms"><li>Dipl. Sozialpädagogin (FH)</li><li>Systemische Therapeutin (IFW)</li><li>Bindungspsychotherapie nach Prof. Dr. Brisch</li><li>Ausgebildete STEP-Elterntrainerin</li><li>Seit über 18 Jahren selbstständig</li></ul>
+  <ul class="quals rv" style="--d:80ms"><li>Dipl. Sozialpädagogin (FH)</li><li>Systemische Therapeutin (IFW)</li><li>Seit über 18 Jahren selbstständig</li></ul>
 </div></section>
 
-<section class="section"><div class="wrap split">
+<section class="section" id="angebot"><div class="wrap split">
   <h2 class="rv">Was beschäftigt Sie gerade?</h2>
   <ul class="links rv">
     <li><a href="/einzeltherapie/">Ich bin erschöpft <span>Einzeltherapie</span></a></li>
@@ -281,27 +286,22 @@ pages.push({
 <section class="deep">${mark}<div class="wrap">
   <figure class="rv">
     <blockquote class="quote">„Ich weiß, dass ich nichts weiß – alles hat einen Sinn.“</blockquote>
-    <figcaption class="lead quote-by">Diesen Sinn möchte ich mit einer wertschätzenden und neugierigen Haltung erforschen. <a class="link" href="/ueber-mich/">Mehr über mich</a></figcaption>
+    <figcaption class="lead quote-by"><a class="link" href="/ueber-mich/">Mehr über mich</a></figcaption>
   </figure>
 </div></section>
 
-<section class="section" id="angebot"><div class="wrap">
-  <div class="head rv"><h2>Begleitung für Einzelne, Paare, Eltern und Jugendliche</h2></div>
-  <div class="grid g4">${services.slice(0, 4).map((s, i) => `<a class="item rv" style="--d:${i * 70}ms" href="${s.path}"><h3>${nameOf(s)}</h3><p>${inline(s.card)}</p><span class="more">Mehr erfahren</span></a>`).join('')}</div>
-  <p class="also rv">Außerdem: ${services.slice(4).map(s => `<a class="link" href="${s.path}">${s.name}</a>`).join(', ')}</p>
-</div></section>
 
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>So beginnt es</h2></div>
-  ${steps()}
+  ${stepsShort()}
 </div></section>
 
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Sie entscheiden, was Ihnen guttut</h2></div>
   <div class="grid g3 ways">
-    <div class="way rv">${ART.praxis}<h3>In der Praxis</h3><p>${ADDRESS}</p></div>
-    <div class="way rv" style="--d:90ms">${ART.walk}<h3>Walk and Talk</h3><p>Im Gehen kommt vieles in Fluss und es unterhält sich ungezwungener.</p></div>
-    <div class="way rv" style="--d:180ms">${ART.online}<h3>Online</h3><p>Deutschlandweit sowie für Klienten aus Österreich und der Schweiz.</p></div>
+    <div class="way rv">${ART.praxis}<h3>In der Praxis</h3><p>${P.street}, ${P.city}</p></div>
+    <div class="way rv" style="--d:90ms">${ART.walk}<h3>Walk and Talk</h3><p>Im Gehen kommt vieles in Fluss.</p></div>
+    <div class="way rv" style="--d:180ms">${ART.online}<h3>Online</h3><p>Deutschlandweit, Österreich und Schweiz.</p></div>
   </div>
 </div></section>
 
@@ -315,20 +315,20 @@ pages.push({
 
 
 <section class="section"><div class="wrap">
-  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p>Bei finanziellem Engpass sind Sonderregelungen möglich. <a class="link" href="/preise/">Alle Preise</a></p></div>
+  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="link" href="/preise/">Alle Preise</a></p></div>
   ${prices(3)}
 </div></section>
 
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
-    <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><ul class="tile-list"><li>Eltern sein, Paar bleiben</li><li>Schritt für Schritt als Eltern fit</li><li>Gruppe für Trennungs- und Scheidungskinder</li></ul><span class="tile-go">Alle Kurse ansehen</span></a>
-    <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><p>Zu Erschöpfung, Partnerschaft, Elternsein und systemischer Therapie.</p><span class="tile-go">Weiterlesen</span></a>
+    <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><span class="tile-go">Alle Kurse ansehen</span></a>
+    <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><span class="tile-go">Weiterlesen</span></a>
   </div>
 </div></section>
 
 <section class="section"><div class="wrap split faq-split">
-  <div class="rv"><h2>Häufige Fragen</h2><p class="faq-side">Ihre Frage ist nicht dabei? Schreiben Sie mir oder rufen Sie an.</p><a class="btn" href="/kontakt/">Kontakt aufnehmen</a></div>
+  <div class="rv"><h2>Häufige Fragen</h2><a class="btn" href="/kontakt/">Frage stellen</a></div>
   ${faq}
 </div></section>
 ${cta()}`,
