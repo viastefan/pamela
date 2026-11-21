@@ -2008,3 +2008,14 @@ label.opt, .opt { box-shadow: var(--lift); }
 }
 @media (max-width: 960px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .svc-tile:last-child { grid-column: 1 / -1; } }
 @media (max-width: 640px) { .svc-grid { grid-template-columns: 1fr; gap: 12px; } .svc-txt h2 { font-size: 24px; } }
+
+/* Über mich: Vorlieben als ruhige, gefüllte Zeilen */
+.like-card { padding: 28px !important; }
+.like-card .facts { display: grid; grid-template-columns: 1fr !important; gap: 8px; margin-top: 20px; }
+.like-card .facts li { padding: 10px 14px 10px 10px; gap: 14px; border-radius: 6px; background: var(--wine-100); font-size: 16px; min-height: 52px; }
+.like-card .facts .ico { box-sizing: content-box; padding: 9px; border-radius: 6px; background: #fff; color: var(--wine-700); }
+.like-card:not(.is-warm) .facts li { background: var(--sunken); }
+.like-card:not(.is-warm) .facts .ico { background: #fff; color: var(--ink-2); }
+@media (min-width: 961px) { .like-card.is-warm .facts { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 960px) { .like-card { padding: 20px !important; } .like-card .facts { gap: 6px; margin-top: 16px; } .like-card .facts li { min-height: 0; padding: 8px 12px 8px 8px; font-size: 15.5px; } }
+[data-theme="dark"] .like-card .facts li { background: rgba(255,255,255,.05); } [data-theme="dark"] .like-card .facts .ico { background: rgba(255,255,255,.08); color: var(--blush-300); }
