@@ -1861,3 +1861,9 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 .course-btn.is-soft:hover { background: var(--blush-200); }
 .course-btn:active { transform: scale(.98); }
 @media (max-width: 960px) { .course { padding: 22px; } .course h2 { font-size: 23px; margin-top: 18px; } .course-btn { height: 46px; } }
+/* Keine Linien an Abschnittsköpfen und Angebotseinträgen */
+.head h2::before, .rev-head h2::before { content: none !important; }
+.item { border-top: 0; padding-top: 0; }
+.item::before { content: none; }
+.g4 { row-gap: 40px; }
+.tenets li { border-top: 0; }
