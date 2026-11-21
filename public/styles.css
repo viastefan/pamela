@@ -1904,3 +1904,12 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
   .cta-wrap { padding: 0 4px 4px; }
   .foot { margin: 0 4px 4px; }
 }
+
+/* Handy-Hero: Bild kompakter, die Karte steht mit 8 px Abstand darunter statt im Bild */
+@media (max-width: 960px) {
+  .hero.hero-photo { padding: 6px; display: grid; gap: 8px; overflow: visible; }
+  .hero-photo .hero-bg, .hero-photo .hero-bg img { margin: 0; }
+  .hero-photo .hero-bg img { aspect-ratio: 4 / 3.2; object-position: 70% 16%; }
+  .hero-photo .hero-grid { padding: 0; }
+  .hero-photo .hero-card { margin: 0 !important; padding: 24px 20px 22px; border-radius: 12px !important; box-shadow: 0 1px 2px rgba(46,58,42,.05), 0 14px 34px -22px rgba(46,58,42,.3); }
+}
