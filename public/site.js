@@ -1,5 +1,65 @@
 // Menü, Erscheinen, Zählen und die Terminanfrage. Ohne Skript bleibt alles sichtbar und bedienbar.
-(function () {
+// Fenster am Handy: erst als Karte mit Rand, am Griff hochziehen bis zur ganzen Seite, wieder runter und wegziehen
+;(function () {
+  var mq = matchMedia('(max-width: 640px)')
+  window.sheetSnap = function (o) {
+    var el = o.el, st = { p: 0, on: false, d: null }, gap = o.gap == null ? 8 : o.gap
+    var boxH = function () { return o.box ? o.box.clientHeight : (window.visualViewport ? visualViewport.height : innerHeight) }
+    var sizes = function () {
+      var full = Math.round(boxH() - gap), half = Math.round(Math.min(o.half ? o.half() : full * .66, full - 40))
+      return { full: full, half: Math.max(160, half) }
+    }
+    var apply = function (p, ty) {
+      var z = sizes(); st.p = p
+      el.style.setProperty('--p', p.toFixed(3))
+      el.style.height = Math.round(z.half + p * (z.full - z.half)) + 'px'
+      el.style.transform = ty ? 'translateY(' + Math.round(ty) + 'px)' : ''
+      el.classList.toggle('is-full', p > .98)
+    }
+    var api = {
+      reset: function (on) {
+        st.on = !!on; el.classList.remove('is-drag', 'is-full')
+        if (!on || !mq.matches) { el.style.removeProperty('--p'); el.style.height = ''; el.style.transform = ''; st.p = 0; return }
+        el.style.height = ''; el.style.transform = ''
+        apply(0, 0)
+      }
+    }
+    var down = function (e) {
+      if (!mq.matches || !st.on || (e.target.closest && e.target.closest('button, a, input'))) return
+      var z = sizes(); st.d = { y: e.clientY, t: Date.now(), p0: st.p, h0: z.half + st.p * (z.full - z.half), z: z, p: st.p, ty: 0 }
+      el.classList.add('is-drag')
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (err) {}
+    }
+    var move = function (e) {
+      var d = st.d; if (!d) return
+      var h = Math.min(d.z.full + 18, d.h0 - (e.clientY - d.y)), p, ty = 0
+      if (h >= d.z.half) p = Math.min(1, (h - d.z.half) / (d.z.full - d.z.half)); else { p = 0; ty = d.z.half - h }
+      d.p = p; d.ty = ty; apply(p, ty)
+    }
+    var up = function (e) {
+      var d = st.d; if (!d) return
+      st.d = null
+      var v = (e.clientY - d.y) / Math.max(1, Date.now() - d.t), target
+      if (v < -.4) target = 1
+      else if (d.ty > d.z.half * .3 || (v > .5 && d.p0 < .5 && d.p < .02)) target = -1
+      else if (v > .5) target = 0
+      else target = d.p > .5 ? 1 : 0
+      el.classList.remove('is-drag')
+      if (target < 0) { var t = d.ty; el.style.transform = ''; o.close(); return }
+      apply(target, 0)
+    }
+    ;(o.grips || []).forEach(function (g) {
+      if (!g) return
+      g.addEventListener('pointerdown', down); g.addEventListener('pointermove', move)
+      g.addEventListener('pointerup', up); g.addEventListener('pointercancel', up)
+    })
+    var rs = function () { if (st.on && mq.matches) apply(st.p, 0) }
+    addEventListener('resize', rs); if (window.visualViewport) visualViewport.addEventListener('resize', rs)
+    return api
+  }
+})()
+
+;(function () {
   var doc = document, root = doc.documentElement
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -17,10 +77,12 @@
   if (loc) {
     var locCard = loc.querySelector('.loc-card'), locLoad = loc.querySelector('[data-loc-load]'), locFrom = null
     var locOpeners = [].slice.call(doc.querySelectorAll('[data-loc-open]'))
-    var setLoc = function (open) { loc.classList.toggle('open', open); locCard.hidden = !open; locOpeners.forEach(function (b) { b.setAttribute('aria-expanded', String(open)) }) }
+    var locSnap = sheetSnap({ el: locCard, grips: [locCard.querySelector('.loc-grip')], box: loc, gap: 8, close: function () { closeLoc() }, half: function () { var m = locCard.querySelector('.loc-map'), b = locCard.querySelector('.loc-body'); return 168 + b.offsetHeight } })
+    var setLoc = function (open) { loc.classList.toggle('open', open); locCard.hidden = !open; locSnap.reset(open); locOpeners.forEach(function (b) { b.setAttribute('aria-expanded', String(open)) }) }
     var closeLoc = function () { setLoc(false); if (locFrom && locFrom.offsetParent) locFrom.focus() }
     locOpeners.forEach(function (b) { b.addEventListener('click', function () { locFrom = b; setLoc(true); loc.querySelector('[data-loc-close]').focus() }) })
     loc.querySelector('[data-loc-close]').addEventListener('click', closeLoc)
+    loc.addEventListener('click', function (e) { if (e.target === loc && loc.classList.contains('open')) closeLoc() })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && loc.classList.contains('open')) closeLoc() })
     locLoad.addEventListener('click', function () {
       var f = doc.createElement('iframe'); f.src = locLoad.dataset.src; f.title = 'Karte: Standort der Praxis'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'
@@ -227,8 +289,10 @@
       root.style.setProperty('--cw-top', Math.round(vv ? vv.offsetTop : 0) + 'px')
     }
     if (vv) { vv.addEventListener('resize', syncViewport); vv.addEventListener('scroll', syncViewport) }
+    var chatSnap = null
     var setChat = function (on) {
       cw.classList.toggle('is-open', on); panel.inert = !on
+      if (chatSnap) chatSnap.reset(on)
       launcher.setAttribute('aria-expanded', String(on))
       launcher.setAttribute('aria-label', on ? 'Chat schließen' : 'Chat öffnen')
       if (innerWidth <= 640) doc.body.style.overflow = on ? 'hidden' : ''
@@ -237,30 +301,7 @@
       if (on && matchMedia('(pointer: fine)').matches) setTimeout(function () { composer.q.focus({ preventScroll: true }) }, 280)
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
-    // Am Handy lässt sich das Fenster am Griff nach unten wegziehen
-    var grip = cw.querySelector('.cw-grip'), head = cw.querySelector('.cw-head'), drag = null
-    var dragStart = function (e) {
-      if (innerWidth > 640 || !cw.classList.contains('is-open') || (e.target.closest && e.target.closest('button, a'))) return
-      drag = { y: e.clientY, t: Date.now(), dy: 0 }; panel.classList.add('is-drag')
-      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (err) {}
-    }
-    var dragMove = function (e) {
-      if (!drag) return
-      drag.dy = Math.max(0, e.clientY - drag.y)
-      panel.style.transform = 'translateY(' + drag.dy + 'px)'
-    }
-    var dragEnd = function () {
-      if (!drag) return
-      var fast = drag.dy / Math.max(1, Date.now() - drag.t) > .6, far = drag.dy > panel.offsetHeight * .28
-      panel.classList.remove('is-drag'); panel.style.transform = ''
-      if (drag.dy > 12 && (fast || far)) setChat(false)
-      drag = null
-    }
-    ;[grip, head].forEach(function (h) {
-      if (!h) return
-      h.addEventListener('pointerdown', dragStart); h.addEventListener('pointermove', dragMove)
-      h.addEventListener('pointerup', dragEnd); h.addEventListener('pointercancel', dragEnd)
-    })
+    chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .74, 620) } })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })
@@ -481,20 +522,12 @@
   doc.querySelectorAll('[data-course-open]').forEach(function (b) {
     var dlg = doc.getElementById(b.dataset.courseOpen)
     if (!dlg || !dlg.showModal) return
-    b.addEventListener('click', function () { dlg.showModal(); dlg.querySelector('.sheet-in').scrollTop = 0 })
+    b.addEventListener('click', function () { dlg.showModal(); dlg.querySelector('.sheet-in').scrollTop = 0; if (dlg._snap) dlg._snap.reset(true) })
   })
   doc.querySelectorAll('.course-sheet').forEach(function (dlg) {
     dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-sheet-close]')) dlg.close() })
-    var grip = dlg.querySelector('.sheet-grip'), d = null
-    if (!grip) return
-    grip.addEventListener('pointerdown', function (e) { d = { y: e.clientY, t: Date.now(), dy: 0 }; dlg.classList.add('is-drag'); try { grip.setPointerCapture(e.pointerId) } catch (err) {} })
-    grip.addEventListener('pointermove', function (e) { if (!d) return; d.dy = Math.max(0, e.clientY - d.y); dlg.style.transform = 'translateY(' + d.dy + 'px)' })
-    var end = function () {
-      if (!d) return
-      var go = d.dy > 12 && (d.dy / Math.max(1, Date.now() - d.t) > .6 || d.dy > dlg.offsetHeight * .28)
-      dlg.classList.remove('is-drag'); dlg.style.transform = ''; d = null
-      if (go) dlg.close()
-    }
-    grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end)
+    var snap = sheetSnap({ el: dlg, grips: [dlg.querySelector('.sheet-grip')], gap: 8, close: function () { dlg.close() } })
+    dlg._snap = snap
+    dlg.addEventListener('close', function () { snap.reset(false) })
   })
 })()

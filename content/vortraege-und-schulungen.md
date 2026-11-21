@@ -3,10 +3,10 @@ path: /vortraege-und-schulungen/
 type: service
 name: Vorträge und Schulungen
 title: Vorträge und Schulungen zu Kommunikation, Erziehung und Trauma | Pamela Zurbuchen
-desc: Vorträge und Schulungen von Pamela Zurbuchen: wertschätzende Kommunikation, Beziehung stärken, Schulangst, Angst und Panik, Entwicklungstrauma, Erziehungsmythen.
+desc: Vorträge und Schulungen von Pamela Zurbuchen: wertschätzende Kommunikation, Beziehung stärken, Angst und Panik, Entwicklungstrauma, Erziehungsmythen.
 h1: Vorträge und Schulungen
 lead: Themen, zu denen ich Vorträge und Schulungen halte.
-card: Vorträge und Schulungen zu Kommunikation, Beziehung, Schulangst und Trauma.
+card: Vorträge und Schulungen zu Kommunikation, Beziehung und Trauma.
 price: nach Absprache
 ---
 ## Kommunikation und Beziehung
@@ -18,7 +18,6 @@ price: nach Absprache
 ## Kinder und Eltern
 
 - Kinder stärkend durchs Leben begleiten
-- Schulangst: „Mama, ich habe Bauchweh!“ Wie können kindliche Bedürfnisse anders zum Ausdruck gebracht werden? Kinder dabei unterstützen, aber wie?
 - Mutter oder Vater sein, losgelöst von anerzogenen alten Glaubenssätzen, Werten und Mustern
 - Erziehungsmythen, was kann losgelassen werden: Sauberkeitserziehung, Schnuller, Schlafen, Essen, Kindergarteneingewöhnung usw.
 

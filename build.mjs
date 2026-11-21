@@ -505,7 +505,7 @@ for (const d of docs.filter(d => d.type === 'page')) {
 </div></section>
 ${d.prices ? `<section class="section"><div class="wrap"><h2 class="sr">Preise im Überblick</h2>${prices()}</div></section>` : ''}
 <section class="section"><div class="wrap with-toc">${toc(d.body)}<div class="prose" data-fold>${d.path === '/preise/' ? md(d.body).replace('</p>', '</p>' + place) : md(d.body)}</div></div></section>
-${isCourse ? cta(false, 'Kurs für Ihre Schule anfragen', 'Gerne berate ich Sie zu Ablauf, Terminen und Kosten.', 'kurs') : cta()}`,
+${isCourse ? cta(false, 'Kurs anfragen', 'Gerne berate ich Sie zu Ablauf, Terminen und Kosten.', 'kurs') : cta()}`,
   })
 }
 
@@ -711,6 +711,7 @@ const widgets = `
 <div class="loc" data-loc>
   <button class="loc-pill" type="button" data-loc-open aria-expanded="false" aria-controls="standort">${PIN}<span>Standort</span></button>
   <section class="loc-card" id="standort" hidden aria-label="Standort der Praxis">
+    <div class="loc-grip" aria-hidden="true"><span></span></div>
     <button class="loc-x" type="button" data-loc-close aria-label="Schließen">${X}</button>
     <div class="loc-map" data-loc-map><button class="loc-load" type="button" data-loc-load data-src="${MAPS_EMBED}">${PIN}<b>Karte laden</b></button></div>
     <div class="loc-body">
@@ -836,7 +837,7 @@ const indexed = pages.filter(p => !p.noindex)
 const today = new Date().toISOString().slice(0, 10)
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`)
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
-write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#5E7B53', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
+write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#3F6B4C', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
 
