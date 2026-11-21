@@ -350,8 +350,8 @@ pages.push({
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>Kurse und Gedanken</h2></div>
   <div class="bento">
-    <a class="tile tile-deep rv" href="/kurse/">${mark}<span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><span class="tile-go">Alle Kurse ansehen</span></a>
-    <a class="tile tile-blush rv" style="--d:160ms" href="/blog/"><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><span class="tile-go">Weiterlesen</span></a>
+    <a class="tile tile-deep rv" href="/kurse/"><span class="tile-ico">${ico('couple')}</span><span class="tile-kind">Kurse und Seminare</span><h3>Für Eltern, Paare und Kinder</h3><ul class="tile-list">${COURSES.filter(c => !/online/i.test(c[1])).map(c => `<li>${c[1]}</li>`).join('')}</ul><span class="tile-go">Alle Kurse ansehen</span></a>
+    <a class="tile tile-blush rv" style="--d:120ms" href="/blog/"><span class="tile-ico">${ico('book')}</span><span class="tile-kind">Blog</span><h3>Gedanken und Impulse</h3><ul class="tile-list">${posts.slice(0, 3).map(d => `<li>${d.name}</li>`).join('')}</ul><span class="tile-go">Weiterlesen</span></a>
   </div>
 </div></section>
 

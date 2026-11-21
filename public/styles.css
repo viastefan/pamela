@@ -2321,3 +2321,26 @@ html, body { overflow-x: clip; max-width: 100%; }
   .cta .actions { display: grid; grid-template-columns: 1fr; gap: 8px; }
   .cta .actions .btn { width: 100%; }
 }
+
+/* Kurse und Gedanken: zwei kompakte Karten mit Symbol, kurzer Liste und Knopf */
+.bento { grid-template-columns: 1fr !important; grid-template-rows: auto !important; gap: 12px !important; }
+@media (min-width: 961px) { .bento { grid-template-columns: 1fr 1fr !important; } }
+.tile { min-height: 0 !important; padding: 24px !important; border-radius: 12px !important; border: 0 !important; background: #fff; box-shadow: var(--lift, var(--shadow-sm)); gap: 0; }
+.tile.tile-deep { background: linear-gradient(160deg, #EEF3E8, #E0EBDF) !important; grid-row: auto !important; }
+.tile.tile-blush { background: #fff; }
+.tile-ico { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 10px; background: rgba(255,255,255,.75); color: var(--wine-700); }
+.tile-blush .tile-ico { background: var(--blush-100); }
+.tile-ico .ico { width: 24px; height: 24px; }
+.tile-kind { margin-top: 18px; font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: .02em; }
+.tile h3 { margin-top: 6px; font-size: 25px !important; line-height: 1.18; }
+.tile-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 7px; }
+.tile-list li { position: relative; padding-left: 20px; font-size: 15px; line-height: 1.4; color: var(--ink-2); }
+.tile-list li::before { content: ''; position: absolute; left: 3px; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: var(--wine-500); }
+.tile-go { align-self: flex-start; margin-top: 22px; display: inline-flex; align-items: center; gap: 10px; height: 42px; padding: 0 18px; border-radius: 10px; background: var(--wine-100); color: var(--wine-900); font-size: 15px; font-weight: 600; text-decoration: none !important; border: 0 !important; }
+.tile-deep .tile-go { background: #fff; }
+.tile-go::after { content: '→'; transition: transform .35s var(--ease); }
+a.tile:hover .tile-go::after { transform: translateX(4px); }
+.tile .mark { display: none !important; }
+.tile-list { gap: 6px !important; }
+.tile-list li { margin: 0 !important; padding: 0 0 0 20px !important; min-height: 0 !important; line-height: 1.4 !important; display: block !important; border: 0 !important; }
+.tile-list li::before { top: .5em !important; }
