@@ -1867,3 +1867,30 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 .item::before { content: none; }
 .g4 { row-gap: 40px; }
 .tenets li { border-top: 0; }
+
+/* ══ Ruhigere Ecken: Container 6 px, große Flächen 12 px; Tasten und Kapseln bleiben rund ══ */
+:root { --r-card: 6px; --r-media: 6px; --r-chip: 6px; }
+:is(.card, .way, .course, .tile, .info, .like-card, .fees, .faq details, .aside, .opt, .g-badge, .cs-info div, .course-ico, .svc-art .art, .art, .item, .row, .step, .cform, .field input, .field textarea, .loc-card, .consent, .qmenu, .cw-bubble, .cw-msg-user p, .pick, .sheet-x, .tilt::before, .tilt::after, .portrait .frame, .portrait img, .wide, .wide img, .toc, .voice, .cs-points li) { border-radius: 6px !important; }
+:is(.hero-photo .hero-bg, .hero-photo .hero-bg img, .hero-card, .cta, .deep, .foot, .sheet, .course-sheet, .cw-panel, .cta-wrap .cta) { border-radius: 12px !important; }
+@media (max-width: 640px) { .cw.is-open .cw-panel, .sheet, .course-sheet { border-radius: 12px 12px 0 0 !important; } }
+.g-badge { border-radius: 999px !important; }
+
+/* Auswahl im Hero ohne Unterstriche: ruhige Flächen */
+.quick select, .quick select:hover, .quick select:focus-visible, .quick select[aria-expanded="true"] { border-bottom: 0 !important; background-color: var(--blush-100) !important; border-radius: 6px; padding: 0 26px 0 10px !important; margin: 3px 0; }
+.quick select:hover { background-color: var(--blush-200) !important; }
+
+/* „Erstgespräch kostenfrei · ca. 30 Minuten“ als kleine Kapseln */
+.quick-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.quick-facts li { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; background: var(--blush-100); font-size: 13.5px; font-weight: var(--wt-text); color: var(--ink-2); white-space: nowrap; }
+.quick-facts svg { width: 14px; height: 14px; fill: none; stroke: var(--wine-700); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.quick-foot { align-items: center; }
+@media (max-width: 960px) { .quick-foot .btn { width: 100%; } .quick-facts { width: 100%; justify-content: center; } }
+
+/* Terminanfrage: Kopf beim Scrollen gefüllt mit Weichzeichner statt durchsichtig */
+.flow-page .top { background: var(--head-bg) !important; -webkit-backdrop-filter: blur(20px) saturate(150%) !important; backdrop-filter: blur(20px) saturate(150%) !important; }
+.flow-page .top.scrolled { box-shadow: 0 8px 24px -14px rgba(46,58,42,.28); }
+.hero.hero-photo { border-radius: 12px !important; }
+@media (max-width: 960px) { .quick-facts { flex-wrap: nowrap; gap: 6px; } .quick-facts li { height: 30px; padding: 0 10px; font-size: 12.5px; } }
+.trust-strip .g-badge, .foot .g-badge, a.g-badge { border-radius: 999px !important; }
+@media (max-width: 960px) { .quick-facts li { padding: 0 9px; font-size: 12px; gap: 5px; } .quick-facts svg { width: 12px; height: 12px; } }
+@media (max-width: 960px) { .quick-facts li { padding: 0 8px; font-size: 11.5px; } }
