@@ -496,7 +496,7 @@ pages.push({
 </div></section>
 <section class="section"><div class="wrap">
   <div class="courses">${COURSES.map(([ic, t, text, meta, pdf], i) => `
-    <article class="course rv" style="--d:${(i % 2) * 80}ms"><div class="course-top"><span class="course-ico">${ico(ic)}</span><p class="course-kind">${meta.split(', ').join(' · ')}</p></div><h2>${t}</h2><p>${text}</p><div class="course-acts"><button class="course-btn is-soft" type="button" data-course-open="kurs-${i}">Details</button><a class="course-btn" href="/termin/?thema=kurs">Anfragen</a></div></article>`).join('')}
+    <article class="course rv" style="--d:${(i % 2) * 80}ms"><div class="course-top"><span class="course-ico">${ico(ic)}</span></div><h2>${t}</h2><ul class="course-tags">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><div class="course-acts"><button class="course-btn is-soft" type="button" data-course-open="kurs-${i}">Details</button><a class="course-btn" href="/termin/?thema=kurs">Anfragen</a></div></article>`).join('')}
   </div>
 </div></section>
 ${COURSES.map(([ic, t], i) => courseSheet(COURSE_INFO[i], i, t, ic)).join('')}
