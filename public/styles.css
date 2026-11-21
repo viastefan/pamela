@@ -2029,3 +2029,19 @@ label.opt, .opt { box-shadow: var(--lift); }
   .tenets li::before { flex: none; }
 }
 [data-theme="dark"] .tenets li { background: var(--card); } [data-theme="dark"] .tenets li::before { background: rgba(255,255,255,.08); color: var(--blush-300); }
+
+/* Preise & Infos: ruhigere Akkordeons, Listen als Zeilen, Hinweise als Notiz */
+.prose > .fold { border-radius: 12px !important; border: 0 !important; background: var(--card); box-shadow: var(--lift, var(--shadow-sm)) !important; }
+.prose > .fold > summary { padding: 18px 18px 18px 22px; border-radius: 12px; }
+.prose > .fold > summary::after { width: 34px; height: 34px; border-radius: 6px; }
+.prose > .fold > .fold-body { padding: 0 22px 24px; }
+.prose > .fold > .fold-body > * + * { margin-top: 14px; }
+.fold-body .list { list-style: none; padding: 0; display: grid; gap: 8px; }
+.fold-body .list li { position: relative; padding: 12px 14px 12px 46px; border-radius: 6px; background: var(--wine-100); line-height: 1.4; font-size: 16px; }
+.fold-body .list li::before { left: 15px; top: 50%; width: 12px; height: 6px; margin-top: -5px; }
+.fold-body h3 { margin-top: 26px !important; font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--wine-700); }
+.fold-body h3 + p { margin-top: 8px !important; padding: 16px 18px; border-radius: 6px; background: var(--blush-100); font-size: 15.5px; line-height: 1.6; }
+.fold-body p { font-size: 16.5px; line-height: 1.65; }
+@media (max-width: 640px) { .prose > .fold > summary { padding: 16px 14px 16px 18px; } .prose > .fold > .fold-body { padding: 0 18px 20px; } .fold-body p { font-size: 16px; } }
+[data-theme="dark"] .fold-body .list li, [data-theme="dark"] .fold-body h3 + p { background: rgba(255,255,255,.05); }
+.fold-body .list li::before { border-color: var(--wine-700) !important; }
