@@ -2460,3 +2460,19 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 .nav a[aria-current="page"] { background: var(--fill) !important; color: var(--wine-700) !important; }
 .drawer-link, .drawer-nav > *, .drawer-foot { border: 0 !important; border-top: 0 !important; border-bottom: 0 !important; }
 .hero-tilt { display: none !important; }
+
+/* Handy: die zwei Hinweise wieder als Container, jetzt als gleich große Karten mit Symbol-Kachel */
+@media (max-width: 960px) {
+  .hero-photo .quick-facts { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px !important; justify-content: stretch; }
+  .hero-photo .quick-facts li { background: var(--wine-100) !important; padding: 10px 12px !important; border-radius: 10px !important; font-size: 13.5px !important; font-weight: 500; line-height: 1.25; color: var(--wine-900) !important; display: flex !important; align-items: center; gap: 10px !important; }
+  .hero-photo .quick-facts svg { box-sizing: content-box; width: 15px !important; height: 15px !important; padding: 7px; border-radius: 8px; background: #fff; color: var(--wine-700) !important; flex: none; }
+}
+@media (max-width: 960px) {
+  .hero-photo .quick-facts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+  .hero-photo .quick-facts li { padding: 8px 10px !important; gap: 8px !important; min-width: 0; font-size: 13px !important; }
+  .hero-photo .quick-facts svg { padding: 5px !important; width: 14px !important; height: 14px !important; }
+}
+@media (max-width: 960px) {
+  .hero-photo .quick-facts { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) !important; }
+  .hero-photo .quick-facts li { font-size: 12.5px !important; padding: 8px !important; gap: 7px !important; white-space: nowrap; }
+}
