@@ -2390,3 +2390,20 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 .foot .fine { margin-top: 18px; }
 .foot .fine p { font-size: 12.5px !important; line-height: 1.55 !important; color: var(--ink-3) !important; }
 @media (max-width: 640px) { .foot .cols { display: grid !important; grid-template-columns: 1fr 1fr; padding: 20px 18px 8px; } .foot .cols a { display: inline-block; padding: 5px 0; } }
+
+/* Kopfzeile Desktop: flacher, ruhig, wie moderne Praxis- und Kanzleiseiten */
+@media (min-width: 961px) {
+  :root { --head-h: 60px !important; }
+  .top { background: rgba(251,250,245,.97) !important; border-bottom: 1px solid var(--line) !important; box-shadow: none; }
+  .top-row { gap: 28px; }
+  .top .brand { gap: 11px; margin-right: auto; }
+  .top .brand .brand-mark { width: 34px !important; height: 34px !important; }
+  .top .brand .brand-text b { font-size: 18.5px !important; letter-spacing: -.005em; }
+  .top .brand .brand-text small { font-size: 11px !important; letter-spacing: .01em; opacity: .85; }
+  .nav { gap: 2px; margin-left: auto; }
+  .nav a { font-size: 14.5px !important; font-weight: 500; padding: 7px 12px !important; border-radius: 6px !important; color: var(--ink-2); }
+  .nav a:hover { background: var(--fill) !important; color: var(--ink-1); }
+  .nav a[aria-current="page"] { background: none !important; color: var(--wine-700); }
+  .nav a::after { left: 12px !important; right: 12px !important; bottom: 1px !important; }
+  .top .btn.primary.sm { height: 36px !important; padding: 0 16px !important; font-size: 14px !important; border-radius: 8px !important; box-shadow: none !important; margin-left: 10px; }
+}
