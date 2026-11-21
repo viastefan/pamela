@@ -825,7 +825,7 @@ const indexed = pages.filter(p => !p.noindex)
 const today = new Date().toISOString().slice(0, 10)
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`)
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
-write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#3F6B4C', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
+write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#3A6148', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
 

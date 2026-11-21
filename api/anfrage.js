@@ -19,7 +19,7 @@ const PRAXIS = { name: 'Pamela Zurbuchen', phone: '0176-43 45 22 86', mail: 'zur
 
 // Eine ruhige Mail im Stil der Website: Logo, Überschrift, ein Satz, die Angaben als Tabelle, Kontakt, Fußzeile.
 const SITE = process.env.SITE_URL || 'https://pamela-festag.vercel.app'
-const C = { bg: '#F8F6EE', card: '#FFFFFF', line: '#E6EEE0', ink: '#33352B', ink2: '#56574B', ink3: '#767567', brand: '#3F6B4C', tint: '#EFF4EA' }
+const C = { bg: '#F8F6EE', card: '#FFFFFF', line: '#E6EEE0', ink: '#33352B', ink2: '#56574B', ink3: '#767567', brand: '#3A6148', tint: '#EFF4EA' }
 const mail = ({ title, intro, rows, foot, cta }) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${title}</title></head>
 <body style="margin:0;background:${C.bg};padding:32px 16px;font:16px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.ink2}">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto"><tr><td style="padding:0 4px 18px">
