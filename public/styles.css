@@ -2493,3 +2493,20 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 @media (max-width: 960px) {
   .hero.hero-photo .hero-bg, .hero.hero-photo .hero-bg img, .hero.hero-photo picture.hero-bg img { border-radius: 0 !important; box-shadow: none !important; }
 }
+
+/* Desktop-Hero: ein durchgehender Abschnitt über die ganze Breite, ohne Rand, ohne Rundungen, ohne Container */
+@media (min-width: 961px) {
+  .hero.hero-photo { margin: 0 !important; border-radius: 0 !important; min-height: min(78vh, 700px); }
+  .hero-photo .hero-bg, .hero-photo .hero-bg img { border-radius: 0 !important; }
+  .hero-photo::after { display: block !important; background: linear-gradient(90deg, rgba(248,246,238,.96) 0%, rgba(248,246,238,.9) 30%, rgba(248,246,238,.55) 46%, rgba(248,246,238,0) 62%) !important; }
+  .hero-card { background: none !important; box-shadow: none !important; border-radius: 0 !important; padding: 0 !important; max-width: 560px; }
+  .hero-photo .quick select, .hero-photo .quick-facts li { background-color: rgba(58,97,72,.08) !important; border-radius: 6px !important; }
+  .hero-photo .quick-facts li { border-radius: 6px !important; }
+  .hero-photo .quick-foot .btn.primary { border-radius: 8px !important; box-shadow: none !important; }
+}
+@media (min-width: 961px) {
+  .hero-card, .hero-card:hover { border: 0 !important; outline: 0 !important; }
+  .hero.hero-photo { align-items: center; padding: 56px 0 !important; }
+  .hero-photo .quick-foot { flex-wrap: wrap; gap: 10px 12px; }
+}
+@media (min-width: 961px) { .hero-card { max-width: 520px !important; } }
