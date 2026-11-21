@@ -1769,3 +1769,15 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Paartherapie-Zeichnung: zwei Menschen im Gespräch, Sprechblasen wechseln sich ab */
 .art-paar .say { animation-duration: 7s; } .art-paar .say.y2 { animation-delay: 4.5s; }
 .art-paar .head, .art-paar .coat { fill: var(--card); }
+
+/* Jugendcoaching: Weg in die Hügel, aufgehende Sonne, Wegweiser an der Gabelung, Vögel */
+.art-jug .road { fill: var(--card); stroke: none; }
+.art-jug .rise { animation: jug-rise 7s ease-in-out infinite alternate; }
+@keyframes jug-rise { from { transform: translateY(10px); } to { transform: translateY(-6px); } }
+.art-jug .tree { animation: none; }
+.art-jug .fly { animation: jug-fly 14s linear infinite; }
+@keyframes jug-fly { from { transform: translate(-40px, 10px); } to { transform: translate(90px, -14px); } }
+.art-jug .bird { fill: none; stroke-width: 1.4; transform-box: fill-box; transform-origin: 50% 100%; animation: flap .45s ease-in-out infinite alternate; }
+.art-jug .bird.b2 { animation-delay: -.2s; }
+@media (prefers-reduced-motion: reduce) { .art-jug .rise, .art-jug .fly { animation: none; } }
+.art-jug .hillback { fill: var(--art-bg); stroke: none; }
