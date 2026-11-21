@@ -241,7 +241,7 @@
   var cw = doc.querySelector('[data-chat]')
   if (cw) {
     var launcher = cw.querySelector('.cw-launcher'), panel = cw.querySelector('.cw-panel'), thread = cw.querySelector('.cw-thread')
-    var chips = cw.querySelector('.cw-chips'), composer = cw.querySelector('.cw-composer'), started = false, typing = null, busy = false
+    var chips = cw.querySelector('.cw-chips'), composer = cw.querySelector('.cw-composer'), started = false, started2 = false, typing = null, busy = false
     var el = function (tag, cls, text) { var n = doc.createElement(tag); n.className = cls; if (text) n.textContent = text; return n }
     var down = function () { thread.scrollTo({ top: thread.scrollHeight, behavior: calm ? 'auto' : 'smooth' }) }
     // Antworten kommen vom Server (/api/chat); fällt er aus, bleibt ein ehrlicher Hinweis mit den Kontaktwegen
@@ -259,7 +259,7 @@
         chips.appendChild(n)
       })
     }
-    var user = function (text) { var m = el('div', 'cw-msg cw-msg-user'); m.appendChild(el('p', '', text)); thread.appendChild(m); down() }
+    var user = function (text) { var m = el('div', 'cw-msg cw-msg-user'); m.appendChild(el('p', '', text)); thread.appendChild(m); if (chatSnap) chatSnap.expand(); down() }
     var botRow = function () {
       var m = el('div', 'cw-msg cw-msg-bot'), av = el('img', 'cw-msg-avatar')
       av.src = '/img/pamela-avatar.webp?v=2'; av.alt = ''; av.width = 28; av.height = 28
@@ -276,7 +276,7 @@
         typing = setTimeout(function () {
           wait.remove()
           var m = botRow(); (node.text || []).forEach(function (t) { m.lastChild.appendChild(el('p', '', t)) })
-          thread.appendChild(m); setChips(node.chips || []); down(); busy = false
+          thread.appendChild(m); setChips(node.chips || []); if (started2 && chatSnap) chatSnap.expand(); started2 = true; down(); busy = false
         }, delay)
       })
     }
@@ -301,7 +301,7 @@
     }
     launcher.addEventListener('click', function () { setChat(!cw.classList.contains('is-open')) })
     chatSnap = sheetSnap({ el: panel, grips: [cw.querySelector('.cw-grip'), cw.querySelector('.cw-head')], box: cw, scroller: null, gap: 8, close: function () { setChat(false) }, half: function () { return Math.min(cw.clientHeight * .72, 640) } })
-    composer.q.addEventListener('focus', function () { if (chatSnap) chatSnap.expand() })
+    ;['focus', 'input', 'pointerdown'].forEach(function (ev) { composer.q.addEventListener(ev, function () { if (chatSnap) chatSnap.expand() }) })
     doc.querySelectorAll('[data-chat-open]').forEach(function (b) { b.addEventListener('click', function () { setChat(true) }) })
     cw.querySelectorAll('[data-chat-close]').forEach(function (b) { b.addEventListener('click', function () { setChat(false) }) })
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && cw.classList.contains('is-open')) { setChat(false); launcher.focus() } })
