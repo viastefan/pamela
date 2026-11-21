@@ -1765,3 +1765,7 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 @media (max-width: 960px) { .foot .cols, .foot .fine, .foot-end { border-top: 0 !important; border-bottom: 0 !important; } .foot .g-badge { margin-bottom: 0; } }
 .foot li, .foot a { hyphens: none; -webkit-hyphens: none; }
 @media (max-width: 960px) { .foot li { overflow-wrap: normal; word-break: normal; } .foot .cols { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px 16px; } .foot li { font-size: 14px; } }
+
+/* Paartherapie-Zeichnung: zwei Menschen im Gespräch, Sprechblasen wechseln sich ab */
+.art-paar .say { animation-duration: 7s; } .art-paar .say.y2 { animation-delay: 4.5s; }
+.art-paar .head, .art-paar .coat { fill: var(--card); }
