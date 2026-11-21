@@ -1817,3 +1817,6 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
   .cs-info { grid-template-columns: 1fr; }
   .cs-acts .btn { flex: 1 1 100%; }
 }
+/* Keine Strichellinien in den Zeichnungen: der Boden beim Spaziergang ist eine durchgehende Linie */
+.art .run { stroke-dasharray: none; animation: none; }
+.art .rays { display: none; }
