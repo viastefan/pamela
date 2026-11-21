@@ -1844,3 +1844,20 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Schatten der Hero-Karte nicht abschneiden, keine Lesefortschritts-Linie unter dem Kopf */
 @media (max-width: 960px) { .hero.hero-photo { overflow: visible; } }
 .top::after { display: none !important; }
+
+/* Kurskarten: ruhiger Aufbau, Eckdaten als eine Zeile, zwei gleich große Tasten */
+.course { padding: 28px; border: 0; border-radius: 24px; background: var(--card); box-shadow: 0 1px 2px rgba(46,58,42,.04), 0 14px 34px -22px rgba(46,58,42,.28); }
+.course:hover { transform: translateY(-2px); box-shadow: 0 1px 2px rgba(46,58,42,.05), 0 22px 44px -24px rgba(46,58,42,.34); }
+.course-top { display: flex; align-items: center; gap: 14px; }
+.course-ico { width: 44px; height: 44px; border-radius: 14px; flex: none; }
+.course-ico .ico { width: 22px; height: 22px; }
+.course-kind { font-size: 13.5px; line-height: 1.4; color: var(--ink-3); }
+.course h2 { margin-top: 20px; font-size: 26px; line-height: 1.15; }
+.course > p { margin-top: 12px; }
+.course .course-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: auto; padding-top: 26px; }
+.course-btn { height: 48px; display: grid; place-items: center; border: 0; border-radius: 999px; background: var(--pk-bg); color: var(--pk-ink); font: inherit; font-size: 15.5px; font-weight: var(--wt-strong); cursor: pointer; transition: background-color .3s ease, transform .2s var(--ease); }
+.course-btn:hover { background: var(--pk-hover); }
+.course-btn.is-soft { background: var(--blush-100); color: var(--wine-950); }
+.course-btn.is-soft:hover { background: var(--blush-200); }
+.course-btn:active { transform: scale(.98); }
+@media (max-width: 960px) { .course { padding: 22px; } .course h2 { font-size: 23px; margin-top: 18px; } .course-btn { height: 46px; } }

@@ -215,7 +215,7 @@ const COURSES = [
   ['couple', 'Eltern sein, Paar bleiben', 'Seitdem die Kinder da sind, ist alles anders? Streit nimmt zu, die Liebe ab? Dann lade ich herzlich zu diesem Paar-Seminar ein.', 'Wochenendseminar, maximal 3 Paare', '/downloads/eltern-sein-paar-bleiben.pdf'],
   ['steps', 'Schritt für Schritt als Eltern fit', 'Mehr Gelassenheit und Ruhe im Erziehungsalltag. Das Elterntraining hilft, ein kooperatives und konfliktärmeres Zusammenleben in der Familie zu entwickeln.', 'Wochenendseminar im ZeitRaum, maximal 8 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit.pdf'],
   ['monitor', 'Schritt für Schritt als Eltern fit, online', 'Dasselbe Elterntraining als Online-Kurs, von zu Hause aus.', 'Online-Kurs, 10 Treffen, maximal 6 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit-online.pdf'],
-  ['kids', 'Gruppe für Trennungs- und Scheidungskinder', 'In dem Gruppenangebot wird Kindern der Raum und die Möglichkeit gegeben, mit der Scheidung oder Trennung ihrer Eltern besser zurechtzukommen.', 'Für Kinder von 8 bis 10 Jahren, 10 Treffen, maximal 4 Kinder', '/downloads/gruppe-trennungs-und-scheidungskinder.pdf'],
+  ['kids', 'Gruppe für Trennungs- und Scheidungskinder', 'In dem Gruppenangebot wird Kindern der Raum und die Möglichkeit gegeben, mit der Scheidung oder Trennung ihrer Eltern besser zurechtzukommen.', 'Für Kinder von 8 bis 13 Jahren, 10 Treffen, maximal 4 Kinder', '/downloads/gruppe-trennungs-und-scheidungskinder.pdf'],
 ]
 
 // ── Strukturierte Daten
@@ -480,7 +480,7 @@ pages.push({
 </div></section>
 <section class="section"><div class="wrap">
   <div class="courses">${COURSES.map(([ic, t, text, meta, pdf], i) => `
-    <article class="course rv" style="--d:${(i % 2) * 80}ms"><span class="course-ico">${ico(ic)}</span><h2>${t}</h2><ul class="course-meta">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><p class="course-acts"><button class="btn primary sm" type="button" data-course-open="kurs-${i}">Details ansehen</button><a class="course-more" href="/termin/?thema=kurs">Anfragen</a></p></article>`).join('')}
+    <article class="course rv" style="--d:${(i % 2) * 80}ms"><div class="course-top"><span class="course-ico">${ico(ic)}</span><p class="course-kind">${meta.split(', ').join(' · ')}</p></div><h2>${t}</h2><p>${text}</p><div class="course-acts"><button class="course-btn is-soft" type="button" data-course-open="kurs-${i}">Details</button><a class="course-btn" href="/termin/?thema=kurs">Anfragen</a></div></article>`).join('')}
   </div>
 </div></section>
 ${COURSES.map(([ic, t], i) => courseSheet(COURSE_INFO[i], i, t, ic)).join('')}
