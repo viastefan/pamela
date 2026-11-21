@@ -2215,3 +2215,10 @@ label.opt, .opt { box-shadow: var(--lift); }
   .hero-photo .quick-facts li { background: none !important; padding: 0 !important; border-radius: 0 !important; font-size: 14px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; box-shadow: none; }
   .hero-photo .quick-facts svg { width: 15px; height: 15px; color: var(--wine-700); flex: none; }
 }
+
+/* Preise dezenter: keine Marken, nur ruhige Schrift in Grün */
+.fee-price, .fee:first-child .fee-price { background: none !important; color: var(--wine-700) !important; padding: 0 !important; font-size: 22px !important; border-radius: 0 !important; }
+.fee { padding: 18px 22px !important; }
+.fee-name { font-size: 17px; }
+.fee-note { font-size: 14px; }
+@media (min-width: 961px) { .fee { padding: 24px !important; } .fee-price, .fee:first-child .fee-price { margin-top: 4px; font-size: 24px !important; } }
