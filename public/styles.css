@@ -1832,3 +1832,15 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
   body:has(.svc-book) .foot { padding-bottom: 96px; }
 }
 @media (max-width: 960px) { :is(.cta, .deep, .tile-deep) .mark { display: none !important; } }
+
+/* Weniger Linien: Abschnitte ohne Trennstriche, der Kopf nur mit weichem Schatten statt Kante */
+.top.scrolled { border-bottom-color: transparent; box-shadow: 0 8px 24px -14px rgba(46,58,42,.28); }
+.trust-strip .wrap { border-block: 0; padding-top: 8px; padding-bottom: 8px; }
+.links { border-top: 0; }
+.links li:last-child a { border-bottom: 0; }
+.links a { border-bottom-color: var(--line); }
+.hero-photo .quick { border-top: 0; padding-top: 0; }
+.section .head + .links { margin-top: 8px; }
+/* Schatten der Hero-Karte nicht abschneiden, keine Lesefortschritts-Linie unter dem Kopf */
+@media (max-width: 960px) { .hero.hero-photo { overflow: visible; } }
+.top::after { display: none !important; }
