@@ -2299,7 +2299,7 @@ label.opt, .opt { box-shadow: var(--lift); }
 .flow-back { font-size: 15.5px !important; }
 
 /* Nie seitlich scrollen: überstehende Zierflächen (zum Beispiel hinter dem Foto) werden abgeschnitten */
-html, body { overflow-x: clip; max-width: 100%; }
+body { overflow-x: clip; max-width: 100%; }
 .tilt { position: relative; }
 
 /* „Was beschäftigt Sie gerade?“: Karten statt Liste mit Linien */
@@ -2406,4 +2406,23 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
   .nav a[aria-current="page"] { background: none !important; color: var(--wine-700); }
   .nav a::after { left: 12px !important; right: 12px !important; bottom: 1px !important; }
   .top .btn.primary.sm { height: 36px !important; padding: 0 16px !important; font-size: 14px !important; border-radius: 8px !important; box-shadow: none !important; margin-left: 10px; }
+}
+
+/* Handy: die zwei Karten liegen seitlich versetzt hinter dem Bild, wie bei „Über mich“ */
+.hero-tilt { display: none; }
+@media (max-width: 960px) {
+  .hero-stack { display: none !important; }
+  .hero.hero-photo { overflow: visible !important; position: relative; isolation: isolate; }
+  .hero-photo .hero-bg { position: relative; z-index: 1 !important; }
+  .hero-tilt { display: block; position: absolute; z-index: 0; left: 10px; right: 10px; top: 10px; aspect-ratio: 4 / 4.4; border-radius: 28px; pointer-events: none; transform-origin: 50% 60%; }
+  .hero-tilt:not(.t2) { background: linear-gradient(160deg, rgba(185,204,173,.5), rgba(211,225,202,.3)); transform: rotate(3deg) translate(6px, 4px); }
+  .hero-tilt.t2 { border: 1px solid rgba(117,135,106,.28); transform: rotate(-1.6deg) translate(-5px, 3px); }
+  .js .hero-tilt { animation: tilt-in 1s var(--ease) both; }
+  .js .hero-tilt.t2 { animation-delay: .15s; }
+}
+@keyframes tilt-in { from { opacity: 0; transform: none; } }
+@media (max-width: 960px) {
+  .hero.hero-photo { overflow: clip !important; }
+  .hero-tilt:not(.t2) { transform: rotate(2deg) translate(4px, 3px); }
+  .hero-tilt.t2 { transform: rotate(-1.2deg) translate(-3px, 2px); }
 }
