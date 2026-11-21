@@ -279,6 +279,7 @@ pages.push({
   desc: 'Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching und Erziehungsberatung in Landsberg am Lech. In der Praxis, online oder als Walk and Talk. Erstgespräch kostenfrei.',
   ld: [business, person, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': ORIGIN + '/#website', name: P.name, url: ORIGIN + '/', inLanguage: 'de', publisher: { '@id': ORIGIN + '/#praxis' } }, { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
   body: `
+<div class="hero-stack" aria-hidden="true"><i></i><i></i></div>
 <section class="hero hero-photo">
   <picture class="hero-bg"><source type="image/webp" media="(max-width: 960px)" srcset="/img/hero-900.webp"><source type="image/webp" srcset="/img/hero-1366.webp"><img src="/img/hero-1366.jpg" width="1366" height="768" alt="Pamela Zurbuchen, systemische und traumasensible Therapeutin in Landsberg am Lech, lächelnd im Freien" fetchpriority="high" decoding="async"></picture>
   <div class="wrap hero-grid">

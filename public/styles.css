@@ -2354,3 +2354,25 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 .faq details[open] summary::after { background-color: var(--wine-700) !important; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.500l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.700' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important; transform: rotate(180deg); }
 .faq details p { margin: 0 !important; padding: 0 20px 20px !important; font-size: 16px !important; line-height: 1.6; color: var(--ink-2); }
 @media (max-width: 640px) { .faq summary { font-size: 16.5px !important; padding: 14px 12px 14px 18px !important; min-height: 56px; } .faq details p { padding: 0 18px 18px !important; font-size: 15.5px !important; } }
+
+/* Hero: hinter dem Bild lugen zwei leicht gedrehte Karten hervor, wie hinter dem Foto auf „Über mich“ */
+.hero-stack { position: relative; height: 30px; margin: 0 6px; z-index: 0; pointer-events: none; }
+.hero-stack i { position: absolute; display: block; border-radius: 16px 16px 0 0; transform-origin: 50% 100%; }
+.hero-stack i:nth-child(1) { left: 34px; right: 34px; top: 0; height: 34px; background: linear-gradient(180deg, rgba(185,204,173,.34), rgba(185,204,173,.18)); transform: rotate(-.6deg); }
+.hero-stack i:nth-child(2) { left: 14px; right: 14px; top: 13px; height: 26px; background: linear-gradient(180deg, rgba(185,204,173,.62), rgba(185,204,173,.42)); border: 1px solid rgba(117,135,106,.2); border-bottom: 0; transform: rotate(.45deg); }
+.hero.hero-photo { z-index: 1; border-radius: 16px 16px 28px 28px !important; }
+@media (max-width: 960px) {
+  .hero-stack { margin: 0 10px; height: 24px; }
+  .hero-stack i:nth-child(1) { left: 26px; right: 26px; height: 28px; }
+  .hero-stack i:nth-child(2) { left: 12px; right: 12px; top: 10px; height: 22px; }
+  .hero.hero-photo { border-radius: 0 !important; }
+}
+.js .hero-stack i { animation: stack-in .9s var(--ease) both; }
+.js .hero-stack i:nth-child(2) { animation-delay: .12s; }
+@keyframes stack-in { from { opacity: 0; transform: translateY(14px) scaleX(.96); } }
+
+/* Termin-Knopf unten auf den Unterseiten: erscheint nach zwei Sekunden weich */
+@media (max-width: 960px) {
+  .js .svc-book { opacity: 0; transform: translateY(18px); pointer-events: none; transition: opacity .6s var(--ease), transform .7s var(--ease); }
+  .js .svc-book.is-ready { opacity: 1; transform: none; pointer-events: auto; }
+}

@@ -96,6 +96,10 @@
   var doc = document, root = doc.documentElement
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  // Unterseiten: der Termin-Knopf unten blendet nach zwei Sekunden weich ein
+  var svcBook = doc.querySelector('.svc-book')
+  if (svcBook) setTimeout(function () { svcBook.classList.add('is-ready') }, calm ? 0 : 2000)
+
   // Kopf: Linie erst beim Scrollen, Menü am Handy
   var top = doc.querySelector('.top'), btn = doc.querySelector('.menu-btn')
   var dock = doc.querySelector('[data-dock]')
