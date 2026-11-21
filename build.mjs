@@ -407,6 +407,7 @@ for (const s of services) {
     <a class="small" href="/preise/">Alle Preise und Informationen</a>
   </aside>
 </div></section>
+<a class="svc-book" href="/termin/${slug(s.path) ? '?thema=' + slug(s.path) : ''}">Termin anfragen<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
 <section class="section"><div class="wrap">
   <div class="head rv"><h2>So beginnt es</h2></div>
   ${steps(s.du)}
