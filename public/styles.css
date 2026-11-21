@@ -2305,3 +2305,7 @@ label.opt, .opt { box-shadow: var(--lift); }
 .flow-nav-in { padding-top: 10px !important; padding-bottom: max(10px, env(safe-area-inset-bottom)) !important; }
 .flow-fwd { min-height: 46px !important; min-width: 0 !important; padding: 0 26px !important; border-radius: 10px !important; font-size: 16px !important; }
 .flow-back { font-size: 15.5px !important; }
+
+/* Nie seitlich scrollen: überstehende Zierflächen (zum Beispiel hinter dem Foto) werden abgeschnitten */
+html, body { overflow-x: clip; max-width: 100%; }
+.tilt { position: relative; }
