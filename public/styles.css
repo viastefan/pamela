@@ -1894,3 +1894,13 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 .trust-strip .g-badge, .foot .g-badge, a.g-badge { border-radius: 999px !important; }
 @media (max-width: 960px) { .quick-facts li { padding: 0 9px; font-size: 12px; gap: 5px; } .quick-facts svg { width: 12px; height: 12px; } }
 @media (max-width: 960px) { .quick-facts li { padding: 0 8px; font-size: 11.5px; } }
+
+/* Breiter: Hero-Bild fast randlos, schmalere Außenränder am Handy */
+@media (min-width: 961px) { .hero.hero-photo { margin: 0 6px; } }
+@media (max-width: 960px) {
+  :root { --gutter: 14px; }
+  .hero.hero-photo { padding: 6px 6px 8px; }
+  .hero-photo .hero-card { margin: -72px 12px 0 !important; padding: 24px 18px 22px; }
+  .cta-wrap { padding: 0 4px 4px; }
+  .foot { margin: 0 4px 4px; }
+}
