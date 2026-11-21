@@ -474,3 +474,27 @@
   doc.addEventListener('mousedown', function (e) { if (menu && !menu.contains(e.target) && e.target !== owner) close(false) })
   addEventListener('resize', function () { close(false) })
 })()
+
+// Kursdetails: Fenster öffnen, schließen und am Handy am Griff nach unten wegziehen
+;(function () {
+  var doc = document
+  doc.querySelectorAll('[data-course-open]').forEach(function (b) {
+    var dlg = doc.getElementById(b.dataset.courseOpen)
+    if (!dlg || !dlg.showModal) return
+    b.addEventListener('click', function () { dlg.showModal(); dlg.querySelector('.sheet-in').scrollTop = 0 })
+  })
+  doc.querySelectorAll('.course-sheet').forEach(function (dlg) {
+    dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-sheet-close]')) dlg.close() })
+    var grip = dlg.querySelector('.sheet-grip'), d = null
+    if (!grip) return
+    grip.addEventListener('pointerdown', function (e) { d = { y: e.clientY, t: Date.now(), dy: 0 }; dlg.classList.add('is-drag'); try { grip.setPointerCapture(e.pointerId) } catch (err) {} })
+    grip.addEventListener('pointermove', function (e) { if (!d) return; d.dy = Math.max(0, e.clientY - d.y); dlg.style.transform = 'translateY(' + d.dy + 'px)' })
+    var end = function () {
+      if (!d) return
+      var go = d.dy > 12 && (d.dy / Math.max(1, Date.now() - d.t) > .6 || d.dy > dlg.offsetHeight * .28)
+      dlg.classList.remove('is-drag'); dlg.style.transform = ''; d = null
+      if (go) dlg.close()
+    }
+    grip.addEventListener('pointerup', end); grip.addEventListener('pointercancel', end)
+  })
+})()

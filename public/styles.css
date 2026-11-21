@@ -1786,3 +1786,34 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 .art-erz .drop { animation: erz-drop 4.8s cubic-bezier(.3,.7,.3,1) infinite; }
 @keyframes erz-drop { 0%, 12% { transform: translate(-4px, -14px); opacity: 0; } 24% { opacity: 1; } 38%, 82% { transform: none; opacity: 1; } 94%, 100% { transform: translate(0, -4px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .art-erz .drop { animation: none; } }
+
+/* Kurse: Karten mit Details-Taste, Details im Fenster statt PDF */
+.course-more { font-size: 14.5px; font-weight: var(--wt-strong); color: var(--ink-1); text-decoration: underline; text-decoration-color: var(--line-3); text-underline-offset: .25em; }
+.course-more:hover { color: var(--wine-700); text-decoration-color: currentColor; }
+.course { padding: 34px; border-radius: 26px; box-shadow: var(--shadow-sm); }
+.course h2 { letter-spacing: -.018em; }
+.course-sheet { width: min(620px, calc(100vw - 32px)); max-height: min(86dvh, 820px); overflow: hidden; }
+.course-sheet .sheet-in { max-height: min(86dvh, 820px); overflow-y: auto; overscroll-behavior: contain; gap: 0; padding: 40px 40px 32px; }
+.course-sheet .course-ico { margin-bottom: 18px; }
+.course-sheet h2 { font-size: 30px; padding-right: 40px; }
+.course-sheet .sheet-lead { margin: 14px 0 0; max-width: none; font-size: 16.5px; line-height: 1.6; color: var(--ink-2); }
+.course-sheet h3 { margin-top: 26px; font-size: 13px; font-weight: var(--wt-strong); letter-spacing: .06em; text-transform: uppercase; color: var(--wine-700); }
+.cs-points { list-style: none; margin-top: 10px; display: grid; gap: 0; }
+.cs-points li { position: relative; padding: 10px 0 10px 28px; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.45; color: var(--ink-1); }
+.cs-points li::before { content: ''; position: absolute; left: 2px; top: 15px; width: 13px; height: 7px; border-left: 2px solid var(--wine-700); border-bottom: 2px solid var(--wine-700); transform: rotate(-45deg); }
+.cs-how { margin-top: 18px; font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+.cs-info { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cs-info div { padding: 14px 16px; border-radius: 16px; background: var(--blush-100); }
+.cs-info dt { font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.cs-info dd { margin-top: 4px; font-size: 15px; line-height: 1.45; color: var(--ink-1); }
+.cs-note { margin-top: 14px; font-size: 14px; color: var(--ink-3); }
+.cs-acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+@media (max-width: 640px) {
+  .course-sheet { width: 100%; max-height: 90dvh; }
+  .course-sheet .sheet-in { max-height: 90dvh; padding: 34px 22px max(24px, env(safe-area-inset-bottom)); }
+  .course-sheet .sheet-grip { position: sticky; top: -34px; margin: -34px -22px 6px; height: 30px; background: var(--card); z-index: 2; }
+  .course-sheet .sheet-grip span { width: 44px; background: rgba(51,53,43,.18); }
+  .course-sheet h2 { font-size: 25px; }
+  .cs-info { grid-template-columns: 1fr; }
+  .cs-acts .btn { flex: 1 1 100%; }
+}

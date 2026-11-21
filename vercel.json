@@ -16,6 +16,7 @@
     { "source": "/online-kurse-die-friedensstifter", "destination": "/kurse/", "permanent": true },
     { "source": "/kurse/die-friedensstifter", "destination": "/kurse/", "permanent": true },
     { "source": "/kurse/die-friedensstifter/", "destination": "/kurse/", "permanent": true },
+    { "source": "/downloads/:path*", "destination": "/kurse/", "permanent": true },
     { "source": "/aktuelle-kurse", "destination": "/kurse/", "permanent": true },
     { "source": "/blogbeitraege", "destination": "/blog/", "permanent": true },
     { "source": "/blogbeitraege/gedanken-zum-elternsein", "destination": "/blog/finde-deinen-weg-als-mama-oder-papa/", "permanent": true },

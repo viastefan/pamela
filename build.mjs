@@ -189,6 +189,28 @@ const contactForm = `
   <div class="cform-done" data-cform-done hidden tabindex="-1"><h3>Danke, Ihre Nachricht ist angekommen.</h3><p>Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.</p></div>
 </form>`
 
+// Kursdetails, früher als PDF-Kursblatt: jetzt direkt auf der Seite in einem Fenster
+const COURSE_INFO = [
+  { lead: 'Steckt ihr mitten im Übergang vom Paar zur Familie oder seid gerade Eltern geworden? Ihr merkt, dass sich etwas verändert, Konflikte sich mehren und die Paarbeziehung anders geworden ist?', points: ['Was macht unsere Partnerschaft wieder lebendig, und wie halten wir sie lebendig?', 'Wie gehen wir achtsam und wertschätzend miteinander um und kommunizieren besser?', 'Wie kann eine Krise als Chance genutzt werden?', 'Wie finden wir gute Entscheidungen in wichtigen Lebensfragen?'], how: 'In Kurzvorträgen geht es um typische Paarsituationen. Jedes Paar kann eigene Themen einbringen und lernt in Übungen die eigene Paardynamik, Ressourcen und individuelle Lösungen kennen. Die meiste Zeit verbringt ihr als Paar miteinander.', info: [['Wann', 'Samstag und Sonntag, jeweils 10 bis 17 Uhr. Neuer Termin, sobald genügend Anmeldungen da sind.'], ['Wo', 'ZeitRaum, Weilheimer Str. 9, Landsberg am Lech'], ['Gruppe', 'maximal 3 Paare'], ['Kursgebühr', '250 € pro Paar']] },
+  { lead: 'Mehr Gelassenheit und Ruhe im Erziehungsalltag, hin zu einem wertschätzenden Miteinander. Gute Erziehung lässt sich lernen, üben und verbessern, wie Lesen und Schreiben auch.', points: ['Bindungsstarke, tragfähige und wertschätzende Erziehungsmethoden kennenlernen', 'Sinnvolle Grenzen setzen', 'Erfahren, wie Ihr Kind besser kooperiert', 'Ihr Kind gut begleiten und ermutigen'], how: 'Das Elterntraining ist angelehnt an die STEP-Methode und unterstützt Eltern in ihrer Erziehungs- und Beziehungsarbeit. Freiwillige Nachtreffen helfen, das Gelernte in der Familie zu festigen.', info: [['Wann', 'Wochenendseminar Freitag bis Sonntag. Nächster Termin auf Anfrage.'], ['Wo', 'ZeitRaum, Weilheimer Str. 9, Landsberg am Lech'], ['Gruppe', 'maximal 8 Personen'], ['Kursgebühr', '200 € pro Person, für Paare 20 % Rabatt']], note: 'Bitte das Alter des Kindes bei der Anmeldung angeben.' },
+  { lead: 'Dasselbe Elterntraining als Online-Kurs, bequem von zu Hause aus. Für mehr Gelassenheit und Ruhe im Erziehungsalltag.', points: ['Bindungsstarke, tragfähige und wertschätzende Erziehungsmethoden kennenlernen', 'Sinnvolle Grenzen setzen', 'Erfahren, wie Ihr Kind besser kooperiert', 'Ihr Kind gut begleiten und ermutigen'], how: 'Zehn Treffen, angelehnt an die STEP-Methode. Beim ersten Treffen werden alle weiteren Termine gemeinsam mit der Gruppe abgesprochen. Freiwillige Nachtreffen helfen, dranzubleiben.', info: [['Wann', '10 Treffen, samstags 10:30 bis 12:30 Uhr. Start auf Anfrage.'], ['Wo', 'online'], ['Gruppe', 'maximal 6 Personen'], ['Kursgebühr', '200 € pro Person, für Paare 20 % Rabatt']], note: 'Bitte das Alter des Kindes bei der Anmeldung angeben.' },
+  { lead: 'Für Kinder ist die Trennung der Eltern oft ein einschneidendes Erlebnis. In der Gruppe bekommen sie Raum, mit der veränderten Lebenssituation besser umgehen zu lernen, und emotionale Unterstützung.', points: ['Elternabend mit Hinweisen, wie Eltern ihr Kind zu Hause unterstützen können', 'Im geschützten Rahmen über Gedanken, Gefühle, Ängste und Wünsche sprechen', 'Gefühle wahrnehmen, zulassen und ausdrücken, auch Scham überwinden', 'Eigene Ressourcen und neue Lösungen kennenlernen', 'Selbstwert stärken und eine eigenständige Beziehung zu beiden Eltern aufbauen'], how: 'Zwei Gruppen nach Alter: 8 bis 10 Jahre und 11 bis 13 Jahre.', info: [['Wann', 'wöchentlich, 10 Treffen, 17 bis 18 Uhr. Start, sobald genügend Anmeldungen da sind.'], ['Wo', 'ZeitRaum, Weilheimer Str. 9, Landsberg am Lech'], ['Gruppe', 'maximal 4 Kinder'], ['Kursgebühr', '200 € pro Kind, Geschwister 10 % Rabatt']], note: 'Bitte das Alter des Kindes bei der Anmeldung angeben.' },
+]
+const courseSheet = (c, i, t, ic) => `<dialog class="sheet course-sheet" id="kurs-${i}" aria-labelledby="kurs-${i}-t">
+  <div class="sheet-in" tabindex="-1">
+    <div class="sheet-grip" aria-hidden="true"><span></span></div>
+    <button class="sheet-x" type="button" data-sheet-close aria-label="Schließen"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg></button>
+    <span class="course-ico">${ico(ic)}</span>
+    <h2 id="kurs-${i}-t">${t}</h2>
+    <p class="sheet-lead">${c.lead}</p>
+    <h3>Darum geht es</h3>
+    <ul class="cs-points">${c.points.map(x => `<li>${x}</li>`).join('')}</ul>
+    <p class="cs-how">${c.how}</p>
+    <dl class="cs-info">${c.info.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+    ${c.note ? `<p class="cs-note">${c.note}</p>` : ''}
+    <div class="cs-acts"><a class="btn primary" href="/termin/?thema=kurs">Kurs anfragen</a><a class="btn" href="tel:${P.tel}">${P.phone}</a></div>
+  </div>
+</dialog>`
 const COURSES = [
   ['couple', 'Eltern sein, Paar bleiben', 'Seitdem die Kinder da sind, ist alles anders? Streit nimmt zu, die Liebe ab? Dann lade ich herzlich zu diesem Paar-Seminar ein.', 'Wochenendseminar, maximal 3 Paare', '/downloads/eltern-sein-paar-bleiben.pdf'],
   ['steps', 'Schritt für Schritt als Eltern fit', 'Mehr Gelassenheit und Ruhe im Erziehungsalltag. Das Elterntraining hilft, ein kooperatives und konfliktärmeres Zusammenleben in der Familie zu entwickeln.', 'Wochenendseminar im ZeitRaum, maximal 8 Personen', '/downloads/schritt-fuer-schritt-als-eltern-fit.pdf'],
@@ -454,13 +476,14 @@ pages.push({
   body: `
 <section class="page-hero"><div class="wrap">
   <h1 class="glass">${glass('Kurse und Seminare')}</h1>
-  <p class="lead rv" style="--d:160ms">Für Eltern, Paare und Kinder, im ${P.practice} in Landsberg am Lech und online. Termine und Kursgebühr stehen im Kursblatt.</p>
+  <p class="lead rv" style="--d:160ms">Für Eltern, Paare und Kinder, im ${P.practice} in Landsberg am Lech und online. Termine, Ablauf und Kursgebühr finden Sie in den Details zu jedem Kurs.</p>
 </div></section>
 <section class="section"><div class="wrap">
   <div class="courses">${COURSES.map(([ic, t, text, meta, pdf], i) => `
-    <article class="course rv" style="--d:${(i % 2) * 80}ms"><span class="course-ico">${ico(ic)}</span><h2>${t}</h2><ul class="course-meta">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><p class="course-acts"><a class="btn primary sm" href="/termin/?thema=kurs">Anfragen</a><a class="course-pdf" href="${pdf}">${ico('down')}Kursblatt als PDF</a></p></article>`).join('')}
+    <article class="course rv" style="--d:${(i % 2) * 80}ms"><span class="course-ico">${ico(ic)}</span><h2>${t}</h2><ul class="course-meta">${meta.split(', ').map(m => `<li>${m}</li>`).join('')}</ul><p>${text}</p><p class="course-acts"><button class="btn primary sm" type="button" data-course-open="kurs-${i}">Details ansehen</button><a class="course-more" href="/termin/?thema=kurs">Anfragen</a></p></article>`).join('')}
   </div>
 </div></section>
+${COURSES.map(([ic, t], i) => courseSheet(COURSE_INFO[i], i, t, ic)).join('')}
 ${cta(false, 'Fragen zu einem Kurs?', 'Bitte bei Kursen für Kinder das Alter des Kindes angeben.', 'kurs')}`,
 })
 
