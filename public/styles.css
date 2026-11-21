@@ -2207,14 +2207,6 @@ label.opt, .opt { box-shadow: var(--lift); }
 .drawer-acts .btn.primary { height: 46px !important; }
 .cw-chip, .svc-go, .svc-more { border-radius: 8px !important; }
 
-/* Desktop: Knopf und Hinweise in einer Zeile, die zwei Hinweise untereinander statt als Marken */
-@media (min-width: 961px) {
-  .hero-photo .quick-foot { display: flex !important; align-items: center; flex-wrap: nowrap; gap: 22px; margin-top: 4px; }
-  .hero-photo .quick-foot .btn { flex: none; height: 46px !important; padding: 0 24px !important; font-size: 15.5px !important; }
-  .hero-photo .quick-facts { display: grid !important; gap: 5px; margin: 0 !important; padding: 0; list-style: none; }
-  .hero-photo .quick-facts li { background: none !important; padding: 0 !important; border-radius: 0 !important; font-size: 14px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; box-shadow: none; }
-  .hero-photo .quick-facts svg { width: 15px; height: 15px; color: var(--wine-700); flex: none; }
-}
 
 /* Preise dezenter: keine Marken, nur ruhige Schrift in Grün */
 .fee-price, .fee:first-child .fee-price { background: none !important; color: var(--wine-700) !important; padding: 0 !important; font-size: 22px !important; border-radius: 0 !important; }
