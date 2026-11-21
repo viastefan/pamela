@@ -1820,3 +1820,4 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
 /* Keine Strichellinien in den Zeichnungen: der Boden beim Spaziergang ist eine durchgehende Linie */
 .art .run { stroke-dasharray: none; animation: none; }
 .art .rays { display: none; }
+.cw-avatar, .cw-msg-avatar, .cw-launcher-face img { object-fit: cover; object-position: 50% 40%; }

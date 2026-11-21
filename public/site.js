@@ -194,7 +194,7 @@
     var user = function (text) { var m = el('div', 'cw-msg cw-msg-user'); m.appendChild(el('p', '', text)); thread.appendChild(m); down() }
     var botRow = function () {
       var m = el('div', 'cw-msg cw-msg-bot'), av = el('img', 'cw-msg-avatar')
-      av.src = '/img/pamela-avatar.webp'; av.alt = ''; av.width = 22; av.height = 22
+      av.src = '/img/pamela-avatar.webp?v=2'; av.alt = ''; av.width = 22; av.height = 22
       m.appendChild(av); m.appendChild(el('div', 'cw-bubble')); return m
     }
     var bot = function (id, now) {
