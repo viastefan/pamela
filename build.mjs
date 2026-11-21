@@ -240,7 +240,7 @@ pages.push({
 </section>
 
 <section class="trust-strip"><div class="wrap">
-  <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>2 Google-Rezensionen</small></span></a>
+  <a class="g-badge rv" href="#stimmen">${G}<span><b>5,0 ${STARS}</b><small>Google-Bewertungen</small></span></a>
   <ul class="quals rv" style="--d:80ms"><li>Dipl. Sozialpädagogin (FH)</li><li>Systemische Therapeutin (IFW)</li><li>Bindungspsychotherapie nach Prof. Dr. Brisch</li><li>Ausgebildete STEP-Elterntrainerin</li><li>Seit über 18 Jahren selbstständig</li></ul>
 </div></section>
 
@@ -284,7 +284,7 @@ pages.push({
 </div></section>
 
 <section class="section tinted" id="stimmen"><div class="wrap">
-  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><div class="g-score">${G}<span><b>5,0</b>${STARS}<small>2 Rezensionen auf Google</small></span></div></div>
+  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><div class="g-score">${G}<span><b>5,0</b>${STARS}<small>Bewertungen auf Google</small></span></div></div>
   <div class="grid g2">
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
@@ -755,7 +755,7 @@ ${(p.ld || []).map(ld).join('\n')}
 <footer class="foot"><div class="wrap">
   ${brand}
   <p class="foot-lead">Systemische und traumasensible Begleitung für Einzelne, Paare, Eltern und Jugendliche: in Landsberg am Lech, online und als Walk and Talk.</p>
-  <a class="g-badge on-deep" href="/#stimmen">${G}<span><b>Google-Rezensionen</b><small>5,0 von 5 bei 2 Bewertungen</small></span></a>
+  <a class="g-badge on-deep" href="/#stimmen">${G}<span><b>Google-Rezensionen</b><small>5,0 von 5 Sternen</small></span></a>
   <div class="cols">
     ${FOOT.map(([t, links]) => `<nav aria-label="${t}"><h3>${t}</h3><ul>${links.map(([h, n]) => `<li><a href="${h}">${n}</a></li>`).join('')}</ul></nav>`).join('')}
     <div><h3>Praxis</h3><ul><li>${P.practice}</li><li>${P.street}</li><li>${P.zip} ${P.city}</li><li><a href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></li></ul></div>
