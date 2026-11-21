@@ -2019,3 +2019,13 @@ label.opt, .opt { box-shadow: var(--lift); }
 @media (min-width: 961px) { .like-card.is-warm .facts { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
 @media (max-width: 960px) { .like-card { padding: 20px !important; } .like-card .facts { gap: 6px; margin-top: 16px; } .like-card .facts li { min-height: 0; padding: 8px 12px 8px 8px; font-size: 15.5px; } }
 [data-theme="dark"] .like-card .facts li { background: rgba(255,255,255,.05); } [data-theme="dark"] .like-card .facts .ico { background: rgba(255,255,255,.08); color: var(--blush-300); }
+
+/* Meine Einstellung: sechs ruhige Karten mit Nummer */
+.tenets { gap: 12px !important; }
+.tenets li { border: 0 !important; background: var(--surface, var(--card)); box-shadow: var(--lift, var(--shadow-sm)); border-radius: 12px; padding: 22px 22px 24px !important; display: flex !important; flex-direction: column; gap: 16px; font-size: 22px; line-height: 1.3; }
+.tenets li::before { display: grid !important; place-items: center; width: 34px; height: 34px; margin: 0 !important; border-radius: 6px; background: var(--wine-100); color: var(--wine-700); font-size: 13px; letter-spacing: .02em; }
+@media (max-width: 960px) {
+  .tenets li { flex-direction: row !important; align-items: center; gap: 16px; padding: 16px 18px !important; font-size: 18.5px; line-height: 1.28; }
+  .tenets li::before { flex: none; }
+}
+[data-theme="dark"] .tenets li { background: var(--card); } [data-theme="dark"] .tenets li::before { background: rgba(255,255,255,.08); color: var(--blush-300); }
