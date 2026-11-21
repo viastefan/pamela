@@ -2164,3 +2164,9 @@ label.opt, .opt { box-shadow: var(--lift); }
 .hero-photo .place-h { -webkit-text-stroke: .02em currentColor; }
 :root:not([data-theme="dark"]) { --blush-100: #F8F4EA; --blush-200: #F1EADA; --tint: #F8F4EA; --tint-2: #F8F4EA; }
 .hero-card .quick select, .quick-facts li { background-color: #F8F4EA !important; }
+
+/* Kommunikationstraining: Szene mit drei Personen am Tisch */
+.art-komm .say { animation-duration: 8s; } .art-komm .say.y2 { animation-delay: 4.2s; } .art-komm .say.y3 { transform-origin: 30% 100%; animation-delay: 6.6s; }
+.art-komm :is(.head, .coat, .seat, .pot) { fill: var(--card); }
+/* Hero-Foto minimal dunkler */
+.hero-photo .hero-bg img { filter: brightness(.9) contrast(1.03) saturate(1.03); }

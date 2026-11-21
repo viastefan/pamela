@@ -370,7 +370,18 @@ const SVC_ART = {
 </svg>`,
 }
 const SVC_ART_MINI = {
-  '/kommunikationstraining/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><path stroke="var(--wine-300)" d="M12 126h216"/><g class="say"><rect class="seat" x="38" y="36" width="92" height="44" rx="14"/><path d="M62 80l-8 16 24-16"/><path d="M56 52h54M56 64h34"/></g><g class="say y2"><rect class="seat" x="112" y="70" width="92" height="44" rx="14"/><path d="M176 114l8 14-24-14"/><circle class="dot" cx="138" cy="92" r="2.500"/><circle class="dot d2" cx="158" cy="92" r="2.500"/><circle class="dot d3" cx="178" cy="92" r="2.500"/></g></svg>`,
+  '/kommunikationstraining/': `<svg class="art art-svc art-komm" viewBox="0 0 240 150" aria-hidden="true">
+<ellipse class="rug" cx="120" cy="130" rx="100" ry="4.500"/>
+<g class="soft"><rect class="pane" x="14" y="16" width="40" height="34" rx="5"/><rect x="14" y="16" width="40" height="34" rx="5"/><path d="M34 16v34M14 33h40"/></g>
+<path stroke="var(--wine-300)" d="M12 128h216"/>
+<g transform="translate(64 0)"><circle class="head" cx="0" cy="56" r="7.500"/><path class="coat" d="M-9 69c3-3 15-3 18 0l3 37h-24z"/><path d="M9 78l10 14 8-4"/></g><g transform="translate(120 0)"><circle class="head" cx="0" cy="56" r="7.500"/><path class="coat" d="M-9 69c3-3 15-3 18 0l3 37h-24z"/></g><g transform="translate(176 0) scale(-1 1)"><circle class="head" cx="0" cy="56" r="7.500"/><path class="coat" d="M-9 69c3-3 15-3 18 0l3 37h-24z"/><path d="M9 78l10 14 8-4"/></g>
+<path class="seat" d="M30 106h180v7H30z"/><path d="M42 113v15M198 113v15"/>
+<g class="thin"><rect class="seat" x="92" y="98" width="22" height="8" rx="1.500"/><path d="M96 102h14"/><path d="M134 106v-6h8v6"/><path class="steam" d="M138 96c-2-2.500 2-4 0-7"/></g>
+<g class="thin"><g class="say"><rect class="seat" x="34" y="22" width="44" height="20" rx="10"/><path d="M52 42l-3 6"/><circle class="dot" cx="47" cy="32" r="1.600"/><circle class="dot d2" cx="56" cy="32" r="1.600"/><circle class="dot d3" cx="65" cy="32" r="1.600"/></g>
+<g class="say y2"><rect class="seat" x="98" y="14" width="44" height="20" rx="10"/><path d="M120 34v5"/><path d="M108 24h24M108 29h14"/></g>
+<g class="say y3"><rect class="seat" x="160" y="22" width="44" height="20" rx="10"/><path d="M186 42l3 6"/><path d="M170 32l5 5 9-10"/></g></g>
+<g class="sway"><path class="pot" d="M214 128l-2-10h14l-2 10z"/><path d="M219 118c0-9 4-15 10-18-1 8-4 14-10 18M219 118c-1-7-4-12-10-13 1 7 4 11 10 13"/></g>
+</svg>`,
   '/vortraege-und-schulungen/': `<svg class="art art-svc" viewBox="0 0 240 150" aria-hidden="true"><path stroke="var(--wine-300)" d="M12 126h216"/><rect class="seat" x="62" y="22" width="116" height="68" rx="6"/><path d="M82 44h48M82 58h76M82 72h34"/><circle class="head" cx="60" cy="108" r="7"/><circle class="head" cx="100" cy="108" r="7"/><circle class="head" cx="140" cy="108" r="7"/><circle class="head" cx="180" cy="108" r="7"/><path d="M50 126c2-8 18-8 20 0M90 126c2-8 18-8 20 0M130 126c2-8 18-8 20 0M170 126c2-8 18-8 20 0"/></svg>`,
 }
 pages.push({
@@ -394,11 +405,11 @@ for (const s of services) {
     path: s.path, title: s.title, desc: s.desc,
     ld: [crumbs(['Angebot', '/angebot/'], [s.name, s.path]), { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.desc, url: ORIGIN + s.path, provider: { '@id': ORIGIN + '/#praxis' }, areaServed: P.areas.concat(['Deutschland', 'Österreich', 'Schweiz']) }],
     body: `
-<section class="page-hero"><div class="wrap${SVC_ART[s.path] ? ' has-art' : ''}">
+<section class="page-hero"><div class="wrap${(SVC_ART[s.path] || SVC_ART_MINI[s.path]) ? ' has-art' : ''}">
   <p class="small crumb rv"><a class="link" href="/angebot/">Angebot</a></p>
   <h1 class="glass">${glass(s.h1)}</h1>
   <p class="lead rv" style="--d:260ms">${s.lead}</p>
-  ${SVC_ART[s.path] ? `<figure class="svc-art rv" style="--d:320ms">${SVC_ART[s.path]}</figure>` : ''}
+  ${(SVC_ART[s.path] || SVC_ART_MINI[s.path]) ? `<figure class="svc-art rv" style="--d:320ms">${SVC_ART[s.path] || SVC_ART_MINI[s.path]}</figure>` : ''}
 </div></section>
 <section class="section"><div class="wrap with-aside">
   <div class="prose" data-fold>${md(s.body)}</div>
