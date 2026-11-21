@@ -2479,3 +2479,17 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 
 /* Desktop-Hero: Ecken des Fotos kleiner */
 @media (min-width: 961px) { .hero.hero-photo { border-radius: 0 0 12px 12px !important; } .hero-photo .hero-bg, .hero-photo .hero-bg img { border-radius: 0 0 12px 12px; } }
+
+/* Handy-Hero neu: Foto randlos über die ganze Breite, ohne Ecken und Schatten, Text direkt auf dem Hintergrund */
+@media (max-width: 960px) {
+  .hero.hero-photo { padding: 0 0 28px !important; margin: 0 !important; border-radius: 0 !important; }
+  .hero-photo .hero-bg { border-radius: 0 !important; box-shadow: none !important; margin: 0; }
+  .hero-photo .hero-bg img { border-radius: 0 !important; aspect-ratio: 4 / 4.9 !important; object-position: 66% 18% !important; width: 100%; display: block; }
+  .hero-photo::after { display: none !important; }
+  .hero-photo .hero-bg::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 38%; background: linear-gradient(180deg, rgba(248,246,238,0), var(--canvas)); pointer-events: none; }
+  .hero-card { margin: -64px 0 0 !important; padding: 0 22px !important; background: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; z-index: 2; }
+  .hero-photo h1 { font-size: clamp(32px, 8.8vw, 40px) !important; }
+}
+@media (max-width: 960px) {
+  .hero.hero-photo .hero-bg, .hero.hero-photo .hero-bg img, .hero.hero-photo picture.hero-bg img { border-radius: 0 !important; box-shadow: none !important; }
+}
