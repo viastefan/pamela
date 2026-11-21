@@ -27,8 +27,8 @@ const welcome = () => ({
 
 const fallback = ids => ({
   id: 'fallback',
-  text: ['Dazu habe ich keine passende Antwort. Das beantwortet Pamela Zurbuchen am besten persönlich.', `Sie erreichen sie unter ${PHONE} oder per E-Mail an ${MAIL}. Oder Sie fragen den Termin an, dann meldet sie sich bei Ihnen.`],
-  chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Anrufen', href: 'tel:' + TEL }, ...chipsFor(ids.slice(0, 3))],
+  text: ['Dazu habe ich keine passende Antwort. Das beantwortet Pamela Zurbuchen am besten persönlich.', `Sie erreichen sie über die Kontaktseite oder per E-Mail an ${MAIL}. Oder Sie fragen den Termin an, dann meldet sie sich bei Ihnen.`],
+  chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Zur Kontaktseite', href: '/kontakt/' }, ...chipsFor(ids.slice(0, 3))],
 })
 
 const answer = q => {

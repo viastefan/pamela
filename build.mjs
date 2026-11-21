@@ -81,7 +81,7 @@ const cta = (du, title, text, thema) => `
   ${mark}
   <h2>${title || 'Der erste Schritt ist ein Gespräch.'}</h2>
   <p>${text || (du ? 'Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Du oder Deine Eltern können mir schreiben oder mich anrufen.' : 'Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten.')}</p>
-  <div class="actions">${book(thema, 'gold')}<a class="btn on-deep" href="tel:${P.tel}">${P.phone}</a><a class="btn on-deep" href="mailto:${P.mail}">E-Mail schreiben</a></div>
+  <div class="actions">${book(thema, 'gold')}<a class="btn on-deep" href="mailto:${P.mail}">E-Mail schreiben</a></div>
 </div></section>`
 
 const stepsShort = () => `<div class="steps-wrap rv" data-steps><span class="steps-line" aria-hidden="true"><i></i></span><ol class="steps">
@@ -213,7 +213,7 @@ const courseSheet = (c, i, t, ic) => `<dialog class="sheet course-sheet" id="kur
     <p class="cs-how">${c.how}</p>
     <dl class="cs-info">${c.info.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
     ${c.note ? `<p class="cs-note">${c.note}</p>` : ''}
-    <div class="cs-acts"><a class="btn primary" href="/termin/?thema=kurs">Kurs anfragen</a><a class="btn" href="tel:${P.tel}">${P.phone}</a></div>
+    <div class="cs-acts"><a class="btn primary" href="/termin/?thema=kurs">Kurs anfragen</a></div>
   </div>
 </dialog>`
 const COURSES = [
@@ -692,7 +692,6 @@ const widgets = `
   </button>
 </div>
 <nav class="dock" data-dock aria-label="Schnellzugriff">
-  <a href="tel:${P.tel}" aria-label="Anrufen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg></a>
   <button type="button" data-loc-open aria-label="Standort anzeigen" aria-controls="standort">${PIN}</button>
   <a class="dock-main" href="/termin/">Termin anfragen</a>
 </nav>
@@ -707,7 +706,6 @@ const widgets = `
       <p class="loc-addr">${PIN}<span>${P.street}, ${P.zip} ${P.city}</span></p>
       <div class="loc-acts">
         <a class="btn primary" href="${MAPS_ROUTE}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 3 3.500 8.600l5.600 2.300 2.300 5.600z"/></svg>Route</a>
-        <a class="btn" href="tel:${P.tel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.1c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg>Anrufen</a>
         <a class="btn loc-wide" href="${GMAPS}" target="_blank" rel="noopener">In Google Maps öffnen</a>
       </div>
       <p class="loc-note">Beim Laden der Karte wird eine Verbindung zu Google hergestellt.</p>
@@ -721,7 +719,6 @@ const widgets = `
     <h2 id="kw-titel">Termin anfragen</h2>
     <p class="sheet-lead">Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Wie möchten Sie sich melden?</p>
     <a class="pick is-main" data-sheet-form href="/termin/"><span><b>Kurz ausfüllen</b><small>Fünf Fragen, etwa eine Minute. Sie erhalten einen Terminvorschlag.</small></span></a>
-    <a class="pick" href="tel:${P.tel}"><span><b>Anrufen</b><small>${P.phone}, bitte auf den Anrufbeantworter sprechen</small></span></a>
     <a class="pick" href="mailto:${P.mail}"><span><b>E-Mail schreiben</b><small>${P.mail}</small></span></a>
   </div>
 </dialog>`
@@ -775,7 +772,7 @@ ${(p.ld || []).map(ld).join('\n')}
 </div>
 <div class="drawer" id="menue"><div><nav class="wrap drawer-nav" aria-label="Menü">
   ${NAV.map(([h, t], i) => `<a class="drawer-link" style="--n:${i}" href="${h}"${current(p, h) ? ' aria-current="page"' : ''}><span>${t}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10h11M11 5.500l4.500 4.500L11 14.500"/></svg></a>`).join('')}
-  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="tel:${P.tel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 3.2 4.4 3.6a1 1 0 0 0-.8 1.100c.5 6.200 5.500 11.200 11.700 11.700a1 1 0 0 0 1.100-.8l.4-2.200a1 1 0 0 0-.6-1.100l-2.400-1a1 1 0 0 0-1.100.3l-.9 1.100a8 8 0 0 1-4.500-4.500l1.100-.9a1 1 0 0 0 .3-1.100l-1-2.400a1 1 0 0 0-1.100-.6z"/></svg>Anrufen</a><a class="btn" href="mailto:${P.mail}"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.500" y="4.500" width="15" height="11" rx="2"/><path d="M3 6l7 5.200L17 6"/></svg>E-Mail</a></div>
+  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="mailto:${P.mail}"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.500" y="4.500" width="15" height="11" rx="2"/><path d="M3 6l7 5.200L17 6"/></svg>E-Mail</a></div>
   <div class="drawer-foot" style="--n:${NAV.length + 1}">
     <a class="drawer-place" href="${GMAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.800s5.600-4.900 5.600-9.300a5.600 5.600 0 0 0-11.200 0c0 4.400 5.600 9.300 5.600 9.300z"/><circle cx="10" cy="8.500" r="2"/></svg><span>${P.practice}<br>${P.street}, ${P.zip} ${P.city}</span></a>
     <div class="theme" role="group" aria-label="Darstellung">
@@ -795,7 +792,7 @@ ${(p.ld || []).map(ld).join('\n')}
   <div class="cols">
     ${FOOT.map(([t, links]) => `<nav aria-label="${t}"><h3>${t}</h3><ul>${links.map(([h, n]) => `<li><a href="${h}">${n}</a></li>`).join('')}</ul></nav>`).join('')}
     <div><h3>Praxis</h3><ul><li>${P.practice}</li><li>${P.street}</li><li>${P.zip} ${P.city}</li><li><a href="${MAPS}" rel="noopener">Auf der Karte ansehen</a></li></ul></div>
-    <div><h3>Kontakt</h3><ul><li><a href="tel:${P.tel}">${P.phone}</a></li><li><a href="mailto:${P.mail}">${P.mail}</a></li><li><a href="/termin/">Termin anfragen</a></li></ul></div>
+    <div><h3>Kontakt</h3><ul><li><a href="mailto:${P.mail}">${P.mail}</a></li><li><a href="/termin/">Termin anfragen</a></li></ul></div>
   </div>
   <div class="fine">
     <p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Einzugsgebiet: ${P.areas.join(', ')} und Umgebung, online auch in Österreich und der Schweiz.</p>

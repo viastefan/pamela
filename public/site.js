@@ -244,7 +244,7 @@
     var el = function (tag, cls, text) { var n = doc.createElement(tag); n.className = cls; if (text) n.textContent = text; return n }
     var down = function () { thread.scrollTo({ top: thread.scrollHeight, behavior: calm ? 'auto' : 'smooth' }) }
     // Antworten kommen vom Server (/api/chat); fällt er aus, bleibt ein ehrlicher Hinweis mit den Kontaktwegen
-    var OFFLINE = { text: ['Die Antwort ist gerade nicht erreichbar. Pamela Zurbuchen erreichen Sie unter 0176-43 45 22 86 oder per E-Mail an zurbuchen-therapie@gmx.de.'], chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Anrufen', href: 'tel:+4917643452286' }] }
+    var OFFLINE = { text: ['Die Antwort ist gerade nicht erreichbar. Pamela Zurbuchen erreichen Sie über die Kontaktseite oder per E-Mail an zurbuchen-therapie@gmx.de.'], chips: [{ label: 'Termin anfragen', href: '/termin/', primary: true }, { label: 'Zur Kontaktseite', href: '/kontakt/' }] }
     var api = function (body) {
       var opt = body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}
       return fetch('/api/chat', opt).then(function (r) { if (!r.ok) throw new Error('chat'); return r.json() }).catch(function () { return OFFLINE })
