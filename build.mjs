@@ -316,7 +316,7 @@ pages.push({
 
 
 <section class="section"><div class="wrap">
-  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="link" href="/preise/">Alle Preise</a></p></div>
+  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="btn btn-more" href="/preise/">Alle Preise</a></p></div>
   ${prices(3)}
 </div></section>
 
@@ -329,7 +329,7 @@ pages.push({
 </div></section>
 
 <section class="section"><div class="wrap split faq-split">
-  <div class="rv"><h2>Häufige Fragen</h2><a class="btn" href="/kontakt/">Frage stellen</a></div>
+  <div class="rv"><h2>Häufige Fragen</h2><a class="btn btn-more" href="/kontakt/">Frage stellen</a></div>
   ${faq}
 </div></section>
 ${cta()}`,
@@ -578,7 +578,7 @@ pages.push({
   ${contactForm}
 </div></section>
 <section class="section"><div class="wrap">
-  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="link" href="/preise/">Alle Preise und Informationen</a></p></div>
+  <div class="head rv"><h2>Was eine Sitzung kostet</h2><p><a class="btn btn-more" href="/preise/">Alle Preise und Informationen</a></p></div>
   ${prices(3)}
 </div></section>`,
 })
