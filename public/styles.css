@@ -1913,3 +1913,10 @@ a.card:hover, .way:hover, .course:hover, a.tile:hover { box-shadow: var(--shadow
   .hero-photo .hero-grid { padding: 0; }
   .hero-photo .hero-card { margin: 0 !important; padding: 24px 20px 22px; border-radius: 12px !important; box-shadow: 0 1px 2px rgba(46,58,42,.05), 0 14px 34px -22px rgba(46,58,42,.3); }
 }
+
+/* Desktop: Bewertungsleiste mit Abstand zum Hero und zu den Abschnitten */
+@media (min-width: 961px) {
+  .trust-strip { margin-top: 0; padding: 40px 0 var(--section); }
+  .trust-strip .wrap { padding-top: 0; padding-bottom: 0; }
+}
+@media (max-width: 960px) { .trust-strip { padding-top: 24px; } .trust-strip .wrap { padding-top: 0; padding-bottom: 0; } }
