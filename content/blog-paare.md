@@ -1,6 +1,7 @@
 ---
 path: /blog/immer-wieder-der-gleiche-streit/
 type: post
+published: 2026-11-20
 name: Immer wieder der gleiche Streit? So finden Paare zurück ins Gespräch
 title: Immer wieder der gleiche Streit? So finden Paare zurück ins Gespräch | Pamela Zurbuchen
 desc: Warum Paare oft über dasselbe streiten, was hinter wiederkehrenden Konflikten steckt und wie Paartherapie in Landsberg am Lech helfen kann, wieder zueinanderzufinden.

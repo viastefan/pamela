@@ -1,24 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.zurbuchen-therapie.de/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/angebot/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/einzeltherapie/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/paartherapie/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/jugendcoaching/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/erziehungsberatung/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/kommunikationstraining/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/vortraege-und-schulungen/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/walk-and-talk/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/ueber-mich/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/kurse/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/preise/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/wenn-alles-zu-viel-wird/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/was-ist-systemische-therapie/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/warum-gespraeche-im-gehen-leichter-fallen/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/immer-wieder-der-gleiche-streit/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/finde-deinen-weg-als-mama-oder-papa/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/blog/elternsein-ist-oft-nicht-leicht/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/kontakt/</loc><lastmod>2026-11-21</lastmod></url>
-  <url><loc>https://www.zurbuchen-therapie.de/termin/</loc><lastmod>2026-11-21</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/start.jpg</image:loc><image:caption>Systemische Therapie in Landsberg am Lech</image:caption></image:image>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/pamela-zurbuchen-992.jpg</image:loc><image:caption>Pamela Zurbuchen, Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/angebot/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/angebot.jpg</image:loc><image:caption>Angebot: Therapie, Coaching, Beratung</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/einzeltherapie/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/einzeltherapie.jpg</image:loc><image:caption>Einzeltherapie in Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/paartherapie/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/paartherapie.jpg</image:loc><image:caption>Paartherapie in Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/jugendcoaching/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/jugendcoaching.jpg</image:loc><image:caption>Jugendcoaching in Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/erziehungsberatung/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/erziehungsberatung.jpg</image:loc><image:caption>Erziehungsberatung in Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/kommunikationstraining/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/kommunikationstraining.jpg</image:loc><image:caption>Kommunikationstraining für Teams</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/vortraege-und-schulungen/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/vortraege-und-schulungen.jpg</image:loc><image:caption>Vorträge und Schulungen</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/walk-and-talk/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/walk-and-talk.jpg</image:loc><image:caption>Walk and Talk und Online-Beratung</image:caption></image:image>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/walk-1600.jpg</image:loc><image:caption>Pamela Zurbuchen, Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/ueber-mich/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/ueber-mich.jpg</image:loc><image:caption>Über mich: Pamela Zurbuchen, Landsberg am Lech</image:caption></image:image>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/pamela-zurbuchen-992.jpg</image:loc><image:caption>Pamela Zurbuchen, Landsberg am Lech</image:caption></image:image>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/pamela-zurbuchen-praxis-764.jpg</image:loc><image:caption>Pamela Zurbuchen, Landsberg am Lech</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/kurse/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/kurse.jpg</image:loc><image:caption>Kurse und Seminare für Eltern und Paare</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/preise/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/preise.jpg</image:loc><image:caption>Preise und Informationen</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog.jpg</image:loc><image:caption>Blog: Impulse zu Beziehung, Familie, Erschöpfung</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/wenn-alles-zu-viel-wird/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-wenn-alles-zu-viel-wird.jpg</image:loc><image:caption>Wenn alles zu viel wird</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/was-ist-systemische-therapie/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-was-ist-systemische-therapie.jpg</image:loc><image:caption>Was ist systemische Therapie?</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/warum-gespraeche-im-gehen-leichter-fallen/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-warum-gespraeche-im-gehen-leichter-fallen.jpg</image:loc><image:caption>Gespräche im Gehen: Walk and Talk</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/immer-wieder-der-gleiche-streit/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-immer-wieder-der-gleiche-streit.jpg</image:loc><image:caption>Immer wieder derselbe Streit?</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/finde-deinen-weg-als-mama-oder-papa/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-finde-deinen-weg-als-mama-oder-papa.jpg</image:loc><image:caption>Finde Deinen Weg als Mama oder Papa</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/blog/elternsein-ist-oft-nicht-leicht/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/blog-elternsein-ist-oft-nicht-leicht.jpg</image:loc><image:caption>Elternsein ist oft nicht leicht – oder?</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/kontakt/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/kontakt.jpg</image:loc><image:caption>Kontakt und Erstgespräch</image:caption></image:image>
+  </url>
+  <url>
+    <loc>https://www.zurbuchen-therapie.de/termin/</loc>
+    <lastmod>2026-11-21</lastmod>
+    <image:image><image:loc>https://www.zurbuchen-therapie.de/img/og/termin.jpg</image:loc><image:caption>Termin anfragen</image:caption></image:image>
+  </url>
 </urlset>

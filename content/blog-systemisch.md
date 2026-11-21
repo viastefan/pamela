@@ -1,6 +1,7 @@
 ---
 path: /blog/was-ist-systemische-therapie/
 type: post
+published: 2026-11-20
 name: Was ist systemische Therapie? Einfach erklärt
 title: Was ist systemische Therapie? Einfach erklärt | Pamela Zurbuchen
 desc: Systemische Therapie einfach erklärt: wie sie funktioniert, für wen sie geeignet ist und wie ein Erstgespräch bei Pamela Zurbuchen in Landsberg am Lech abläuft.

@@ -1,6 +1,7 @@
 ---
 path: /blog/warum-gespraeche-im-gehen-leichter-fallen/
 type: post
+published: 2026-11-20
 name: Warum Gespräche im Gehen oft leichter fallen
 title: Warum Gespräche im Gehen leichter fallen: Walk and Talk am Lech | Pamela Zurbuchen
 desc: Beratung im Gehen: was Walk and Talk ist, warum Gespräche in der Natur oft leichter fallen und wie ein Termin am Lech bei Landsberg abläuft.

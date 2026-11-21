@@ -1,7 +1,7 @@
 // Baut die statische Seite nach ./public — `node build.mjs`. Optional: esbuild minimiert CSS und JS (ohne esbuild werden die Dateien unverändert ausgeliefert).
 // Texte: von www.zurbuchen-therapie.de (Stand 18.11.2026) und aus Pamela Zurbuchens Entwurf. Fließtexte liegen in ./content/*.md.
 // Nichts erfunden: keine Zahlen, Stimmen oder Bilder, die nicht vorlagen.
-import { mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs'
+import { mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
@@ -243,10 +243,14 @@ const business = {
   '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': ORIGIN + '/#praxis',
   name: `${P.name}, ${P.practice}`,
   description: 'Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching und Erziehungsberatung in Landsberg am Lech, online und als Walk and Talk.',
-  url: ORIGIN + '/', logo: ORIGIN + '/img/icon-512.png', image: ORIGIN + '/img/pamela-zurbuchen-992.jpg', telephone: P.tel, email: P.mail, priceRange: '€€',
+  url: ORIGIN + '/', logo: ORIGIN + '/img/icon-512.png', telephone: P.tel, email: P.mail, priceRange: '€€',
   address: { '@type': 'PostalAddress', streetAddress: P.street, postalCode: P.zip, addressLocality: P.city, addressRegion: 'Bayern', addressCountry: 'DE' },
   areaServed: [...P.areas.map(a => ({ '@type': 'City', name: a })), { '@type': 'Country', name: 'Deutschland' }, { '@type': 'Country', name: 'Österreich' }, { '@type': 'Country', name: 'Schweiz' }],
-  availableLanguage: 'de', founder: { '@id': ORIGIN + '/#pamela-zurbuchen' },
+  availableLanguage: 'de', founder: { '@id': ORIGIN + '/#pamela-zurbuchen' }, employee: { '@id': ORIGIN + '/#pamela-zurbuchen' },
+  slogan: 'Systemische und traumasensible Einzel- und Paartherapie', currenciesAccepted: 'EUR', hasMap: GMAPS,
+  contactPoint: { '@type': 'ContactPoint', contactType: 'Terminanfrage', email: P.mail, telephone: P.tel, availableLanguage: 'de', areaServed: 'DE' },
+  knowsAbout: ['Systemische Therapie', 'Traumasensible Begleitung', 'Paartherapie', 'Jugendcoaching', 'Erziehungsberatung', 'Kommunikationstraining', 'Walk and Talk', 'Onlineberatung'],
+  image: [ORIGIN + '/img/pamela-zurbuchen-992.jpg', ORIGIN + '/img/og.jpg', ORIGIN + '/img/pamela-zurbuchen-praxis-764.jpg'],
   makesOffer: PRICES.map(([t, p, s]) => ({ '@type': 'Offer', name: `${t} (${s.split(',')[0]})`, price: p === 'kostenfrei' ? '0' : p.replace(' €', ''), priceCurrency: 'EUR' })),
   potentialAction: { '@type': 'ReserveAction', name: 'Termin anfragen', target: ORIGIN + '/termin/' },
 }
@@ -254,8 +258,16 @@ const person = {
   '@context': 'https://schema.org', '@type': 'Person', '@id': ORIGIN + '/#pamela-zurbuchen', name: P.name,
   jobTitle: 'Systemische und traumasensible Therapeutin und Coach, Dipl. Sozialpädagogin (FH)',
   image: ORIGIN + '/img/pamela-zurbuchen-992.jpg', url: ORIGIN + '/ueber-mich/', worksFor: { '@id': ORIGIN + '/#praxis' },
+  description: 'Dipl. Sozialpädagogin (FH) und Systemische Therapeutin (IFW), seit über 18 Jahren selbstständig in Landsberg am Lech.',
+  hasCredential: [
+    { '@type': 'EducationalOccupationalCredential', name: 'Dipl. Sozialpädagogin (FH)', credentialCategory: 'degree' },
+    { '@type': 'EducationalOccupationalCredential', name: 'Systemische Therapeutin (IFW)', credentialCategory: 'certification' },
+  ],
   knowsAbout: ['Systemische Therapie', 'Traumasensible Begleitung', 'Paartherapie', 'Jugendcoaching', 'Erziehungsberatung', 'Bindungspsychotherapie', 'Kommunikationstraining'],
 }
+const PROVIDER = { '@type': 'ProfessionalService', '@id': ORIGIN + '/#praxis', name: `${P.name}, ${P.practice}`, url: ORIGIN + '/', address: business.address }
+const AUTHOR = { '@type': 'Person', '@id': ORIGIN + '/#pamela-zurbuchen', name: P.name, url: ORIGIN + '/ueber-mich/' }
+const PUBLISHER = { '@type': 'Organization', '@id': ORIGIN + '/#praxis', name: `${P.name}, ${P.practice}`, url: ORIGIN + '/', logo: { '@type': 'ImageObject', url: ORIGIN + '/img/icon-512.png', width: 512, height: 512 } }
 const crumbs = (...items) => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Start', '/'], ...items].map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: ORIGIN + path })) })
 
 // ── Seiten
@@ -265,10 +277,10 @@ pages.push({
   path: '/',
   title: 'Systemische Therapie und Paartherapie in Landsberg am Lech | Pamela Zurbuchen',
   desc: 'Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching und Erziehungsberatung in Landsberg am Lech. In der Praxis, online oder als Walk and Talk. Erstgespräch kostenfrei.',
-  ld: [business, person, { '@context': 'https://schema.org', '@type': 'WebSite', name: P.name, url: ORIGIN + '/', inLanguage: 'de' }, { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
+  ld: [business, person, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': ORIGIN + '/#website', name: P.name, url: ORIGIN + '/', inLanguage: 'de', publisher: { '@id': ORIGIN + '/#praxis' } }, { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
   body: `
 <section class="hero hero-photo">
-  <picture class="hero-bg"><source type="image/webp" media="(max-width: 960px)" srcset="/img/hero-900.webp"><source type="image/webp" srcset="/img/hero-1366.webp"><img src="/img/hero-1366.jpg" width="1366" height="768" alt="" fetchpriority="high" decoding="async"></picture>
+  <picture class="hero-bg"><source type="image/webp" media="(max-width: 960px)" srcset="/img/hero-900.webp"><source type="image/webp" srcset="/img/hero-1366.webp"><img src="/img/hero-1366.jpg" width="1366" height="768" alt="Pamela Zurbuchen, systemische und traumasensible Therapeutin in Landsberg am Lech, lächelnd im Freien" fetchpriority="high" decoding="async"></picture>
   <div class="wrap hero-grid">
   <div class="hero-card">
     <h1 class="glass">${glass('Systemische und traumasensible Therapie in')} <span class="place-h">${['Landsberg', 'am&nbsp;Lech'].map((w, i) => `<span class="gw" style="--i:${i + 5}">${w}</span>`).join(' ')}</span></h1>
@@ -418,7 +430,12 @@ ${cta()}`,
 for (const s of services) {
   pages.push({
     path: s.path, title: s.title, desc: s.desc,
-    ld: [crumbs(['Angebot', '/angebot/'], [s.name, s.path]), { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.desc, url: ORIGIN + s.path, provider: { '@id': ORIGIN + '/#praxis' }, areaServed: P.areas.concat(['Deutschland', 'Österreich', 'Schweiz']) }],
+    ld: [crumbs(['Angebot', '/angebot/'], [s.name, s.path]), (() => {
+      const m = String(s.price || '').match(/^(\d+)\s*€\s*für\s*(\d+)\s*Minuten/)
+      return { '@context': 'https://schema.org', '@type': 'Service', '@id': ORIGIN + s.path + '#leistung', name: s.name, serviceType: s.name, description: s.desc, url: ORIGIN + s.path, image: ORIGIN + '/img/og.jpg', inLanguage: 'de', provider: PROVIDER, areaServed: P.areas.concat(['Deutschland', 'Österreich', 'Schweiz']),
+        availableChannel: [{ '@type': 'ServiceChannel', name: 'In der Praxis', serviceLocation: { '@id': ORIGIN + '/#praxis' } }, { '@type': 'ServiceChannel', name: 'Online', serviceUrl: ORIGIN + '/termin/' }],
+        ...(m ? { offers: { '@type': 'Offer', price: m[1], priceCurrency: 'EUR', availability: 'https://schema.org/InStock', url: ORIGIN + '/termin/', description: `${m[2]} Minuten` } } : {}) }
+    })()],
     body: `
 <section class="page-hero"><div class="wrap${(SVC_ART[s.path] || SVC_ART_MINI[s.path]) ? ' has-art' : ''}">
   <p class="small crumb rv"><a class="link" href="/angebot/">Angebot</a></p>
@@ -503,7 +520,7 @@ pages.push({
   path: '/kurse/',
   title: 'Kurse und Seminare für Eltern, Paare und Kinder | Pamela Zurbuchen',
   desc: 'Kurse in Landsberg am Lech und online: Eltern sein, Paar bleiben. Schritt für Schritt als Eltern fit. Gruppe für Trennungs- und Scheidungskinder.',
-  ld: [crumbs(['Kurse', '/kurse/'])],
+  ld: [crumbs(['Kurse', '/kurse/']), { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: COURSES.map(([ic, t, text, meta], i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Course', name: t, description: text + ' ' + meta + '.', url: ORIGIN + '/kurse/', inLanguage: 'de', provider: { '@type': 'Organization', name: P.name + ', ' + P.practice, sameAs: ORIGIN + '/' } } })) }],
   body: `
 <section class="page-hero"><div class="wrap">
   <h1 class="glass">${glass('Kurse und Seminare')}</h1>
@@ -551,8 +568,8 @@ ${cta()}`,
 
 for (const d of posts) {
   pages.push({
-    path: d.path, title: d.title, desc: d.desc, ogType: 'article',
-    ld: [crumbs(['Blog', '/blog/'], [d.name, d.path]), { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: d.h1, description: d.desc, url: ORIGIN + d.path, inLanguage: 'de', author: { '@id': ORIGIN + '/#pamela-zurbuchen' }, publisher: { '@id': ORIGIN + '/#praxis' }, image: ORIGIN + '/img/og.jpg' }],
+    path: d.path, title: d.title, desc: d.desc, ogType: 'article', published: d.published,
+    ld: [crumbs(['Blog', '/blog/'], [d.name, d.path]), { '@context': 'https://schema.org', '@type': 'BlogPosting', '@id': ORIGIN + d.path + '#beitrag', headline: d.h1.replace(/&shy;/g, ''), description: d.desc, url: ORIGIN + d.path, mainEntityOfPage: ORIGIN + d.path, inLanguage: 'de', wordCount: d.body.split(/\s+/).length, author: AUTHOR, publisher: PUBLISHER, isPartOf: { '@type': 'Blog', '@id': ORIGIN + '/blog/#blog', name: 'Blog von ' + P.name, url: ORIGIN + '/blog/' }, image: [ORIGIN + '/img/og.jpg'], ...(d.published ? { datePublished: d.published } : {}) }],
     body: `
 <article>
 <section class="page-hero"><div class="wrap">
@@ -746,21 +763,27 @@ const layout = p => `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(p.title)}</title>
 <meta name="description" content="${esc(p.desc)}">
-${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<link rel="canonical" href="${ORIGIN}${p.path}">`}
+${p.noindex ? '<meta name="robots" content="noindex, follow">' : `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="${ORIGIN}${p.path}">
+<link rel="alternate" hreflang="de" href="${ORIGIN}${p.path}">
+<link rel="alternate" hreflang="x-default" href="${ORIGIN}${p.path}">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="Kurzfassung für KI-Systeme">`}
+<meta name="author" content="${P.name}">
 <meta property="og:type" content="${p.ogType || 'website'}">
 <meta property="og:locale" content="de_DE">
 <meta property="og:site_name" content="${P.name}">
 <meta property="og:title" content="${esc(p.title)}">
 <meta property="og:description" content="${esc(p.desc)}">
 <meta property="og:url" content="${ORIGIN}${p.path}">
-<meta property="og:image" content="${ORIGIN}/img/og.jpg">
+<meta property="og:image" content="${p.og || ORIGIN + '/img/og.jpg'}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${P.name}, systemische und traumasensible Therapie in ${P.city}">
+<meta property="og:image:alt" content="${esc(p.title.split(' | ')[0])}: ${P.name}, ${P.city}">
+${p.published ? `<meta property="article:published_time" content="${p.published}">\n` : ''}${p.modified && p.ogType === 'article' ? `<meta property="article:modified_time" content="${p.modified}">\n<meta property="article:author" content="${P.name}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(p.title)}">
 <meta name="twitter:description" content="${esc(p.desc)}">
-<meta name="twitter:image" content="${ORIGIN}/img/og.jpg">
+<meta name="twitter:image" content="${p.og || ORIGIN + '/img/og.jpg'}">
 <meta name="geo.region" content="DE-BY">
 <meta name="geo.placename" content="${P.city}">
 <meta name="theme-color" content="#F8F6EE">
@@ -832,12 +855,64 @@ ${p.bodyClass ? '' : widgets}
 `
 
 const write = (rel, text) => { const f = join(OUT, rel); mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, text) }
+// ── Suchtreffer: Titel bis etwa 60 Zeichen, Beschreibung bis etwa 158 Zeichen, jeweils mit dem Ort und der Leistung
+const SEO = {
+  '/': ['Systemische Therapie in Landsberg am Lech | Pamela Zurbuchen', 'Systemische, traumasensible Einzel- und Paartherapie in Landsberg am Lech: in der Praxis, online oder im Gehen. Erstgespräch kostenfrei.'],
+  '/angebot/': ['Angebot: Therapie, Coaching, Beratung | Pamela Zurbuchen', 'Einzeltherapie, Paartherapie, Jugendcoaching, Erziehungsberatung, Kommunikationstraining und Vorträge in Landsberg am Lech und online.'],
+  '/einzeltherapie/': ['Einzeltherapie in Landsberg am Lech | Pamela Zurbuchen', 'Systemische, traumasensible Einzeltherapie in Landsberg am Lech und online: Wege aus der Erschöpfung finden. 100 € für 60 Minuten, Erstgespräch kostenfrei.'],
+  '/paartherapie/': ['Paartherapie in Landsberg am Lech | Pamela Zurbuchen', 'Paartherapie in Landsberg am Lech und online: Streit verstehen, wieder ins Gespräch kommen und Wege aus der Krise finden. 180 € für 90 Minuten.'],
+  '/jugendcoaching/': ['Jugendcoaching in Landsberg am Lech | Pamela Zurbuchen', 'Jugendcoaching in Landsberg am Lech und online: Klarheit, Mut und neue Wege für Jugendliche. Dein Weg, Dein Tempo. 100 € für 60 Minuten.'],
+  '/erziehungsberatung/': ['Erziehungsberatung in Landsberg am Lech | Pamela Zurbuchen', 'Erziehungsberatung für Eltern in Landsberg am Lech und online: Konflikte verstehen, Intuition stärken, Lösungen finden. 100 € für 60 Minuten.'],
+  '/kommunikationstraining/': ['Kommunikationstraining für Teams | Pamela Zurbuchen', 'Kommunikationstraining für Teams und Organisationen in Landsberg am Lech, vor Ort oder online: Missverständnisse klären, Konflikte vermeiden.'],
+  '/vortraege-und-schulungen/': ['Vorträge und Schulungen | Pamela Zurbuchen', 'Vorträge und Schulungen zu wertschätzender Kommunikation, Beziehung, Angst und Panik, Entwicklungstrauma und Erziehung in Landsberg am Lech und online.'],
+  '/walk-and-talk/': ['Walk and Talk und Online-Beratung | Pamela Zurbuchen', 'Gespräche im Gehen in der Natur bei Landsberg am Lech oder online: Walk and Talk und Onlineberatung, deutschlandweit, Österreich und Schweiz.'],
+  '/ueber-mich/': ['Über mich: Pamela Zurbuchen, Landsberg am Lech', 'Pamela Zurbuchen: Dipl. Sozialpädagogin (FH), Systemische Therapeutin (IFW), seit über 18 Jahren selbstständig. Haltung, Qualifikationen, Vorlieben.'],
+  '/kurse/': ['Kurse und Seminare für Eltern und Paare | Zurbuchen', 'Kurse und Seminare in Landsberg am Lech: Eltern sein, Paar bleiben, Elterntraining vor Ort und online sowie eine Gruppe für Trennungskinder.'],
+  '/preise/': ['Preise und Informationen | Pamela Zurbuchen', 'Erstgespräch kostenfrei, Einzelsitzung 100 €, Paargespräch 180 €. Absagen, Sonderregelungen, Selbstzahler und Steuer: alle Informationen.'],
+  '/kontakt/': ['Kontakt und Erstgespräch | Pamela Zurbuchen', 'Kostenfreies Erstgespräch vereinbaren: Praxis ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech. Formular, E-Mail, Anfahrt und Standort.'],
+  '/termin/': ['Termin anfragen | Pamela Zurbuchen, Landsberg am Lech', 'In fünf kurzen Fragen zum kostenfreien Erstgespräch: Anliegen, Ort, Wunschzeit und Kontakt. Sie erhalten einen Terminvorschlag.'],
+  '/blog/elternsein-ist-oft-nicht-leicht/': [null, 'Elternsein ist oft nicht leicht: Gedanken von Pamela Zurbuchen zu Erwartungen, Gelassenheit und dem eigenen Weg als Mama oder Papa.'],
+  '/blog/wenn-alles-zu-viel-wird/': ['Wenn alles zu viel wird | Pamela Zurbuchen', null],
+  '/blog/immer-wieder-der-gleiche-streit/': ['Immer wieder derselbe Streit? | Pamela Zurbuchen', 'Warum Paare oft über dasselbe streiten, was dahintersteckt und wie Gespräche behutsam anders gelingen. Mit Impulsen aus der Paartherapie.'],
+  '/blog/was-ist-systemische-therapie/': ['Was ist systemische Therapie? | Pamela Zurbuchen', null],
+  '/blog/warum-gespraeche-im-gehen-leichter-fallen/': ['Gespräche im Gehen: Walk and Talk | Pamela Zurbuchen', null],
+  '/blog/': ['Blog: Impulse zu Beziehung, Familie, Erschöpfung', 'Beiträge von Pamela Zurbuchen zu Erschöpfung, Paarkonflikten, systemischer Therapie, Elternsein und Gesprächen im Gehen.'],
+}
+for (const p of pages) { const e = SEO[p.path]; if (e) { if (e[0]) p.title = e[0]; if (e[1]) p.desc = e[1] } }
+// Änderungsdatum je Seite: nur wenn sich der Inhalt wirklich ändert (steht in seo-dates.json, damit Google dem Datum traut)
+const DATES_FILE = join(ROOT, 'seo-dates.json')
+let DATES = {}
+try { DATES = JSON.parse(readFileSync(DATES_FILE, 'utf8')) } catch (e) {}
+const todayIso = new Date().toISOString().slice(0, 10)
+let datesChanged = false
+for (const p of pages) {
+  if (p.noindex) continue
+  const h = createHash('sha1').update(p.title + p.desc + (p.body || '')).digest('hex').slice(0, 12)
+  if (!DATES[p.path]) { DATES[p.path] = { hash: h, modified: todayIso }; datesChanged = true }
+  else if (DATES[p.path].hash !== h) { DATES[p.path].hash = h; DATES[p.path].modified = todayIso; datesChanged = true }
+  p.modified = DATES[p.path].modified
+  const slugOg = p.path === '/' ? 'start' : p.path.replace(/^\/|\/$/g, '').replace(/\//g, '-')
+  p.og = existsSync(join(OUT, 'img', 'og', slugOg + '.jpg')) ? `${ORIGIN}/img/og/${slugOg}.jpg` : `${ORIGIN}/img/og.jpg`
+  const pageLd = {
+    '@context': 'https://schema.org', '@type': p.path === '/ueber-mich/' ? 'ProfilePage' : p.path === '/kontakt/' ? 'ContactPage' : p.path === '/blog/' ? 'CollectionPage' : 'WebPage',
+    '@id': ORIGIN + p.path + '#seite', url: ORIGIN + p.path, name: p.title, description: p.desc, inLanguage: 'de',
+    isPartOf: { '@type': 'WebSite', '@id': ORIGIN + '/#website', name: P.name, url: ORIGIN + '/' }, about: PROVIDER, dateModified: p.modified,
+    primaryImageOfPage: { '@type': 'ImageObject', url: p.og, width: 1200, height: 630 },
+    ...(p.path === '/ueber-mich/' ? { mainEntity: { '@id': ORIGIN + '/#pamela-zurbuchen' } } : {}),
+  }
+  p.ld = [...(p.ld || []).map(o => (o['@type'] === 'Service' || o['@type'] === 'BlogPosting') ? { ...o, image: [p.og], ...(o['@type'] === 'BlogPosting' ? { dateModified: p.modified } : {}) } : o), pageLd]
+}
+if (datesChanged) { try { writeFileSync(DATES_FILE, JSON.stringify(DATES, null, 1) + '\n') } catch (e) {} }
 for (const p of pages) write(p.file || join(p.path, 'index.html'), layout(p))
 
 const indexed = pages.filter(p => !p.noindex)
 const today = new Date().toISOString().slice(0, 10)
-write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${indexed.map(p => `  <url><loc>${ORIGIN}${p.path}</loc><lastmod>${today}</lastmod></url>`).join('\n')}\n</urlset>\n`)
-write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${ORIGIN}/sitemap.xml\n`)
+const IMG_EXTRA = { '/': ['/img/pamela-zurbuchen-992.jpg'], '/ueber-mich/': ['/img/pamela-zurbuchen-992.jpg', '/img/pamela-zurbuchen-praxis-764.jpg'], '/walk-and-talk/': ['/img/walk-1600.jpg'] }
+const imgTag = (u, cap) => `    <image:image><image:loc>${u.startsWith('http') ? u : ORIGIN + u}</image:loc>${cap ? `<image:caption>${esc(cap)}</image:caption>` : ''}</image:image>`
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${indexed.map(p => `  <url>\n    <loc>${ORIGIN}${p.path}</loc>\n    <lastmod>${p.modified || today}</lastmod>\n${[p.og, ...(IMG_EXTRA[p.path] || [])].filter(Boolean).map(u => imgTag(u, u === p.og ? p.title.split(' | ')[0] : P.name + ', ' + P.city)).join('\n')}\n  </url>`).join('\n')}\n</urlset>\n`)
+// Suchmaschinen und KI-Systeme ausdrücklich willkommen, nur die Schnittstelle bleibt zu
+const BOTS = ['Googlebot', 'Googlebot-Image', 'Bingbot', 'Applebot', 'Applebot-Extended', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'anthropic-ai', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Meta-ExternalAgent', 'DuckAssistBot', 'MistralAI-User', 'CCBot', 'Amazonbot']
+write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\n${BOTS.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\n`).join('\n')}\nSitemap: ${ORIGIN}/sitemap.xml\n`)
 write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#3A6148', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
@@ -853,5 +928,24 @@ write('llms.txt', `# ${P.name}, ${P.practice}
 
 ## Seiten
 ${indexed.map(p => `- [${p.title.split(' | ')[0]}](${ORIGIN}${p.path}): ${p.desc}`).join('\n')}
+
+## Optional
+- [Alle Inhalte der Website als Text](${ORIGIN}/llms-full.txt)
+- [Sitemap](${ORIGIN}/sitemap.xml)
 `)
+// Alle Inhalte in einer Datei für KI-Systeme
+const plain = t => t.replace(/&shy;/g, '').replace(/\[(.+?)\]\((.+?)\)/g, '$1 ($2)').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1')
+write('llms-full.txt', `# ${P.name}, ${P.practice}: alle Inhalte
+
+Systemische und traumasensible Einzel- und Paartherapie, Jugendcoaching, Erziehungsberatung, Kommunikationstraining, Vorträge und Schulungen in ${P.city}, online und als Walk and Talk. Adresse: ${ADDRESS}. Kontakt: ${P.mail}. Erstgespräch kostenfrei.
+
+## Preise
+${PRICES.map(([t, p, s]) => `- ${t}: ${p} (${s})`).join('\n')}
+
+## Häufige Fragen
+${FAQ.map(([q, a]) => `### ${q}\n${a}`).join('\n\n')}
+
+${docs.filter(d => !d.noindex && indexed.some(p => p.path === d.path)).map(d => `---\n\n## ${plain(d.h1 || d.name)}\nAdresse: ${ORIGIN}${d.path}\n${d.desc ? `Kurz: ${d.desc}\n` : ''}\n${plain(d.body)}`).join('\n\n')}
+`)
+
 console.log(`${pages.length} Seiten nach ${OUT}`)
