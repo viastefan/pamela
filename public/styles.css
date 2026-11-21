@@ -2376,3 +2376,7 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
   .js .svc-book { opacity: 0; transform: translateY(18px); pointer-events: none; transition: opacity .6s var(--ease), transform .7s var(--ease); }
   .js .svc-book.is-ready { opacity: 1; transform: none; pointer-events: auto; }
 }
+
+/* Walk and Talk: Haare gefüllt, Kragen und Gürtellinie als feine Details */
+.art-walk .hairfill { fill: var(--wine-700); stroke: none; }
+.art-walk .collar { stroke-width: 1.5; opacity: .8; }
