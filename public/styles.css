@@ -1979,3 +1979,8 @@ label.opt, .opt { box-shadow: var(--lift); }
 .prose > .place .place-go { margin-left: 58px; flex: 1 1 100%; }
 @media (min-width: 641px) { .prose > .place { flex-wrap: nowrap; } .prose > .place .place-go { margin-left: auto; flex: none; } }
 .toc ul, .toc li, ul.toc { border: 0 !important; }
+
+/* Google-Bewertung im Stimmen-Bereich: klein, allein und mittig unter den Zitaten */
+.rev-score { display: flex; justify-content: center; margin-top: 28px; }
+.rev-head { margin-bottom: 32px; }
+.g-badge.g-badge { border-radius: 999px !important; }

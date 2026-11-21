@@ -306,11 +306,12 @@ pages.push({
 </div></section>
 
 <section class="section tinted" id="stimmen"><div class="wrap">
-  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2><div class="g-score">${G}<span><b>5,0</b>${STARS}<small>Bewertungen auf Google</small></span></div></div>
+  <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2></div>
   <div class="grid g2">
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
   </div>
+  <div class="rev-score rv"><div class="g-badge">${G}<span><b>5,0 ${STARS}</b><small>Google-Bewertungen</small></span></div></div>
 </div></section>
 
 
