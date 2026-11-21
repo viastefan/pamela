@@ -330,6 +330,7 @@ ${cta()}`,
 
 const SVC_ART = {
   '/einzeltherapie/': ART.praxis,
+  '/walk-and-talk/': ART.walk,
   '/paartherapie/': `<svg class="art art-svc art-paar" viewBox="0 0 240 150" aria-hidden="true">
 <ellipse class="rug" cx="120" cy="127" rx="96" ry="4.500"/>
 <g class="soft"><rect class="pane" x="98" y="14" width="44" height="36" rx="5"/><rect x="98" y="14" width="44" height="36" rx="5"/><path d="M120 14v36M98 32h44"/></g>
