@@ -2284,3 +2284,24 @@ label.opt, .opt { box-shadow: var(--lift); }
   .cw-composer input { font-size: 16px !important; }
 }
 [data-theme="dark"] .cw-composer input, [data-theme="dark"] .cw-composer input:focus { background: transparent !important; }
+
+/* Terminanfrage: moderner und flacher, Beschriftung als Platzhalter im Feld, dünner Rand statt dicker Linie */
+.flow form { padding-top: 12px !important; }
+.step legend, .step h1 { font-size: clamp(28px, 7.4vw, 36px) !important; line-height: 1.12 !important; }
+.step .hint { font-size: 15.5px !important; margin-top: 8px !important; }
+.fields { margin-top: 22px !important; gap: 10px !important; }
+.field { position: relative; }
+.field label { position: absolute; z-index: 1; left: 17px; top: 17px; margin: 0 !important; font-size: 16px !important; color: var(--ink-3) !important; pointer-events: none; transition: top .22s var(--ease), font-size .22s var(--ease), color .22s ease; }
+.field:focus-within label, .field:has(input:not(:placeholder-shown)) label, .field:has(textarea:not(:placeholder-shown)) label { top: 8px; font-size: 12px !important; }
+.field:focus-within label { color: var(--wine-700) !important; }
+.field input, .field textarea { width: 100%; height: 56px; padding: 24px 16px 6px !important; background: #fff !important; border: 1px solid var(--line-2) !important; border-radius: 12px !important; box-shadow: none !important; font-size: 16.5px !important; }
+.field textarea { height: auto; min-height: 132px; padding-top: 28px !important; }
+.field input:focus, .field textarea:focus { border-color: var(--wine-700) !important; background: #fff !important; box-shadow: 0 0 0 3px rgba(58,97,72,.12) !important; outline: none; }
+.field input::placeholder, .field textarea::placeholder { color: transparent; }
+.field input:focus::placeholder, .field textarea:focus::placeholder { color: var(--ink-3); opacity: .7; }
+.opt { min-height: 56px !important; padding: 11px 16px !important; border-radius: 12px !important; }
+.opt:has(input:checked) { background: var(--wine-100) !important; box-shadow: 0 0 0 1.5px var(--wine-700) !important; }
+.flow-nav { border-top: 0 !important; box-shadow: 0 -10px 30px -18px rgba(30,40,28,.25); background: var(--canvas) !important; }
+.flow-nav-in { padding-top: 10px !important; padding-bottom: max(10px, env(safe-area-inset-bottom)) !important; }
+.flow-fwd { min-height: 46px !important; min-width: 0 !important; padding: 0 26px !important; border-radius: 10px !important; font-size: 16px !important; }
+.flow-back { font-size: 15.5px !important; }
