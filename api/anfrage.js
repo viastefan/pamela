@@ -1,11 +1,10 @@
-// Nimmt die Terminanfrage entgegen und verschickt zwei Mails über Resend:
-// 1. die Benachrichtigung an die Praxis (Antwort geht direkt an die anfragende Person),
-// 2. eine Bestätigung an die anfragende Person, wenn sie eine E-Mail-Adresse angegeben hat.
-// Umgebungsvariablen: RESEND_API_KEY und ANFRAGE_TO (Empfängerin) sind Pflicht,
-// ANFRAGE_FROM (verifizierter Absender), ANFRAGE_REPLY (Antwortadresse der Bestätigung) und
-// ANFRAGE_COPY (stille Kopie der Anfrage an die Betreuung der Website) sind optional.
-// Fehlen die Pflichtangaben, antwortet die Funktion mit 503 und die Seite weicht auf das Mailprogramm aus.
-// Gespeichert wird nichts.
+// Nimmt Kontaktformular und Terminanfrage entgegen und verschickt zwei Mails über Resend (Absenderdomain festag.app):
+// 1. an die Praxis: "Diese Person hat sich im Kontaktformular eingetragen" mit allen Angaben,
+// 2. an die anfragende Person: Dank für den Eintrag, "wir melden uns in Kürze".
+// Beide Mails kommen von "No Reply". Es gibt bewusst keine Antwortadresse (kein Reply-To) und keine Kopie an die Betreuung der Website:
+// Antworten schreibt die Praxis selbst, manuell, aus ihrem eigenen Postfach.
+// Umgebungsvariablen: RESEND_API_KEY und ANFRAGE_TO (Empfängerin) sind Pflicht, ANFRAGE_FROM (verifizierter Absender) ist optional.
+// Fehlen die Pflichtangaben, antwortet die Funktion mit 503 und die Seite weicht auf das Mailprogramm aus. Gespeichert wird nichts.
 
 const line = (v, max) => String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f]+/g, ' ').trim().slice(0, max)
 const text = (v, max) => String(v == null ? '' : v).replace(/[\u0000-\u0008\u000b-\u001f\u007f]+/g, ' ').trim().slice(0, max)
@@ -14,7 +13,7 @@ const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&
 const THEMA = { einzeltherapie: 'Einzeltherapie', paartherapie: 'Paartherapie', jugendcoaching: 'Jugendcoaching', erziehungsberatung: 'Erziehungsberatung', kurs: 'Kurs, Training oder Vortrag', offen: 'Noch unsicher' }
 const ORT = { praxis: 'In der Praxis', online: 'Online', walk: 'Walk and Talk', egal: 'Egal' }
 const ZEIT = { vormittags: 'Vormittags', nachmittags: 'Nachmittags', abends: 'Am frühen Abend', flexibel: 'Flexibel' }
-const DEFAULT_FROM = 'Pamela Zurbuchen <noreply@festag.app>'
+const DEFAULT_FROM = 'No Reply <noreply@festag.app>'
 const PRAXIS = { name: 'Pamela Zurbuchen', phone: '0176-43 45 22 86', mail: 'zurbuchen-therapie@gmx.de', site: 'www.zurbuchen-therapie.de' }
 
 // Eine ruhige Mail im Stil der Website: Logo, Überschrift, ein Satz, die Angaben als Tabelle, Kontakt, Fußzeile.
@@ -64,45 +63,30 @@ module.exports = async (req, res) => {
   if (email && !/^[^\s@<>,;"]+@[^\s@<>,;"]+\.[^\s@<>,;"]{2,}$/.test(email)) return done(400, { error: 'email' })
 
   const { RESEND_API_KEY: key, ANFRAGE_TO: to } = process.env
-  const from = process.env.ANFRAGE_FROM || DEFAULT_FROM, reply = process.env.ANFRAGE_REPLY || PRAXIS.mail
+  const from = process.env.ANFRAGE_FROM || DEFAULT_FROM
   if (!key || !to) return done(503, { error: 'not_configured' })
-  // Optionale stille Kopie der Anfrage (ANFRAGE_COPY, mehrere Adressen mit Komma). Standard: keine Kopie.
-  const copy = (process.env.ANFRAGE_COPY || '').split(',').map(x => x.trim()).filter(Boolean)
-  const bcc = copy.length ? { bcc: copy } : {}
-
   const wish = [['Anliegen', thema], ['Form', ort], ['Wunschzeit', zeit.join(', ')]]
   const contact = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
   const plain = rows => rows.map(([k, v]) => `${k}: ${v}`).join('\n')
 
-  if (kontakt) {
-    const rows = [['Name', name], ['E-Mail', email], ['Telefon', telefon], ['Nachricht', nachricht]].filter(r => r[1])
-    const sent = await send(key, {
-      from, to: [to], ...bcc, subject: `Neue Nachricht über die Website (${name})`, ...(email ? { reply_to: email } : {}),
-      text: `Neue Nachricht über die Website\n\n${rows.map(([k, v]) => `${k}: ${v}`).join('\n')}`,
-      html: mail({ title: 'Neue Nachricht', intro: `${esc(name)} hat über das Kontaktformular geschrieben.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
-    })
-    if (!sent) return done(502, { error: 'send_failed' })
-    if (email) await send(key, {
-      from, to: [email], reply_to: reply, subject: 'Ihre Nachricht ist angekommen',
-      text: `Guten Tag ${name},\n\nvielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.\n\n${PRAXIS.name}\n${PRAXIS.phone}\n${PRAXIS.mail}`,
-      html: mail({ title: 'Ihre Nachricht ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: [['Ihre Nachricht', nachricht]], foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br>${PRAXIS.phone} · <a href="mailto:${PRAXIS.mail}" style="color:${C.brand}">${PRAXIS.mail}</a><br><br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.<br>In akuten Krisen: Telefonseelsorge 0800 111 0 111, Notruf 112.`, cta: ['Zur Website', SITE] }),
-    })
-    return done(200, { ok: true })
-  }
+  const NOREPLY = 'Diese Nachricht wurde automatisch verschickt. Bitte antworten Sie nicht auf diese E-Mail, sie wird nicht gelesen.'
+  const CRISIS = 'In akuten Krisen: Telefonseelsorge 0800 111 0 111, Notruf 112.'
+  const rows = kontakt ? contact : [...wish, ...contact]
+  const art = kontakt ? 'im Kontaktformular' : 'im Terminformular'
 
-  // 1. An die Praxis. Ohne diese Mail gilt die Anfrage als nicht zugestellt.
+  // 1. An die Praxis. Ohne diese Mail gilt die Anfrage als nicht zugestellt. Kein Reply-To: Die Praxis antwortet selbst.
   const lead = await send(key, {
-    from, to: [to], ...bcc, subject: `Neue Terminanfrage: ${thema} (${name})`, ...(email ? { reply_to: email } : {}),
-    text: `Neue Terminanfrage über die Website\n\n${plain([...wish, ...contact])}`,
-    html: mail({ title: 'Neue Terminanfrage', intro: `${esc(name)} hat über die Website einen Termin angefragt.${email ? ' Eine Antwort auf diese Mail geht direkt an die Person.' : ' Bitte telefonisch melden.'}`, rows: [...wish, ...contact], foot: 'Diese Nachricht wurde automatisch von der Website verschickt.', cta: email ? ['Direkt antworten', `mailto:${email}`] : telefon ? ['Zurückrufen', `tel:${telefon.replace(/[^+\\d]/g, '')}`] : null }),
+    from, to: [to], subject: kontakt ? `Neue Nachricht über das Kontaktformular (${name})` : `Neue Terminanfrage: ${thema} (${name})`,
+    text: `Neuer Eintrag ${art}\n\n${name} hat sich ${art} eingetragen.\n\n${plain(rows)}\n\nDiese Nachricht wurde automatisch von der Website verschickt. Bitte nicht auf diese E-Mail antworten, sondern die Person selbst kontaktieren.`,
+    html: mail({ title: kontakt ? 'Neue Nachricht' : 'Neue Terminanfrage', intro: `${esc(name)} hat sich ${art} eingetragen. Bitte melden Sie sich selbst bei der Person${email || telefon ? ' (Kontaktdaten unten)' : ''}.`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt. Bitte nicht auf diese E-Mail antworten.', cta: null }),
   })
   if (!lead) return done(502, { error: 'send_failed' })
 
-  // 2. Bestätigung an die anfragende Person. Schlägt sie fehl, ist die Anfrage trotzdem angekommen.
+  // 2. Bestätigung an die anfragende Person. Schlägt sie fehl, ist die Anfrage trotzdem angekommen. Kein Reply-To.
   if (email) await send(key, {
-    from, to: [email], reply_to: reply, subject: 'Ihre Terminanfrage ist angekommen',
-    text: `Guten Tag ${name},\n\nvielen Dank für Ihre Anfrage. Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.\n\n${plain(wish)}\n\n${PRAXIS.name}\n${PRAXIS.phone}\n${PRAXIS.mail}`,
-    html: mail({ title: 'Ihre Anfrage ist angekommen', intro: `Guten Tag ${esc(name)}, vielen Dank für Ihre Nachricht. Ich melde mich mit einem Terminvorschlag bei Ihnen. Während der bayerischen Schulferien kann es etwas länger dauern.`, rows: wish, foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br>${PRAXIS.phone} · <a href="mailto:${PRAXIS.mail}" style="color:${C.brand}">${PRAXIS.mail}</a><br><br>Diese Bestätigung wurde automatisch verschickt. Wenn Sie antworten, erreicht Ihre Nachricht die Praxis.<br>In akuten Krisen: Telefonseelsorge 0800 111 0 111, Notruf 112.`, cta: ['Zur Website', SITE] }),
+    from, to: [email], subject: 'Vielen Dank für Ihren Eintrag',
+    text: `Guten Tag ${name},\n\nDanke, dass Sie sich erfolgreich eingetragen haben. Wir werden uns in Kürze bei Ihnen melden.\n\n${kontakt ? '' : plain(wish) + '\n\n'}${PRAXIS.name}\nZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech\n\n${NOREPLY}\n${CRISIS}`,
+    html: mail({ title: 'Vielen Dank für Ihren Eintrag', intro: `Guten Tag ${esc(name)}, danke, dass Sie sich erfolgreich eingetragen haben. Wir werden uns in Kürze bei Ihnen melden.`, rows: kontakt ? [['Ihre Nachricht', nachricht]] : wish, foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br><br>${NOREPLY}<br>${CRISIS}`, cta: ['Zur Website', SITE] }),
   })
   return done(200, { ok: true })
 }
