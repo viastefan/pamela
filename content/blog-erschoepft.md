@@ -4,7 +4,7 @@ type: post
 published: 2026-11-20
 name: Wenn alles zu viel wird: Wege aus der Erschöpfung
 title: Wenn alles zu viel wird: Wege aus der Erschöpfung | Pamela Zurbuchen
-desc: Müde, gereizt, leer und trotzdem funktionieren? Woran Sie Erschöpfung erkennen, was im Alltag entlastet und wann eine Einzeltherapie in Landsberg am Lech hilft.
+desc: Müde, gereizt, leer und trotzdem funktionieren? Woran Sie Erschöpfung erkennen, was im Alltag entlastet und wann eine Einzeltherapie in Landsberg am Lech sinnvoll sein kann.
 h1: Wenn alles zu viel wird: Wege aus der Erschöpfung
 teaser: Müde, gereizt, leer und trotzdem weiter funktionieren? Woran Sie Erschöpfung erkennen und was wirklich entlastet.
 ---

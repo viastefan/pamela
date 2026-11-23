@@ -23,9 +23,9 @@ price: nach Absprache
 
 ## Angst und Trauma
 
-- Angst und Panik: gibt es Techniken, die helfen?
-- Entwicklungstrauma: wie kann ich heilen?
-- Trauma: was hilft?
+- Angst und Panik: welche Techniken können unterstützen?
+- Entwicklungstrauma: Wege zu mehr Stabilität
+- Trauma: was kann unterstützen?
 - Bin ich traumatisiert?
 
 Ihr Thema ist nicht dabei? Sprechen Sie mich an, es gibt noch viele mehr.

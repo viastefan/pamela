@@ -29,4 +29,4 @@ Es ist mir wichtig, dass Sie sich zu jedem Zeitpunkt sicher fühlen. Mein Angebo
 
 - **Sicherheit und Vertrauen:** Ein geschützter Rahmen, in dem alles Platz hat.
 - **Körperorientierte Achtsamkeit:** Wir hören darauf, was Ihr Körper Ihnen sagen möchte.
-- **Nachhaltigkeit:** Wir arbeiten nicht nur an den Symptomen, sondern an der Wurzel der Erschöpfung.
+- **Nachhaltigkeit:** Wir schauen nicht nur auf einzelne Anzeichen, sondern auch auf mögliche Hintergründe der Erschöpfung.

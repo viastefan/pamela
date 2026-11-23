@@ -338,6 +338,7 @@ pages.push({
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
   </div>
+  <p class="small rev-note rv">Auszüge aus öffentlichen Google-Rezensionen, Stand November 2026, unverändert übernommen. Ob die Bewertenden meine Leistungen tatsächlich in Anspruch genommen haben, wird nicht überprüft.</p>
   <div class="rev-score rv"><div class="g-badge">${G}<span><b>5,0 ${STARS}</b><small>Google-Bewertungen</small></span></div></div>
 </div></section>
 

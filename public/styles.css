@@ -2528,3 +2528,4 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 .art-walk .sun { fill: #B6C5BB !important; fill-opacity: .55 !important; } .art-walk .halo { fill: #B6C5BB !important; fill-opacity: .2 !important; }
 .hero-photo::after { background: linear-gradient(90deg, rgba(246,246,242,.96) 0%, rgba(246,246,242,.9) 30%, rgba(246,246,242,.55) 46%, rgba(246,246,242,0) 62%) !important; }
 @media (max-width: 960px) { .hero-photo::after { display: none !important; } .hero-photo .hero-bg::after { background: linear-gradient(180deg, rgba(246,246,242,0), var(--canvas)) !important; } }
+.rev-note { max-width: 46em; margin: 18px 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-3); }

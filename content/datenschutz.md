@@ -24,7 +24,7 @@ Ein Datenschutzbeauftragter ist nicht bestellt, da hierzu keine gesetzliche Pfli
 
 Die Website wird bei Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA, gehostet. Beim Aufruf jeder Seite verarbeitet der Hosting-Anbieter automatisch technisch notwendige Daten: IP-Adresse, Datum und Uhrzeit, aufgerufene Seite, übertragene Datenmenge, Referrer sowie Browser und Betriebssystem. Diese Daten sind erforderlich, um die Website auszuliefern, die Sicherheit zu gewährleisten und Angriffe abzuwehren. Sie werden nicht mit anderen Daten zusammengeführt und nach kurzer Zeit gelöscht.
 
-Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in der sicheren und stabilen Bereitstellung der Website. Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung. Die Übermittlung in die USA erfolgt auf Grundlage des EU-US Data Privacy Framework, unter dem Vercel zertifiziert ist, sowie ergänzend der EU-Standardvertragsklauseln.
+Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in der sicheren und stabilen Bereitstellung der Website. Die technische Betreuung der Website übernimmt mein Dienstleister Stefan Dirnberger, Webentwicklung & Design, der Vercel als Unterauftragnehmer einsetzt. Mit meinem Dienstleister besteht ein Vertrag zur Auftragsverarbeitung. Die Server-Funktionen der Website (Kontaktformular, Terminanfrage und Chat) laufen auf Servern in Frankfurt am Main. Soweit Vercel Daten in die USA übermittelt, erfolgt das auf Grundlage des EU-US Data Privacy Framework, unter dem Vercel zertifiziert ist, sowie ergänzend der EU-Standardvertragsklauseln.
 
 ## 4. Speicher im Browser
 
@@ -38,7 +38,7 @@ Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) sowie 
 
 Bitte schreiben Sie nur das in das Formular, was für eine erste Kontaktaufnahme nötig ist. Ausführliche Schilderungen besprechen wir am besten persönlich.
 
-Die Angaben werden nicht auf der Website gespeichert. Sie werden verschlüsselt an den E-Mail-Dienst Resend (Resend, Inc., USA) übergeben, der daraus eine E-Mail an mein Postfach erstellt. Haben Sie eine E-Mail-Adresse angegeben, sendet Resend Ihnen zusätzlich eine automatische Eingangsbestätigung. Mit Resend besteht ein Vertrag zur Auftragsverarbeitung; die Übermittlung in die USA erfolgt auf Grundlage der EU-Standardvertragsklauseln. Mein E-Mail-Postfach wird von der 1&1 Mail & Media GmbH (GMX), Montabaur, betrieben.
+Die Angaben werden nicht auf der Website gespeichert. Sie werden verschlüsselt an den E-Mail-Dienst Resend (Resend, Inc., USA) übergeben, der daraus eine E-Mail an mein Postfach erstellt. Haben Sie eine E-Mail-Adresse angegeben, sendet Resend Ihnen zusätzlich eine automatische Eingangsbestätigung. Resend ist ein Unterauftragnehmer meines technischen Dienstleisters; die Verarbeitung ist im Vertrag zur Auftragsverarbeitung geregelt. Soweit Daten in die USA übermittelt werden, erfolgt das auf Grundlage der EU-Standardvertragsklauseln. Mein E-Mail-Postfach wird von der 1&1 Mail & Media GmbH (GMX), Montabaur, betrieben.
 
 Ich lösche Ihre Anfrage, sobald sie erledigt ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Kommt es zu einer Begleitung, gelten die dafür vorgesehenen Aufbewahrungsfristen.
 
@@ -89,4 +89,4 @@ Diese Website nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung.
 
 Ich passe diese Datenschutzerklärung an, wenn sich die Website oder die Rechtslage ändert.
 
-Stand: November 2026
+Stand: 23. November 2026

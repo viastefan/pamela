@@ -4,7 +4,7 @@ type: post
 published: 2026-11-20
 name: Immer wieder der gleiche Streit? So finden Paare zurück ins Gespräch
 title: Immer wieder der gleiche Streit? So finden Paare zurück ins Gespräch | Pamela Zurbuchen
-desc: Warum Paare oft über dasselbe streiten, was hinter wiederkehrenden Konflikten steckt und wie Paartherapie in Landsberg am Lech helfen kann, wieder zueinanderzufinden.
+desc: Warum Paare oft über dasselbe streiten, was hinter wiederkehrenden Konflikten steckt und wie Paartherapie in Landsberg am Lech unterstützen kann, wieder ins Gespräch zu kommen.
 h1: Immer wieder der gleiche Streit? So finden Paare zurück ins Gespräch
 teaser: Es geht um den Abwasch, die Schwiegereltern oder das Handy am Esstisch, und am Ende fühlen sich beide unverstanden. Was hinter wiederkehrenden Konflikten steckt.
 ---
@@ -32,7 +32,7 @@ Ein anderes Muster entsteht, wenn Kinder kommen. Plötzlich ist das Paar vor all
 
 **Erst verstehen, dann antworten.** Wiederholen Sie in eigenen Worten, was Sie gehört haben, bevor Sie Ihre Sicht schildern. Das klingt einfach und verändert erstaunlich viel.
 
-## Wie Paartherapie helfen kann
+## Wie Paartherapie unterstützen kann
 
 In der [Paartherapie](/paartherapie/) schaffen wir einen geschützten Raum, in dem beide zu Wort kommen. Ich achte darauf, dass das Gespräch nicht in die gewohnten Bahnen kippt, und wir erarbeiten gemeinsam neue Wege, miteinander umzugehen. Ein Paargespräch dauert 90 Minuten.
 
