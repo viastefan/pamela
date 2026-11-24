@@ -2575,3 +2575,9 @@ a.link, .link { color: #B4500D; }
 .svc-tile:nth-child(3n+2) .svc-pic .art { background: #FCF0F5; }
 .svc-tile:nth-child(3n) .svc-pic .art { background: #EEF4FA; }
 .art-walk .halo { fill: #E07CAF !important; fill-opacity: .12 !important; }
+
+/* Zitat-Abschnitt: Logo dezent rechts eingebettet */
+.deep { position: relative; overflow: hidden; }
+.deep::after { content: ""; position: absolute; right: clamp(-40px, 4vw, 70px); top: 50%; width: clamp(200px, 30vw, 380px); aspect-ratio: 1; transform: translateY(-50%); background: url(/img/logo-512.webp) center/contain no-repeat; opacity: .16; pointer-events: none; }
+.deep > .wrap { position: relative; z-index: 1; }
+@media (max-width: 700px) { .deep::after { width: 200px; right: -50px; opacity: .12; } }
