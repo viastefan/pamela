@@ -23,14 +23,14 @@ const html = (title, kind) => `<!doctype html><html><head><meta charset="utf-8">
 @font-face{font-family:'GS';src:url('${font('GeistSerif-VF.woff2')}')}
 @font-face{font-family:'G';src:url('${font('Geist-VF-latin.woff2')}');font-weight:100 900}
 *{box-sizing:border-box;margin:0}
-body{width:1200px;height:630px;background:#F8F6EE;font-family:'G',sans-serif;color:#33352B;position:relative;overflow:hidden}
+body{width:1200px;height:630px;background:#F8F6F2;font-family:'G',sans-serif;color:#33352B;position:relative;overflow:hidden}
 .photo{position:absolute;right:0;top:0;width:470px;height:630px;background:url('${img('hero-1366.jpg')}') 83% 30%/auto 128% no-repeat}
-.photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#F8F6EE 0,rgba(248,246,238,0) 22%)}
-.l{position:absolute;left:70px;top:64px;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:500;color:#3A6148}
+.photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#F8F6F2 0,rgba(248,246,242,0) 22%)}
+.l{position:absolute;left:70px;top:64px;display:flex;align-items:center;gap:16px;font-size:26px;font-weight:500;color:#B4500D}
 .l img{width:54px;height:54px}
 h1{position:absolute;left:70px;top:190px;width:640px;font-family:'GS',serif;font-weight:400;font-size:${title.length > 34 ? 62 : 74}px;line-height:1.06;letter-spacing:-.02em;color:#2B2E24}
 .k{position:absolute;left:70px;bottom:62px;font-size:25px;color:#56574B}
-.k b{display:inline-block;margin-right:14px;padding:9px 18px;border-radius:10px;background:#3A6148;color:#fff;font-weight:500;font-size:22px}
+.k b{display:inline-block;margin-right:14px;padding:9px 18px;border-radius:10px;background:#EE8640;color:#2A1708;font-weight:500;font-size:22px}
 </style></head><body><div class="photo"></div>
 <div class="l"><img src="${img('logo-192.webp')}">Pamela Zurbuchen</div>
 <h1>${esc(title)}</h1>

@@ -913,7 +913,7 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="htt
 // Suchmaschinen und KI-Systeme ausdrücklich willkommen, nur die Schnittstelle bleibt zu
 const BOTS = ['Googlebot', 'Googlebot-Image', 'Bingbot', 'Applebot', 'Applebot-Extended', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'anthropic-ai', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Meta-ExternalAgent', 'DuckAssistBot', 'MistralAI-User', 'CCBot', 'Amazonbot']
 write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /api/\n\n${BOTS.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\n`).join('\n')}\nSitemap: ${ORIGIN}/sitemap.xml\n`)
-write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#2F5441', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
+write('site.webmanifest', JSON.stringify({ name: P.name, short_name: 'Zurbuchen', start_url: '/', display: 'browser', background_color: '#F8F6EE', theme_color: '#EE8640', icons: [{ src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' }] }))
 // Für KI-Suchsysteme: die Fakten der Praxis in einer lesbaren Datei.
 write('llms.txt', `# ${P.name}, ${P.practice}
 

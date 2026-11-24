@@ -18,16 +18,16 @@ const PRAXIS = { name: 'Pamela Zurbuchen', phone: '0176-43 45 22 86', mail: 'zur
 
 // Eine ruhige Mail im Stil der Website: Logo, Überschrift, ein Satz, die Angaben als Tabelle, Kontakt, Fußzeile.
 const SITE = process.env.SITE_URL || 'https://pamela-festag.vercel.app'
-const C = { bg: '#F6F6F2', card: '#FFFFFF', line: '#E6EEE0', ink: '#232B26', ink2: '#56574B', ink3: '#767567', brand: '#2F5441', tint: '#EFF4EA' }
+const C = { bg: '#F8F6F2', card: '#FFFFFF', line: '#F0E4D8', ink: '#232B26', ink2: '#48514B', ink3: '#6B736D', brand: '#EE8640', brandInk: '#2A1708', tint: '#FDF1E6' }
 const mail = ({ title, intro, rows, foot, cta }) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${title}</title></head>
 <body style="margin:0;background:${C.bg};padding:32px 16px;font:16px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.ink2}">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto"><tr><td style="padding:0 4px 18px">
-<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:middle"><img src="${SITE}/img/icon-512.png" width="36" height="36" alt="" style="display:block;border:0"></td><td style="padding-left:12px;vertical-align:middle;font:400 19px/1.2 Georgia,'Times New Roman',serif;color:${C.ink}">${PRAXIS.name}<br><span style="font:12px/1.4 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.brand}">Systemische und traumasensible Einzel- und Paartherapie</span></td></tr></table>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:middle"><img src="${SITE}/img/icon-512.png" width="36" height="36" alt="" style="display:block;border:0"></td><td style="padding-left:12px;vertical-align:middle;font:400 19px/1.2 Georgia,'Times New Roman',serif;color:${C.ink}">${PRAXIS.name}<br><span style="font:12px/1.4 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:#B4500D">Systemische und traumasensible Einzel- und Paartherapie</span></td></tr></table>
 </td></tr><tr><td style="background:${C.card};border-radius:18px;border:1px solid ${C.line};padding:32px 30px">
 <h1 style="margin:0 0 12px;font:400 26px/1.25 Georgia,'Times New Roman',serif;color:${C.ink}">${title}</h1>
 <p style="margin:0 0 24px">${intro}</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line}">${rows.map(([k, v]) => `<tr><td style="padding:12px 16px 12px 0;border-bottom:1px solid ${C.line};font-size:13px;color:${C.ink3};vertical-align:top;white-space:nowrap">${k}</td><td style="padding:12px 0;border-bottom:1px solid ${C.line};color:${C.ink}">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}</table>
-${cta ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:26px"><tr><td style="background:${C.brand};border-radius:999px"><a href="${cta[1]}" style="display:inline-block;padding:12px 24px;font-size:15px;color:#FFFFFF;text-decoration:none">${cta[0]}</a></td></tr></table>` : ''}
+${cta ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:26px"><tr><td style="background:${C.brand};border-radius:10px"><a href="${cta[1]}" style="display:inline-block;padding:12px 24px;font-size:15px;color:${C.brandInk};text-decoration:none">${cta[0]}</a></td></tr></table>` : ''}
 </td></tr><tr><td style="padding:20px 6px 0;font-size:13px;line-height:1.55;color:${C.ink3}">${foot}</td></tr></table></body></html>`
 
 // Höchstens acht Sekunden warten; bei einem Fehler nur den Status festhalten, keine Angaben der Person.
