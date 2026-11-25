@@ -81,6 +81,7 @@ const slug = p => p.replace(/\//g, '')
 const ld = o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`
 const picture = (name, [big, small], alt, w, h, attrs = 'loading="lazy" decoding="async"') =>
   `<picture><source type="image/webp" srcset="/img/${name}-${small}.webp ${small}w, /img/${name}-${big}.webp ${big}w" sizes="(max-width: 960px) 74vw, 440px"><img src="/img/${name}-${big}.jpg" srcset="/img/${name}-${small}.jpg ${small}w, /img/${name}-${big}.jpg ${big}w" sizes="(max-width: 960px) 74vw, 440px" width="${w}" height="${h}" alt="${esc(alt)}" ${attrs}></picture>`
+const rimg = (name, w, h, alt) => `<picture><source type="image/webp" srcset="/img/${name}-480.webp 480w, /img/${name}-960.webp 960w, /img/${name}-1440.webp 1440w" sizes="(max-width: 960px) 92vw, 520px"><img src="/img/${name}-960.jpg" srcset="/img/${name}-480.jpg 480w, /img/${name}-960.jpg 960w, /img/${name}-1440.jpg 1440w" sizes="(max-width: 960px) 92vw, 520px" width="${w}" height="${h}" alt="${esc(alt)}" loading="lazy" decoding="async"></picture>`
 const portrait = (name, sizes, alt, w, h, caption = '') => `<figure class="portrait rv"><div class="tilt"><div class="frame">${picture(name, sizes, alt, w, h, 'fetchpriority="high" decoding="async"')}</div></div>${caption && `<figcaption><b>${caption.split('|')[0]}</b><span>${caption.split('|')[1]}</span></figcaption>`}</figure>`
 const mark = ''
 const nameOf = d => d.name.replace('Kommunikationstraining', 'Kommunikations&shy;training').replace('Erziehungsberatung', 'Erziehungs&shy;beratung')
@@ -249,7 +250,8 @@ const business = {
   slogan: 'Systemische und traumasensible Einzel- und Paartherapie', currenciesAccepted: 'EUR', hasMap: GMAPS,
   contactPoint: { '@type': 'ContactPoint', contactType: 'Terminanfrage', email: P.mail, telephone: P.tel, availableLanguage: 'de', areaServed: 'DE' },
   knowsAbout: ['Systemische Therapie', 'Traumasensible Begleitung', 'Paartherapie', 'Jugendcoaching', 'Erziehungsberatung', 'Kommunikationstraining', 'Walk and Talk', 'Onlineberatung'],
-  image: [ORIGIN + '/img/pamela-zurbuchen-992.jpg', ORIGIN + '/img/og.jpg', ORIGIN + '/img/pamela-zurbuchen-praxis-764.jpg'],
+  image: [ORIGIN + '/img/pamela-zurbuchen-992.jpg', ORIGIN + '/img/og.jpg', ORIGIN + '/img/pamela-zurbuchen-praxis-764.jpg', ORIGIN + '/img/raum-sessel-1440.jpg', ORIGIN + '/img/raum-lampe-1440.jpg', ORIGIN + '/img/raum-liege-1440.jpg'],
+  photo: [{ '@type': 'ImageObject', url: ORIGIN + '/img/raum-sessel-1440.jpg', caption: 'Gesprächsbereich der Praxis ZeitRaum in Landsberg am Lech' }, { '@type': 'ImageObject', url: ORIGIN + '/img/raum-lampe-1440.jpg', caption: 'Praxisraum mit warmem Licht' }, { '@type': 'ImageObject', url: ORIGIN + '/img/raum-liege-1440.jpg', caption: 'Liege mit Decke am Fenster' }],
   makesOffer: PRICES.map(([t, p, s]) => ({ '@type': 'Offer', name: `${t} (${s.split(',')[0]})`, price: p === 'kostenfrei' ? '0' : p.replace(' €', ''), priceCurrency: 'EUR' })),
   potentialAction: { '@type': 'ReserveAction', name: 'Termin anfragen', target: ORIGIN + '/termin/' },
 }
@@ -332,13 +334,24 @@ pages.push({
   </div>
 </div></section>
 
+
+<section class="section" id="raum"><div class="wrap">
+  <div class="head rv"><h2>Ein Raum zum Ankommen</h2><p>Warmes Licht, bequeme Sessel und Zeit zum Durchatmen: So sieht die Praxis in der ${P.street} aus.</p></div>
+  <div class="raum">
+    <figure class="raum-a rv">${rimg('raum-sessel', 3036, 2514, 'Gesprächsbereich in der Praxis ZeitRaum in Landsberg am Lech mit zwei Sesseln, Beistelltisch, Stehlampe und Landschaftsbild')}</figure>
+    <figure class="raum-b rv" style="--d:80ms">${rimg('raum-lampe', 3060, 4080, 'Praxisraum mit warmem Licht der Stehlampe, Blumen und Taschentüchern auf dem Beistelltisch')}</figure>
+    <figure class="raum-c rv" style="--d:160ms">${rimg('raum-liege', 3060, 4080, 'Liege mit Kissen und Decke am Fenster der Praxis, daneben Gräser in einer Vase')}</figure>
+  </div>
+</div></section>
+
 <section class="section tinted" id="stimmen"><div class="wrap">
   <div class="rev-head rv"><h2>Was Menschen über die Begleitung sagen</h2></div>
   <div class="grid g2">
     <figure class="card voice rv"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Pamela Zurbuchen hat eine sehr angenehme und einfühlsame Art! Außerdem die Fähigkeit aufmerksam zu …“</blockquote><figcaption><b>Brigitte B.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
     <figure class="card voice rv" style="--d:80ms"><div class="voice-top">${STARS}${G}</div><blockquote class="quote">„Seit Jahren suche ich bei Frau Zurbuchen Rat bei Erziehungsfragen. Mit ihrem Feingefühl hatte sie bisher immer den richtigen Riecher …“</blockquote><figcaption><b>Angie L.</b><span>Google-Rezension, Auszug</span></figcaption></figure>
+    <figure class="card voice voice-wide rv" style="--d:120ms">${STARS}<blockquote class="quote">„Pamela hat mich über mehrere Jahre sehr einfühlsam in ganz unterschiedlichen Themenbereichen begleitet, von der Persönlichkeitsentwicklung bis hin zu Kindererziehungsfragen und diversen Alltagsthemen. Meine Bedürfnisse standen dabei immer im Zentrum, und Pamela hat es immer verstanden, mir das mitzugeben, was mir in dem Moment am meisten half. Gleichzeitig war es ihr immer ein grosses Anliegen, dass ich nicht von ihr abhängig wurde und dass ich mir selbst helfen kann, mit ganz vielen sehr hilfreichen und alltagsnahen Tipps und Tricks. Ich bin Pamela sehr dankbar für alles, was sie mir mit auf den Weg gegeben hat, und kann sie wärmstens empfehlen!“</blockquote><figcaption><b>Pascale</b><span>Rückmeldung einer Klientin, Vorname mit Einverständnis genannt</span></figcaption></figure>
   </div>
-  <p class="small rev-note rv">Auszüge aus öffentlichen Google-Rezensionen, Stand November 2026, unverändert übernommen. Ob die Bewertenden meine Leistungen tatsächlich in Anspruch genommen haben, wird nicht überprüft.</p>
+  <p class="small rev-note rv">Die ersten beiden Stimmen sind Auszüge aus öffentlichen Google-Rezensionen, Stand November 2026, unverändert übernommen; die dritte ist eine Rückmeldung per E-Mail, die ich mit Einverständnis der Verfasserin veröffentliche. Ob die Bewertenden meine Leistungen tatsächlich in Anspruch genommen haben, wird nicht überprüft.</p>
   <div class="rev-score rv"><div class="g-badge">${G}<span><b>5,0 ${STARS}</b><small>Google-Bewertungen</small></span></div></div>
 </div></section>
 

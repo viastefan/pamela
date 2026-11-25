@@ -2565,15 +2565,15 @@ a.link, .link { color: #B4500D; }
 /* Logo-Blau und Logo-Rosa nur als kleine Akzente, Hauptfarbe bleibt Orange */
 :root { --lc-blue: #8FB3D6; --lc-pink: #E07CAF; }
 .head h2::before, .rev-head h2::before { background: linear-gradient(90deg, #EE8640 0 45%, #E07CAF 45% 72%, #8FB3D6 72% 100%) !important; }
-.way:nth-child(2) .art { --art-bg: #FCF0F5 !important; background: #FCF0F5 !important; }
-.way:nth-child(3) .art { --art-bg: #EEF4FA !important; background: #EEF4FA !important; }
+.way:nth-child(2) .art { --art-bg: #F8DCEA !important; background: #F8DCEA !important; }
+.way:nth-child(3) .art { --art-bg: #D9E7F5 !important; background: #D9E7F5 !important; }
 .way:nth-child(2) .art .cloud path, .way:nth-child(3) .art .cloud path { fill: var(--art-bg); }
 .quick-facts li:nth-child(1) svg { color: #4E7FAD !important; }
 .quick-facts li:nth-child(2) svg { color: #C65A93 !important; }
-.course:nth-child(2) .course-ico { background: #FCF0F5; color: #C65A93; }
-.course:nth-child(3) .course-ico { background: #EEF4FA; color: #4E7FAD; }
-.svc-tile:nth-child(3n+2) .svc-pic .art { background: #FCF0F5; }
-.svc-tile:nth-child(3n) .svc-pic .art { background: #EEF4FA; }
+.course:nth-child(2) .course-ico { background: #F8DCEA; color: #C65A93; }
+.course:nth-child(3) .course-ico { background: #D9E7F5; color: #4E7FAD; }
+.svc-tile:nth-child(3n+2) .svc-pic .art { background: #F8DCEA; }
+.svc-tile:nth-child(3n) .svc-pic .art { background: #D9E7F5; }
 .art-walk .halo { fill: #E07CAF !important; fill-opacity: .12 !important; }
 
 /* Zitat-Abschnitt: Logo dezent rechts eingebettet */
@@ -2581,3 +2581,15 @@ a.link, .link { color: #B4500D; }
 .deep::after { content: ""; position: absolute; right: clamp(-40px, 4vw, 70px); top: 50%; width: clamp(200px, 30vw, 380px); aspect-ratio: 1; transform: translateY(-50%); background: url(/img/logo-512.webp) center/contain no-repeat; opacity: .16; pointer-events: none; }
 .deep > .wrap { position: relative; z-index: 1; }
 @media (max-width: 700px) { .deep::after { width: 200px; right: -50px; opacity: .12; } }
+
+/* Raum-Fotos */
+.raum { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px; align-items: stretch; }
+.raum figure { margin: 0; overflow: hidden; border-radius: 8px; box-shadow: 0 6px 24px rgba(60, 30, 10, .08); background: #F3E8DC; }
+.raum picture, .raum img { display: block; width: 100%; height: 100%; }
+.raum img { object-fit: cover; aspect-ratio: 4 / 5; }
+.raum .raum-a img { aspect-ratio: auto; min-height: 100%; }
+.raum .raum-b img { object-position: 50% 40%; }
+@media (max-width: 900px) { .raum { grid-template-columns: 1fr 1fr; } .raum .raum-a { grid-column: 1 / -1; } .raum .raum-a img { aspect-ratio: 4 / 3; } }
+.voice-wide { grid-column: 1 / -1; }
+.voice-wide > svg, .voice-wide .stars { margin-bottom: 18px; }
+.voice-wide .quote { font-size: 21px; max-width: 70ch; }
