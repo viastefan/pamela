@@ -13,22 +13,27 @@ const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&
 const THEMA = { einzeltherapie: 'Einzeltherapie', paartherapie: 'Paartherapie', jugendcoaching: 'Jugendcoaching', erziehungsberatung: 'Erziehungsberatung', kurs: 'Kurs, Training oder Vortrag', offen: 'Noch unsicher' }
 const ORT = { praxis: 'In der Praxis', online: 'Online', walk: 'Walk and Talk', egal: 'Egal' }
 const ZEIT = { vormittags: 'Vormittags', nachmittags: 'Nachmittags', abends: 'Am frühen Abend', flexibel: 'Flexibel' }
-const DEFAULT_FROM = 'No Reply <noreply@festag.app>'
+const DEFAULT_FROM = 'Pamela Zurbuchen <noreply@festag.app>'
 const PRAXIS = { name: 'Pamela Zurbuchen', phone: '0176-43 45 22 86', mail: 'zurbuchen-therapie@gmx.de', site: 'www.zurbuchen-therapie.de' }
 
-// Eine ruhige Mail im Stil der Website: Logo, Überschrift, ein Satz, die Angaben als Tabelle, Kontakt, Fußzeile.
 const SITE = process.env.SITE_URL || 'https://pamela-festag.vercel.app'
 const C = { bg: '#F8F6F2', card: '#FFFFFF', line: '#F0E4D8', ink: '#232B26', ink2: '#48514B', ink3: '#6B736D', brand: '#EE8640', brandInk: '#2A1708', tint: '#FDF1E6' }
-const mail = ({ title, intro, rows, foot, cta }) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>${title}</title></head>
-<body style="margin:0;background:${C.bg};padding:32px 16px;font:16px/1.6 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:${C.ink2}">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto"><tr><td style="padding:0 4px 18px">
-<table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:middle"><img src="${SITE}/img/icon-512.png" width="36" height="36" alt="" style="display:block;border:0"></td><td style="padding-left:12px;vertical-align:middle;font:400 19px/1.2 Georgia,'Times New Roman',serif;color:${C.ink}">${PRAXIS.name}<br><span style="font:12px/1.4 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;color:#B4500D">Systemische und traumasensible Einzel- und Paartherapie</span></td></tr></table>
-</td></tr><tr><td style="background:${C.card};border-radius:18px;border:1px solid ${C.line};padding:32px 30px">
-<h1 style="margin:0 0 12px;font:400 26px/1.25 Georgia,'Times New Roman',serif;color:${C.ink}">${title}</h1>
-<p style="margin:0 0 24px">${intro}</p>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid ${C.line}">${rows.map(([k, v]) => `<tr><td style="padding:12px 16px 12px 0;border-bottom:1px solid ${C.line};font-size:13px;color:${C.ink3};vertical-align:top;white-space:nowrap">${k}</td><td style="padding:12px 0;border-bottom:1px solid ${C.line};color:${C.ink}">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}</table>
-${cta ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:26px"><tr><td style="background:${C.brand};border-radius:10px"><a href="${cta[1]}" style="display:inline-block;padding:12px 24px;font-size:15px;color:${C.brandInk};text-decoration:none">${cta[0]}</a></td></tr></table>` : ''}
-</td></tr><tr><td style="padding:20px 6px 0;font-size:13px;line-height:1.55;color:${C.ink3}">${foot}</td></tr></table></body></html>`
+// Eine ruhige Mail im Stil der Website. Bewusst ohne Bilder (viele Mailprogramme blockieren sie): Monogramm, Überschrift, Text, Angaben, Kontakt.
+const FONT = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif", SERIF = "Georgia,'Times New Roman',serif"
+const mail = ({ title, hello, intro, rows, foot, cta, next }) => `<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light"><title>${title}</title></head>
+<body style="margin:0;background:${C.bg};padding:28px 14px;font:16px/1.6 ${FONT};color:${C.ink2}">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0">${esc(String(intro).replace(/<[^>]+>/g, ''))}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:580px;margin:0 auto"><tr><td style="padding:0 6px 18px">
+<table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="40" height="40" valign="top" align="center" style="width:40px;height:40px;border-radius:20px;background:${C.brand};color:${C.brandInk};font:400 21px/40px ${SERIF}">P</td><td style="padding-left:12px;vertical-align:middle;font:400 20px/1.2 ${SERIF};color:${C.ink}">${PRAXIS.name}<br><span style="font:12px/1.5 ${FONT};color:#B4500D">Systemische und traumasensible Einzel- und Paartherapie</span></td></tr></table>
+</td></tr><tr><td style="background:${C.card};border-radius:14px;border:1px solid ${C.line};border-top:4px solid ${C.brand};padding:34px 32px 30px">
+<h1 style="margin:0 0 18px;font:400 28px/1.2 ${SERIF};color:${C.ink};letter-spacing:-.01em">${title}</h1>
+${hello ? `<p style="margin:0 0 6px;color:${C.ink}">${hello}</p>` : ''}<p style="margin:0 0 26px">${intro}</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${C.tint};border-radius:10px"><tr><td style="padding:8px 20px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${rows.map(([k, v], i) => `<tr><td style="padding:13px 16px 13px 0;${i ? `border-top:1px solid ${C.line};` : ''}font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:${C.ink3};vertical-align:top;white-space:nowrap;width:1%">${k}</td><td style="padding:13px 0;${i ? `border-top:1px solid ${C.line};` : ''}color:${C.ink};vertical-align:top;padding-left:8px">${esc(v).replace(/\n/g, '<br>')}</td></tr>`).join('')}</table>
+</td></tr></table>
+${next ? `<p style="margin:26px 0 0;color:${C.ink2}">${next}</p>` : ''}
+${cta ? `<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:26px"><tr><td bgcolor="${C.brand}" style="background:${C.brand};border-radius:9px"><a href="${cta[1]}" style="display:inline-block;padding:13px 26px;font:600 15px/1 ${FONT};color:${C.brandInk} !important;text-decoration:none !important;border-radius:9px"><span style="color:${C.brandInk};text-decoration:none">${cta[0]}</span></a></td></tr></table>` : ''}
+</td></tr><tr><td style="padding:22px 8px 0;font-size:13px;line-height:1.6;color:${C.ink3}">${foot}</td></tr></table></body></html>`
 
 // Höchstens acht Sekunden warten; bei einem Fehler nur den Status festhalten, keine Angaben der Person.
 const send = (key, body) => fetch('https://api.resend.com/emails', {
@@ -75,18 +80,19 @@ module.exports = async (req, res) => {
   const art = kontakt ? 'im Kontaktformular' : 'im Terminformular'
 
   // 1. An die Praxis. Ohne diese Mail gilt die Anfrage als nicht zugestellt. Kein Reply-To: Die Praxis antwortet selbst.
+  const addr = (from.match(/<([^>]+)>/) || [])[1] || from
   const lead = await send(key, {
-    from, to: [to], subject: kontakt ? `Neue Nachricht über das Kontaktformular (${name})` : `Neue Terminanfrage: ${thema} (${name})`,
+    from: `Website Zurbuchen <${addr}>`, to: [to], subject: kontakt ? `Neue Nachricht über das Kontaktformular (${name})` : `Neue Terminanfrage: ${thema} (${name})`,
     text: `Neuer Eintrag ${art}\n\n${name} hat sich ${art} eingetragen.\n\n${plain(rows)}\n\nDiese Nachricht wurde automatisch von der Website verschickt. Bitte nicht auf diese E-Mail antworten, sondern die Person selbst kontaktieren.`,
-    html: mail({ title: kontakt ? 'Neue Nachricht' : 'Neue Terminanfrage', intro: `${esc(name)} hat sich ${art} eingetragen. Bitte melden Sie sich selbst bei der Person${email || telefon ? ' (Kontaktdaten unten)' : ''}.`, rows, foot: 'Diese Nachricht wurde automatisch von der Website verschickt. Bitte nicht auf diese E-Mail antworten.', cta: null }),
+    html: mail({ title: kontakt ? 'Neue Nachricht' : 'Neue Terminanfrage', intro: `<b>${esc(name)}</b> hat sich ${art} eingetragen.`, rows, next: email || telefon ? 'Bitte melden Sie sich bei der Person, die Kontaktdaten stehen oben.' : '', foot: 'Diese Nachricht wurde automatisch von Ihrer Website verschickt. Bitte nicht auf diese E-Mail antworten, sondern die Person selbst kontaktieren.', cta: null }),
   })
   if (!lead) return done(502, { error: 'send_failed' })
 
   // 2. Bestätigung an die anfragende Person. Schlägt sie fehl, ist die Anfrage trotzdem angekommen. Kein Reply-To.
   if (email) await send(key, {
     from, to: [email], subject: 'Vielen Dank für Ihren Eintrag',
-    text: `Guten Tag ${name},\n\nDanke, dass Sie sich erfolgreich eingetragen haben. Wir werden uns in Kürze bei Ihnen melden.\n\n${kontakt ? '' : plain(wish) + '\n\n'}${PRAXIS.name}\nZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech\n\n${NOREPLY}\n${CRISIS}`,
-    html: mail({ title: 'Vielen Dank für Ihren Eintrag', intro: `Guten Tag ${esc(name)}, danke, dass Sie sich erfolgreich eingetragen haben. Wir werden uns in Kürze bei Ihnen melden.`, rows: kontakt ? [['Ihre Nachricht', nachricht]] : wish, foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br><br>${NOREPLY}<br>${CRISIS}`, cta: ['Zur Website', SITE] }),
+    text: `Guten Tag ${name},\n\nvielen Dank für Ihren Eintrag. Ich melde mich in Kürze persönlich bei Ihnen.\n\n${kontakt ? '' : plain(wish) + '\n\n'}Herzliche Grüße\n${PRAXIS.name}\nZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech\nTelefon ${PRAXIS.phone}\n\n${NOREPLY}\n${CRISIS}`,
+    html: mail({ title: 'Vielen Dank für Ihren Eintrag', hello: `Guten Tag ${esc(name)},`, intro: 'schön, dass Sie sich gemeldet haben. Ihre Anfrage ist bei mir angekommen, und ich melde mich in Kürze persönlich bei Ihnen.', rows: kontakt ? [['Ihre Nachricht', nachricht]] : wish, next: `Wenn es eilt, erreichen Sie mich unter <a href="tel:+4917643452286" style="color:#B4500D;text-decoration:underline">${PRAXIS.phone}</a>.<br><span style="color:${C.ink}">Herzliche Grüße, ${PRAXIS.name}</span>`, foot: `<b style="color:${C.ink2}">${PRAXIS.name}</b> · ZeitRaum, Weilheimer Str. 9, 86899 Landsberg am Lech<br><br>${NOREPLY}<br>${CRISIS}`, cta: ['Zur Website', SITE] }),
   })
   return done(200, { ok: true })
 }
