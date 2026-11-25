@@ -1478,7 +1478,7 @@ html:not(.js) .flow-nav { display: none; }
 }
 
 /* ── Grüne Farbwelt nach dem Lehrercoach-Logo: Salbei als Hauptfarbe, Blau, Rosa und Orange nur als kleine Akzente */
-:root { --lc-blue: #8FB3D6; --lc-pink: #E07CAF; --lc-orange: #EE8640; }
+:root { --lc-blue: #8FB3D6; --lc-pink: #E07CAF; --lc-orange: #F4985C; }
 .brand .brand-word { display: none !important; }
 @media (min-width: 961px) { :root:not([data-theme="dark"]) .top .brand .brand-mark { display: block; } :root:not([data-theme="dark"]) .top .brand .brand-text { display: grid; } :root { --head-h: 76px; } }
 .brand { color: var(--wine-950); }
@@ -2530,41 +2530,41 @@ a.tile:hover .tile-go::after { transform: translateX(4px); }
 @media (max-width: 960px) { .hero-photo::after { display: none !important; } .hero-photo .hero-bg::after { background: linear-gradient(180deg, rgba(246,246,242,0), var(--canvas)) !important; } }
 .rev-note { max-width: 46em; margin: 18px 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-3); }
 
-/* ══ Farbwelt Orange: Logo-Orange #EE8640 statt Grün ══ */
-:root { --lc-orange: #EE8640; --lc-blue: #D9C8B8; --lc-pink: #F0B58F; }
+/* ══ Farbwelt Orange: Logo-Orange #F4985C statt Grün ══ */
+:root { --lc-orange: #F4985C; --lc-blue: #D9C8B8; --lc-pink: #F0B58F; }
 :root:not([data-theme="dark"]) {
   --canvas: #F8F6F2; --content: #FBFAF7; --sunken: #EFECE7; --card: #FFFFFF;
   --wine-950: #3B1F0C; --wine-900: #7A3608; --wine-700: #B4500D; --wine-500: #E9A06B; --wine-300: #F7CFAE; --wine-100: #FCEBDD;
   --blush-100: #FDF1E6; --blush-200: #FAE3CF; --blush-300: #F5B27F; --tint: #FDF1E6; --tint-2: #FDF1E6;
   --fill: rgba(238,134,64,.08); --fill-hover: rgba(238,134,64,.15);
-  --pk-bg: #EE8640; --pk-ink: #2A1708; --pk-hover: #E3742A; --brand: #B4500D; --brand-ink: #7A3608;
+  --pk-bg: #F4985C; --pk-ink: #2A1708; --pk-hover: #EE8A4C; --brand: #B4500D; --brand-ink: #7A3608;
   --head-bg: rgba(251,250,247,.97);
   --ring: 0 0 0 3px var(--canvas), 0 0 0 5.5px var(--wine-500);
 }
 :root:not([data-theme="dark"]) .deep, :root:not([data-theme="dark"]) .cta, :root:not([data-theme="dark"]) .tile-deep, .tile.tile-deep { background: linear-gradient(135deg, #FDF3EA 0%, #FBE6D3 100%) !important; }
 /* Gefüllte Flächen: Logo-Orange mit dunkler Schrift (Kontrast 6,6:1) */
-.btn.primary, .flow-nav .flow-fwd, .dock .dock-main, .cw-chip.is-primary, .cw-cta, .cw-send, .pick.is-main, .hero-photo .quick-foot .btn.primary, .cw-launcher-mark, .svc-book { background: #EE8640 !important; border-color: #EE8640 !important; color: #2A1708 !important; }
-.btn.primary:hover, .flow-nav .flow-fwd:hover, .dock .dock-main:hover, .cw-chip.is-primary:hover, .cw-cta:hover, .cw-send:hover, .pick.is-main:hover, .svc-book:hover { background: #E3742A !important; border-color: #E3742A !important; color: #2A1708 !important; }
+.btn.primary, .flow-nav .flow-fwd, .dock .dock-main, .cw-chip.is-primary, .cw-cta, .cw-send, .pick.is-main, .hero-photo .quick-foot .btn.primary, .cw-launcher-mark, .svc-book { background: #F4985C !important; border-color: #F4985C !important; color: #2A1708 !important; }
+.btn.primary:hover, .flow-nav .flow-fwd:hover, .dock .dock-main:hover, .cw-chip.is-primary:hover, .cw-cta:hover, .cw-send:hover, .pick.is-main:hover, .svc-book:hover { background: #EE8A4C !important; border-color: #EE8A4C !important; color: #2A1708 !important; }
 .pick.is-main b, .pick.is-main small { color: #2A1708 !important; }
 .cw-msg-user p { background: #FCEBDD !important; color: #3B1F0C !important; }
 .btn.btn-more, .svc-go, .course-btn.is-soft { background: #FCEBDD !important; color: #7A3608 !important; }
 .btn.btn-more:hover, .svc-go:hover { background: #F7CFAE !important; }
-.steps li.on::before, .opt:has(input:checked) kbd { background: #EE8640 !important; border-color: #EE8640 !important; color: #2A1708 !important; }
-.opt:has(input:checked) { background: #FDF1E6 !important; box-shadow: 0 0 0 1.5px #EE8640 !important; }
-.faq details[open] summary::after { background-color: #EE8640 !important; }
+.steps li.on::before, .opt:has(input:checked) kbd { background: #F4985C !important; border-color: #F4985C !important; color: #2A1708 !important; }
+.opt:has(input:checked) { background: #FDF1E6 !important; box-shadow: 0 0 0 1.5px #F4985C !important; }
+.faq details[open] summary::after { background-color: #F4985C !important; }
 .fee-price, .hero-photo .place-h, .place-h { color: #B4500D !important; }
 .hero-photo .place-h { -webkit-text-stroke: .02em #B4500D; }
 .hero-photo::after { background: linear-gradient(90deg, rgba(248,246,242,.96) 0%, rgba(248,246,242,.9) 30%, rgba(248,246,242,.55) 46%, rgba(248,246,242,0) 62%) !important; }
-.art-walk .sun { fill: #EE8640 !important; fill-opacity: .4 !important; } .art-walk .halo { fill: #EE8640 !important; fill-opacity: .16 !important; }
+.art-walk .sun { fill: #F4985C !important; fill-opacity: .4 !important; } .art-walk .halo { fill: #F4985C !important; fill-opacity: .16 !important; }
 a.link, .link { color: #B4500D; }
 ::selection { background: rgba(238,134,64,.28); }
-.links li:last-child a { background: #EE8640 !important; color: #2A1708 !important; }
+.links li:last-child a { background: #F4985C !important; color: #2A1708 !important; }
 .links li:last-child a span, .links li:last-child a::after { background: rgba(42,23,8,.12) !important; color: #2A1708 !important; }
 .foot { background: #FBF1E7; }
 
 /* Logo-Blau und Logo-Rosa nur als kleine Akzente, Hauptfarbe bleibt Orange */
 :root { --lc-blue: #8FB3D6; --lc-pink: #E07CAF; }
-.head h2::before, .rev-head h2::before { background: linear-gradient(90deg, #EE8640 0 45%, #E07CAF 45% 72%, #8FB3D6 72% 100%) !important; }
+.head h2::before, .rev-head h2::before { background: linear-gradient(90deg, #F4985C 0 45%, #E07CAF 45% 72%, #8FB3D6 72% 100%) !important; }
 .way:nth-child(2) .art { --art-bg: #F8DCEA !important; background: #F8DCEA !important; }
 .way:nth-child(3) .art { --art-bg: #D9E7F5 !important; background: #D9E7F5 !important; }
 .way:nth-child(2) .art .cloud path, .way:nth-child(3) .art .cloud path { fill: var(--art-bg); }
@@ -2598,3 +2598,22 @@ a.link, .link { color: #B4500D; }
 .raum-wide picture, .raum-wide img { display: block; width: 100%; }
 .raum-wide img { height: 460px; object-fit: cover; object-position: 50% 62%; }
 @media (max-width: 700px) { .raum-wide img { height: 320px; } }
+
+/* ── Feedback Pamela 25.11.: Orange etwas heller, Logo-Farben (Blau, Rosa) auch auf PC-Bildschirmen gut sichtbar ── */
+:root { --lc-blue: #7FA9D6; --lc-pink: #E26FAB; --lc-orange: #F4985C; }
+/* Große Ortsangabe im Hero etwas heller (große Schrift, Kontrast 4:1); kleine Orange-Links bleiben dunkel */
+:root:not([data-theme="dark"]) .hero-photo .place-h, :root:not([data-theme="dark"]) .place-h { color: #C25A12 !important; --place-ink: #C25A12; }
+.hero-photo .place-h { -webkit-text-stroke: .02em #C25A12 !important; }
+/* Szenen-Karten: kräftigere Logo-Töne statt blasser Pastellflächen (Pamelas PC stellt helle Töne kaum dar) */
+.way:nth-child(2) .art { --art-bg: #F6C6DD !important; background: #F6C6DD !important; }
+.way:nth-child(3) .art { --art-bg: #C3D9F0 !important; background: #C3D9F0 !important; }
+.svc-tile:nth-child(3n+2) .svc-pic .art { background: #F6C6DD; }
+.svc-tile:nth-child(3n) .svc-pic .art { background: #C3D9F0; }
+.course:nth-child(2) .course-ico { background: #F6C6DD; color: #B8478A; }
+.course:nth-child(3) .course-ico { background: #C3D9F0; color: #3F6F9E; }
+.art .pane { fill-opacity: .42; }
+.art-walk .halo { fill-opacity: .2 !important; }
+/* Zitat-Abschnitt: neutraler, heller Grund, damit Blau und Rosa des Logos nicht unter dem Orange verschwinden; Logo deutlich kräftiger */
+:root:not([data-theme="dark"]) .deep { background: linear-gradient(120deg, #FFFCF8 0%, #FDF4EA 100%) !important; }
+.deep::after { opacity: .62; }
+@media (max-width: 700px) { .deep::after { opacity: .5; } }
