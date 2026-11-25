@@ -192,7 +192,8 @@ const glance = `
   <div class="info is-wide rv">${ico('list')}<div><h3>Angebot</h3><p class="info-tags">${services.map(s => `<a href="${s.path}">${s.name}</a>`).join('')}</p></div></div>
   <div class="info rv">${ico('area')}<div><h3>Einzugsgebiet</h3><p>${P.areas.join(', ')} und Umgebung. Online deutschlandweit, in Österreich und der Schweiz.</p></div></div>
   <div class="info rv" style="--d:60ms">${ico('cal')}<div><h3>Schulferien</h3><p>Während der bayerischen Schulferien ist die Praxis nicht besetzt. Danach melde ich mich, so schnell es mir möglich ist.</p></div></div>
-</div>`
+</div>
+<figure class="raum-wide rv">${rimg('raum-tageslicht', 1932, 2049, 'Zwei Sessel mit Beistelltisch im hellen Praxisraum ZeitRaum in Landsberg am Lech')}</figure>`
 const contactForm = `
 <form class="cform rv" id="kontakt-form" method="post" action="/api/anfrage" data-mail="${P.mail}" novalidate>
   <input type="hidden" name="art" value="kontakt">

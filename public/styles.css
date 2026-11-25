@@ -2593,3 +2593,8 @@ a.link, .link { color: #B4500D; }
 .voice-wide { grid-column: 1 / -1; }
 .voice-wide > svg, .voice-wide .stars { margin-bottom: 18px; }
 .voice-wide .quote { font-size: 21px; max-width: 70ch; }
+.raum .raum-a img { object-position: 68% 50%; }
+.raum-wide { margin: 28px 0 0; overflow: hidden; border-radius: 8px; box-shadow: 0 6px 24px rgba(60, 30, 10, .08); background: #F3E8DC; max-height: 460px; }
+.raum-wide picture, .raum-wide img { display: block; width: 100%; }
+.raum-wide img { height: 460px; object-fit: cover; object-position: 50% 62%; }
+@media (max-width: 700px) { .raum-wide img { height: 320px; } }
