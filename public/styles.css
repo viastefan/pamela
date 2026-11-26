@@ -2621,3 +2621,12 @@ a.link, .link { color: #B4500D; }
 /* Zitat-Abschnitt: Logo nur ganz zart im Hintergrund (nicht als Blickfang) */
 .deep::after { opacity: .14 !important; width: clamp(220px, 28vw, 340px); right: clamp(-30px, 5vw, 90px); }
 @media (max-width: 700px) { .deep::after { opacity: .1 !important; width: 190px; right: -40px; } }
+
+/* Abschnitts-Hintergrund: warmer Pfirsich-Verlauf mit zartem Rosa-/Blauhauch, bleibt hell */
+:root:not([data-theme="dark"]) .deep {
+  background:
+    radial-gradient(60% 120% at 92% 50%, rgba(240, 150, 190, .16) 0%, rgba(240, 150, 190, 0) 70%),
+    radial-gradient(45% 90% at 78% 100%, rgba(143, 179, 214, .16) 0%, rgba(143, 179, 214, 0) 70%),
+    linear-gradient(120deg, #FEF3E7 0%, #FCE7D5 55%, #FADCC4 100%) !important;
+}
+:root:not([data-theme="dark"]) :is(.cta, .tile-deep), :root:not([data-theme="dark"]) .tile.tile-deep { background: linear-gradient(135deg, #FEF3E7 0%, #FADCC4 100%) !important; }
