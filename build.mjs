@@ -97,7 +97,7 @@ const cta = (du, title, text, thema) => `
   ${mark}
   <h2>${title || 'Der erste Schritt ist ein Gespräch.'}</h2>
   <p>${text || (du ? 'Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Du oder Deine Eltern können mir schreiben oder mich anrufen.' : 'Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten.')}</p>
-  <div class="actions">${book(thema, 'gold')}<a class="btn on-deep" href="mailto:${P.mail}">E-Mail schreiben</a></div>
+  <div class="actions">${book(thema, 'gold')}<a class="btn on-deep" href="/kontakt/#schreiben">E-Mail schreiben</a></div>
 </div></section>`
 
 const stepsShort = () => `<div class="steps-wrap rv" data-steps><span class="steps-line" aria-hidden="true"><i></i></span><ol class="steps">
@@ -766,7 +766,7 @@ const widgets = `
     <h2 id="kw-titel">Termin anfragen</h2>
     <p class="sheet-lead">Das Erstgespräch ist kostenfrei und dauert etwa 30 Minuten. Wie möchten Sie sich melden?</p>
     <a class="pick is-main" data-sheet-form href="/termin/"><span><b>Kurz ausfüllen</b><small>Fünf Fragen, etwa eine Minute. Sie erhalten einen Terminvorschlag.</small></span></a>
-    <a class="pick" href="mailto:${P.mail}"><span><b>E-Mail schreiben</b><small>${P.mail}</small></span></a>
+    <a class="pick" href="/kontakt/#schreiben"><span><b>Nachricht schreiben</b><small>Direkt über das Formular</small></span></a>
   </div>
 </dialog>`
 
@@ -826,7 +826,7 @@ ${(p.ld || []).map(ld).join('\n')}
 </div>
 <div class="drawer" id="menue"><div><nav class="wrap drawer-nav" aria-label="Menü">
   ${NAV.map(([h, t], i) => `<a class="drawer-link" style="--n:${i}" href="${h}"${current(p, h) ? ' aria-current="page"' : ''}><span>${t}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10h11M11 5.500l4.500 4.500L11 14.500"/></svg></a>`).join('')}
-  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="mailto:${P.mail}"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.500" y="4.500" width="15" height="11" rx="2"/><path d="M3 6l7 5.200L17 6"/></svg>E-Mail</a></div>
+  <div class="drawer-acts" style="--n:${NAV.length}"><a class="btn primary" href="/termin/">Termin anfragen</a><a class="btn" href="/kontakt/#schreiben"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.500" y="4.500" width="15" height="11" rx="2"/><path d="M3 6l7 5.200L17 6"/></svg>E-Mail</a></div>
   <div class="drawer-foot" style="--n:${NAV.length + 1}">
     <a class="drawer-place" href="${GMAPS}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.800s5.600-4.900 5.600-9.300a5.600 5.600 0 0 0-11.200 0c0 4.400 5.600 9.300 5.600 9.300z"/><circle cx="10" cy="8.500" r="2"/></svg><span>${P.practice}<br>${P.street}, ${P.zip} ${P.city}</span></a>
     <div class="theme" role="group" aria-label="Darstellung">
