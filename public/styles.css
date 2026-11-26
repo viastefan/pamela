@@ -2578,7 +2578,7 @@ a.link, .link { color: #B4500D; }
 
 /* Zitat-Abschnitt: Logo dezent rechts eingebettet */
 .deep { position: relative; overflow: hidden; }
-.deep::after { content: ""; position: absolute; right: clamp(-40px, 4vw, 70px); top: 50%; width: clamp(200px, 30vw, 380px); aspect-ratio: 1; transform: translateY(-50%); background: url(/img/logo-512.webp) center/contain no-repeat; opacity: .16; pointer-events: none; }
+.deep::after { content: ""; position: absolute; right: clamp(-40px, 4vw, 70px); top: 50%; width: clamp(200px, 30vw, 380px); aspect-ratio: 1; transform: translateY(-50%); background: url(/img/logo-512.webp?v=4) center/contain no-repeat; opacity: .16; pointer-events: none; }
 .deep > .wrap { position: relative; z-index: 1; }
 @media (max-width: 700px) { .deep::after { width: 200px; right: -50px; opacity: .12; } }
 
@@ -2617,3 +2617,7 @@ a.link, .link { color: #B4500D; }
 :root:not([data-theme="dark"]) .deep { background: linear-gradient(120deg, #FFFCF8 0%, #FDF4EA 100%) !important; }
 .deep::after { opacity: .62; }
 @media (max-width: 700px) { .deep::after { opacity: .5; } }
+
+/* Zitat-Abschnitt: Logo nur ganz zart im Hintergrund (nicht als Blickfang) */
+.deep::after { opacity: .14 !important; width: clamp(220px, 28vw, 340px); right: clamp(-30px, 5vw, 90px); }
+@media (max-width: 700px) { .deep::after { opacity: .1 !important; width: 190px; right: -40px; } }
